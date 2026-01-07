@@ -4,19 +4,27 @@ import { blogPosts } from "@/lib/data";
 import { PlaceHolderImages as placeholderImages } from "@/lib/placeholder-images";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, PlusCircle } from "lucide-react";
 
 export default function BlogPage() {
   return (
     <div className="bg-background">
       <div className="container mx-auto px-4 py-16 md:py-24">
         <header className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-extrabold font-headline text-primary">
-            Our Blog
-          </h1>
-          <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
-            Insights, tips, and updates on navigating the world of international education.
-          </p>
+          <div className="flex flex-col items-center justify-center">
+              <h1 className="text-4xl md:text-5xl font-extrabold font-headline text-primary">
+                Our Blog
+              </h1>
+              <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
+                Insights, tips, and updates on navigating the world of international education.
+              </p>
+              <Button asChild size="lg" className="mt-8">
+                  <Link href="/blog/new">
+                      <PlusCircle className="mr-2 h-5 w-5" />
+                      Write a Post
+                  </Link>
+              </Button>
+          </div>
         </header>
 
         <main>
