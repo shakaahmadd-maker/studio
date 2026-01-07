@@ -1,5 +1,5 @@
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { europeScholarships, ukScholarshipsData, globalScholarships } from '@/lib/data.tsx';
+import { europeScholarships, ukScholarshipsData, globalScholarships, whyChooseUsData } from '@/lib/data.tsx';
 import Image from 'next/image';
 import { Award, BookOpenText, Mountain, Medal, Trophy, Star, HandCoins, FlaskRound, CheckCircle, Wallet, Plane, Briefcase, Search, Home, SendHorizontal, DollarSign, HeartPulse, XCircle, Lightbulb, FileSignature, Gem, LifeBuoy, Route } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { OtherEuropeSlider } from '@/components/layout/other-europe-slider';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { CountryFlagSlider } from '@/components/layout/country-flag-slider';
 
 const iconMap: { [key: string]: React.ReactNode } = {
   award: <Award />,
@@ -37,38 +38,6 @@ const badgeColors: { [key: string]: string } = {
   gray: 'bg-gray-100 text-gray-700',
 };
 
-const whyChooseUsData = [
-    {
-        icon: <Lightbulb className="text-4xl text-amber-500" />,
-        title: "Expert Scholarship Guidance",
-        description: "We offer personalized guidance based on your unique academic background, career aspirations, and financial needs, identifying the right merit-based, need-based, or research opportunities for you."
-    },
-    {
-        icon: <FileSignature className="text-4xl text-amber-500" />,
-        title: "Comprehensive Application Support",
-        description: "Receive step-by-step support for writing compelling personal statements, crafting standout essays, and ensuring all necessary documentation is perfectly in order to highlight your strengths."
-    },
-    {
-        icon: <Trophy className="text-4xl text-amber-500" />,
-        title: "Maximize Your Chances of Winning",
-        description: "Our deep understanding of scholarship panels gives you a competitive edge. We ensure your application reflects the leadership, academic excellence, and passion they look for in highly competitive programs."
-    },
-    {
-        icon: <Gem className="text-4xl text-amber-500" />,
-        title: "Access to Exclusive Scholarships",
-        description: "Benefit from our wide network of universities and private organizations, granting you awareness of hidden gems and fully funded opportunities not available through conventional channels."
-    },
-    {
-        icon: <LifeBuoy className="text-4xl text-amber-500" />,
-        title: "Ongoing Support and Mentorship",
-        description: "Our support doesn't end with the award. We assist with visa applications, accommodation, and transition to ensure a smooth and successful start to your academic life abroad."
-    },
-    {
-        icon: <Route className="text-4xl text-amber-500" />,
-        title: "Customized Scholarship Strategy",
-        description: "We create a tailored strategy, aligning your scholarship applications for undergraduate, graduate, or fellowship programs directly with your academic background and ultimate career goals."
-    }
-]
 
 export default function ScholarshipsPage() {
     const heroImage = PlaceHolderImages.find(p => p.id === 'scholarship-hero');
@@ -106,10 +75,10 @@ export default function ScholarshipsPage() {
 
         <main className="p-6 sm:p-10 bg-white">
             <h2 className="text-3xl sm:text-4xl font-bold text-center text-indigo-800 mb-4">
-                Why Choose Uni Help Consultants?
+                Why Choose Uni Help Consultants for Scholarship Guidance?
             </h2>
             <p className="text-center text-gray-600 mb-10 max-w-4xl mx-auto">
-                We specialize in finding the best scholarships and providing personalized support to ensure your application is a success. Here is our 6-step path to success:
+                Our tailored approach ensures your application stands out in a competitive global landscape.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
@@ -128,6 +97,16 @@ export default function ScholarshipsPage() {
 
 
         <div className="max-w-7xl mx-auto p-4 md:p-8">
+
+            <div className="py-12 bg-white">
+                <div className="container mx-auto px-4">
+                    <h2 className="text-2xl font-bold text-center text-muted-foreground mb-8 font-headline">
+                        Scholarships Available In
+                    </h2>
+                    <CountryFlagSlider />
+                </div>
+            </div>
+            
             <div id="scholarship-container" className="space-y-16">
 
                 {/* SCHOLARSHIPS IN EUROPE SECTION */}
@@ -170,27 +149,35 @@ export default function ScholarshipsPage() {
                     <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-8 border-b-4 border-pink-200 pb-3">
                         🇬🇧 Scholarships in the UK: By Funding Type
                     </h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                         {ukScholarshipsData.map((scholarship, index) => (
-                            <Card key={index} className={`p-6 border-t-4 ${scholarship.borderColor} shadow-lg hover:shadow-xl transition-shadow duration-300`}>
-                                <div className={`text-2xl font-bold ${scholarship.titleColor} mb-3 flex items-center`}>
-                                   <div className="mr-2">{iconMap[scholarship.icon]}</div> {scholarship.title}
-                                </div>
-                                <p className="text-sm text-muted-foreground mb-4">{scholarship.description}</p>
-                                <ul className="list-disc list-inside space-y-1 text-sm font-semibold">
-                                    {scholarship.examples.map((example, i) => (
-                                        <li key={i} className={scholarship.titleColor}>{example}</li>
-                                    ))}
-                                </ul>
-                            </Card>
-                         ))}
-                    </div>
+                     <Accordion type="single" collapsible className="w-full space-y-4">
+                        {ukScholarshipsData.map((scholarship, index) => (
+                           <AccordionItem value={scholarship.title} key={index} className="border rounded-lg bg-white shadow-sm">
+                                <AccordionTrigger className="p-6 hover:no-underline">
+                                    <div className="text-left flex items-center gap-4">
+                                        <div className={`text-2xl ${scholarship.titleColor}`}>{iconMap[scholarship.icon]}</div>
+                                        <div>
+                                            <h3 className={`font-headline text-xl ${scholarship.titleColor}`}>{scholarship.title}</h3>
+                                            <p className="text-sm text-muted-foreground">{scholarship.description}</p>
+                                        </div>
+                                    </div>
+                                </AccordionTrigger>
+                                <AccordionContent className="p-6 pt-0">
+                                    <h4 className="font-semibold mb-2">Key Examples:</h4>
+                                    <ul className="list-disc list-inside space-y-2 text-sm text-muted-foreground">
+                                        {scholarship.examples.map((example, i) => (
+                                            <li key={i}>{example}</li>
+                                        ))}
+                                    </ul>
+                                </AccordionContent>
+                            </AccordionItem>
+                        ))}
+                    </Accordion>
                 </section>
 
                 {/* GLOBAL PROGRAMS SECTION */}
                 <section>
                      <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-8 border-b-4 border-yellow-200 pb-3">
-                        🇺🇸 🇨🇦 🇳🇿 🇨🇳 Global Programs: USA, Canada & APAC
+                        🇺🇸 🇨🇦 🇦🇺 🇳🇿 🇨🇳 Global Programs: USA, Canada & APAC
                     </h2>
                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                         {globalScholarships.map((scholarship, index) => (
@@ -221,6 +208,7 @@ export default function ScholarshipsPage() {
                 <div className="mt-4">
                     <Button asChild size="lg" className="bg-amber-400 hover:bg-amber-500 text-indigo-900 font-bold shadow-lg hover:shadow-xl">
                         <Link href="/contact">
+                            <SendHorizontal className="mr-2 h-5 w-5" />
                             Start Your Application Today
                         </Link>
                     </Button>

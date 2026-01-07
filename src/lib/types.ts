@@ -97,3 +97,9 @@ export interface GlobalScholarship {
         color: string;
     }[];
 }
+
+export interface WhyChooseUsItem {
+    icon: React.ReactNode;
+    title: string;
+    description: string;
+}

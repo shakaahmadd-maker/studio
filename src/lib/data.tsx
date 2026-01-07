@@ -1,5 +1,5 @@
-import type { Service, SuccessStory, BlogPost, TeamMember, FAQ, ServiceCategory, JobOpening, University, UKScholarship, OtherEuropeScholarship, GlobalScholarship } from './types';
-import { Award, Briefcase, Landmark } from 'lucide-react';
+import type { Service, SuccessStory, BlogPost, TeamMember, FAQ, ServiceCategory, JobOpening, University, UKScholarship, OtherEuropeScholarship, GlobalScholarship, WhyChooseUsItem } from './types';
+import { Award, Briefcase, Landmark, Lightbulb, FileSignature, Trophy, Gem, LifeBuoy, Route } from 'lucide-react';
 import React from 'react';
 
 export const services: Service[] = [
@@ -412,6 +412,39 @@ export const universities: University[] = [
   { name: 'University of Göttingen', logoUrl: 'https://logo.clearbit.com/uni-goettingen.de' },
 ];
 
+export const whyChooseUsData: WhyChooseUsItem[] = [
+    {
+        icon: <Lightbulb className="text-4xl text-amber-500" />,
+        title: "Expert Scholarship Guidance",
+        description: "We offer personalized guidance based on your unique academic background, career aspirations, and financial needs, identifying the right merit-based, need-based, or research opportunities for you."
+    },
+    {
+        icon: <FileSignature className="text-4xl text-amber-500" />,
+        title: "Comprehensive Application Support",
+        description: "Receive step-by-step support for writing compelling personal statements, crafting standout essays, and ensuring all necessary documentation is perfectly in order to highlight your strengths."
+    },
+    {
+        icon: <Trophy className="text-4xl text-amber-500" />,
+        title: "Maximize Your Chances of Winning",
+        description: "Our deep understanding of scholarship panels gives you a competitive edge. We ensure your application reflects the leadership, academic excellence, and passion they look for in highly competitive programs."
+    },
+    {
+        icon: <Gem className="text-4xl text-amber-500" />,
+        title: "Access to Exclusive Scholarships",
+        description: "Benefit from our wide network of universities and private organizations, granting you awareness of hidden gems and fully funded opportunities not available through conventional channels."
+    },
+    {
+        icon: <LifeBuoy className="text-4xl text-amber-500" />,
+        title: "Ongoing Support and Mentorship",
+        description: "Our support doesn't end with the award. We assist with visa applications, accommodation, and transition to ensure a smooth and successful start to your academic life abroad."
+    },
+    {
+        icon: <Route className="text-4xl text-amber-500" />,
+        title: "Tailored Scholarship Strategy for Every Student",
+        description: "At Uni Help Consultants, we craft a personalized scholarship strategy based on your goals and background, ensuring your applications align with your strengths and aspirations."
+    }
+]
+
 export const europeScholarships = {
   major: [
     {
@@ -583,7 +616,7 @@ export const ukScholarshipsData = [
   },
 ];
 
-export const globalScholarships = [
+export const globalScholarships: GlobalScholarship[] = [
   {
     title: '🇺🇸 Fulbright Foreign Student Program',
     description: 'U.S. government exchange program (Master’s / PhD).',
@@ -612,6 +645,16 @@ export const globalScholarships = [
     coverage: [
       { text: 'Full/Partial Tuition', icon: 'dollar-sign', color: 'red' },
       { text: 'Research Funding', icon: 'search', color: 'red' },
+    ],
+  },
+  {
+    title: '🇦🇺 Australia Awards & RTP',
+    description: 'Government-funded awards and Research Training Program for graduate students.',
+    borderColor: 'border-green-800',
+    titleColor: 'text-green-800',
+    coverage: [
+        { text: 'Full Tuition & Stipend', icon: 'check-circle', color: 'green' },
+        { text: 'Travel & Health', icon: 'plane', color: 'green' },
     ],
   },
   {
