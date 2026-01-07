@@ -91,7 +91,7 @@ export function Footer() {
           <div className="md:col-span-1">
             <h3 className="font-semibold font-headline tracking-wider uppercase mb-4">Contact Us</h3>
             <div className="space-y-2 text-sm text-muted-foreground">
-              <p>123 Education Lane, Knowledge City, 12345</p>
+              <p>Zam Zam Heights, Opp. Sabzazar Cricket Stadium. Lahore.</p>
               <p>Email: <a href="mailto:contact@unihelpconsultants.com" className="hover:text-primary">contact@unihelpconsultants.com</a></p>
               <p>Phone: <a href="tel:+923417548178" className="hover:text-primary">+92 341 7548178</a></p>
             </div>

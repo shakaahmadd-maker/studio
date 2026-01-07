@@ -48,8 +48,8 @@ export default function ContactPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                    123 Education Lane, <br/>
-                    Knowledge City, 12345
+                    Zam Zam Heights, Opp. Sabzazar Cricket Stadium. <br/>
+                    Lahore.
                 </p>
               </CardContent>
             </Card>
