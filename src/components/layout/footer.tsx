@@ -9,6 +9,15 @@ const socialLinks = [
   { name: "LinkedIn", icon: Linkedin, href: "#" },
 ];
 
+const quickLinks = [
+    { href: "/about", label: "About Us" },
+    { href: "/why-us", label: "Why Us" },
+    { href: "/scholarships", label: "Scholarships" },
+    { href: "/blog", label: "Blog" },
+    { href: "/career", label: "Career" },
+    { href: "/contact", label: "Contact" },
+]
+
 export function Footer() {
   return (
     <footer className="bg-secondary text-secondary-foreground border-t">
@@ -66,7 +75,20 @@ export function Footer() {
             </ul>
           </div>
 
-          <div className="md:col-span-2">
+          <div className="md:col-span-1">
+            <h3 className="font-semibold font-headline tracking-wider uppercase mb-4">Quick Links</h3>
+            <ul className="space-y-2">
+              {quickLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="md:col-span-1">
             <h3 className="font-semibold font-headline tracking-wider uppercase mb-4">Contact Us</h3>
             <div className="space-y-2 text-sm text-muted-foreground">
               <p>123 Education Lane, Knowledge City, 12345</p>
