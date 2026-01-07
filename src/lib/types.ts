@@ -73,3 +73,10 @@ export interface OtherEuropeScholarship {
     icon: JSX.Element;
     note: string;
 }
+
+export interface UKScholarship {
+  title: string;
+  description: string;
+  examples: string[];
+  idealFor: string;
+}

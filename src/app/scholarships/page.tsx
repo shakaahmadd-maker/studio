@@ -1,177 +1,12 @@
 
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { CheckCircle, Award, Briefcase, BookOpen, User, Star } from 'lucide-react';
+import { CheckCircle, Award, Briefcase, BookOpen, User, Star, Landmark } from 'lucide-react';
 import Image from 'next/image';
 import { OtherEuropeSlider } from '@/components/layout/other-europe-slider';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-
-const scholarshipData = {
-  europe: [
-    {
-      title: 'Erasmus+ / Erasmus Mundus Joint Master Degrees (EU)',
-      level: 'Bachelor’s / Master’s / PhD',
-      coverage: [
-        'Full tuition coverage',
-        'Monthly stipend for living costs',
-        'Travel allowance',
-        'Internship/Work opportunities',
-      ],
-      notes: 'Highly competitive scholarships for international students to study in prestigious universities across Europe, fostering academic exchange and a global experience.',
-      icon: <Image src="/flags/eu.svg" alt="EU Flag" width={48} height={48} className="rounded-full" />,
-    },
-    {
-      title: 'DAAD Scholarships (Germany)',
-      level: 'Master’s, PhD, Research Grants',
-      coverage: [
-        'Full coverage of university fees',
-        'Monthly stipend',
-        'Travel & health insurance',
-      ],
-      notes: 'One of the most generous government-funded scholarships in Europe, ideal for students in research, technology, and international relations.',
-      icon: <Image src="/flags/de.svg" alt="Germany Flag" width={48} height={48} className="rounded-full" />,
-    },
-    {
-        title: 'Swiss Government Excellence Scholarships (Switzerland)',
-        level: 'Master’s / PhD / Research',
-        coverage: ['Full tuition coverage', 'Monthly living allowance', 'Travel allowances'],
-        notes: 'Administered by the Swiss government for international students to conduct research or study at Swiss universities, particularly in STEM fields.',
-        icon: <Image src="/flags/ch.svg" alt="Switzerland Flag" width={48} height={48} className="rounded-full" />,
-    },
-    {
-        title: 'Emile Boutmy Scholarship (France)',
-        level: 'Bachelor’s / Master’s',
-        coverage: ['Up to $21,000 per year for tuition and living expenses.'],
-        notes: 'Exclusively for non-EU students applying to Sciences Po in France, aiming to attract top global talent.',
-        icon: <Image src="/flags/fr.svg" alt="France Flag" width={48} height={48} className="rounded-full" />,
-    },
-    {
-        title: 'Eiffel Excellence Scholarship (France)',
-        level: 'Master’s / PhD',
-        coverage: ['Monthly living allowance', 'Covers travel expenses'],
-        notes: 'A prestigious scholarship administered through French universities for top international talent in science, law, engineering, and social sciences.',
-        icon: <Image src="/flags/fr.svg" alt="France Flag" width={48} height={48} className="rounded-full" />,
-    }
-  ],
-  otherEurope: [
-    {
-        country: 'Belgium',
-        icon: <Image src="/flags/be.svg" alt="Belgium Flag" width={32} height={32} />,
-        note: 'Scholarships focus on developing human resources in developing countries for Master\'s and PhD programs.'
-    },
-    {
-        country: 'Sweden',
-        icon: <Image src="/flags/se.svg" alt="Sweden Flag" width={32} height={32} />,
-        note: 'Promotes global sustainability, innovation, and leadership through academic exchange, mainly for Master\'s programs.'
-    },
-    {
-        country: 'Ireland',
-        icon: <Image src="/flags/ie.svg" alt="Ireland Flag" width={32} height={32} />,
-        note: 'Open to all disciplines for non-EU/EEA students pursuing a Master\'s or PhD, enhancing global research partnerships.'
-    },
-    {
-        country: 'Netherlands',
-        icon: <Image src="/flags/nl.svg" alt="Netherlands Flag" width={32} height={32} />,
-        note: 'Includes the Holland Scholarship and Orange Tulip Scholarship, focusing on innovation and strengthening educational ties.'
-    },
-    {
-        country: 'Finland',
-        icon: <Image src="/flags/fi.svg" alt="Finland Flag" width={32} height={32} />,
-        note: 'Targeted at highly talented non-EU/EEA students, primarily for research or doctoral programs in STEM and social sciences.'
-    },
-    {
-        country: 'Denmark',
-        icon: <Image src="/flags/dk.svg" alt="Denmark Flag" width={32} height={32} />,
-        note: 'Aimed at strengthening academic cooperation with developing countries, funding Master’s or PhD studies.'
-    },
-     {
-        country: 'Norway',
-        icon: <Image src="/flags/no.svg" alt="Norway Flag" width={32} height={32} />,
-        note: 'Tuition is often free, but scholarships provide living stipends, especially for students from developing countries.'
-    },
-  ],
-  usa: [
-    {
-      title: 'Fulbright Foreign Student Program',
-      level: 'Master’s / PhD',
-      coverage: ['Full tuition', 'Living stipend', 'Airfare & health insurance'],
-      notes: 'One of the most prestigious U.S. government scholarships designed to promote cultural exchange and graduate-level studies.',
-      icon: <Image src="/flags/us.svg" alt="USA Flag" width={48} height={48} className="rounded-full" />,
-    },
-    {
-      title: 'Knight-Hennessy Scholarships (Stanford)',
-      level: 'Graduate',
-      coverage: ['Full tuition', 'Living stipend', 'Travel allowance'],
-      notes: 'For exceptional international graduate students at Stanford University, covering all expenses and including leadership development programs.',
-      icon: <Star className="h-10 w-10 text-yellow-500" />,
-    },
-     {
-      title: 'University Aid & Endowments (Harvard, Yale, etc.)',
-      level: 'Undergraduate / Graduate',
-      coverage: ['Full funding for tuition, living expenses, and travel.'],
-      notes: 'Top U.S. universities offer generous need-based financial aid to international students based on academic excellence and financial need.',
-      icon: <BookOpen className="h-10 w-10 text-primary" />,
-    },
-     {
-      title: 'Harkness Fellowship',
-      level: 'Postgraduate professional exchange',
-      coverage: ['Covers tuition fees and living costs for the program duration.'],
-      notes: 'Offers international students the chance to engage in research focused on healthcare policy in the U.S.',
-      icon: <Briefcase className="h-10 w-10 text-teal-500" />,
-    },
-  ],
-  canada: [
-    {
-      title: 'Government & University Scholarships',
-      level: 'Varies',
-      coverage: ['Full tuition coverage', 'Living stipends'],
-      notes: 'Canada offers numerous scholarships, particularly for graduate and research programs at top universities like Toronto and UBC.',
-      icon: <Image src="/flags/ca.svg" alt="Canada Flag" width={48} height={48} className="rounded-full" />,
-    },
-  ],
-  australia: [
-    {
-      title: 'Australia Awards Scholarships',
-      level: 'Bachelor’s / Master’s / PhD',
-      coverage: ['Full tuition fees', 'Travel allowance', 'Living stipend', 'Health coverage'],
-      notes: 'Offered by the Australian government to support students from developing countries to study at top Australian universities.',
-       icon: <Image src="/flags/au.svg" alt="Australia Flag" width={48} height={48} className="rounded-full" />,
-    },
-     {
-      title: 'RTP Research Scholarships (e.g., Monash)',
-      level: 'Master’s by Research / PhD',
-      coverage: ['Full tuition fees', 'Research funding', 'Stipend for living costs'],
-      notes: 'The Research Training Program (RTP) is a highly competitive opportunity for research-focused students across Australia.',
-       icon: <Image src="/flags/au.svg" alt="Australia Flag" width={48} height={48} className="rounded-full" />,
-    },
-  ],
-  newZealand: [
-    {
-      title: 'Manaaki New Zealand Scholarships',
-      level: 'Bachelor’s / Master’s / PhD',
-      coverage: ['Full tuition fees', 'Living allowance', 'Travel and insurance'],
-      notes: 'Full-funding scholarships for students from developing countries, focusing on sustainable development.',
-      icon: <Image src="/flags/nz.svg" alt="New Zealand Flag" width={48} height={48} className="rounded-full" />,
-    },
-  ],
-  china: [
-    {
-      title: 'Confucius Institute Scholarship',
-      level: 'All levels + Language Programs',
-      coverage: ['Full tuition, stipends, accommodation, and travel.'],
-      notes: 'An excellent opportunity for students wishing to study Chinese language and culture, offered through Confucius Institutes worldwide.',
-      icon: <Image src="/flags/cn.svg" alt="China Flag" width={48} height={48} className="rounded-full" />,
-    },
-     {
-      title: 'China Scholarship Council (CSC) Scholarships',
-      level: 'Bachelor’s / Master’s / PhD',
-      coverage: ['Full tuition, monthly stipend, accommodation, and medical insurance.'],
-      notes: 'Provides full funding for international students to pursue degrees at Chinese universities, administered by the CSC.',
-      icon: <Image src="/flags/cn.svg" alt="China Flag" width={48} height={48} className="rounded-full" />,
-    },
-  ],
-};
-
+import { scholarshipData, ukScholarships } from '@/lib/data';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 const ScholarshipCard = ({ scholarship }: { scholarship: (typeof scholarshipData.europe)[0] }) => (
   <Card className="flex flex-col overflow-hidden transition-shadow duration-300 hover:shadow-xl">
@@ -309,6 +144,42 @@ export default function ScholarshipsPage() {
             <p className="text-center text-muted-foreground mt-6 max-w-3xl mx-auto">
                 Many European governments and universities offer a wide range of scholarships. At Uni Help Consultants, we specialize in helping students find and apply for these prestigious opportunities.
             </p>
+        </section>
+
+        <section className="mb-16">
+          <h2 className="mb-8 text-3xl font-bold text-center font-headline text-primary">Scholarships in the UK</h2>
+          <div className="flex flex-col md:flex-row gap-8 items-center">
+            <div className="w-full md:w-1/3">
+              <Image src="https://images.unsplash.com/photo-1723126906313-bcbbe80947cc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHx1ayUyMGxhbmRtYXJrfGVufDB8fHx8MTc2Nzc4NTg2N3ww&ixlib=rb-4.1.0&q=80&w=1080" alt="UK Landmark" width={600} height={800} className="rounded-lg shadow-lg" data-ai-hint="uk landmark" />
+            </div>
+            <div className="w-full md:w-2/3">
+              <p className="text-muted-foreground mb-6">The UK offers a wide variety of scholarships for international students, ranging from fully funded scholarships that cover all expenses to partial scholarships that provide assistance with tuition or living costs. These scholarships are offered by the UK government, individual universities, and private organizations.</p>
+              <Accordion type="single" collapsible className="w-full">
+                {ukScholarships.map((scholarship, index) => (
+                  <AccordionItem value={`item-${index}`} key={index}>
+                    <AccordionTrigger className="text-lg font-semibold">{scholarship.title}</AccordionTrigger>
+                    <AccordionContent>
+                      <div className="space-y-4">
+                        <p className="text-muted-foreground">{scholarship.description}</p>
+                        <div>
+                          <h4 className="font-semibold text-primary">Key Examples:</h4>
+                          <ul className="list-disc list-inside text-muted-foreground">
+                            {scholarship.examples.map((example, i) => (
+                              <li key={i}>{example}</li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-primary">Ideal for:</h4>
+                          <p className="text-muted-foreground">{scholarship.idealFor}</p>
+                        </div>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
+          </div>
         </section>
 
         <RegionSection title="Scholarships in the USA" scholarships={scholarshipData.usa} />

@@ -1,4 +1,4 @@
-import type { Service, SuccessStory, BlogPost, TeamMember, FAQ, ServiceCategory, JobOpening, University } from './types';
+import type { Service, SuccessStory, BlogPost, TeamMember, FAQ, ServiceCategory, JobOpening, University, UKScholarship } from './types';
 
 export const services: Service[] = [
   {
@@ -457,4 +457,89 @@ export const universities: University[] = [
   { name: 'University of Illinois Urbana-Champaign' },
   { name: 'University of Washington, Seattle' },
   { name: 'University of California, Santa Barbara' },
+];
+
+export const ukScholarships: UKScholarship[] = [
+  {
+    title: "Fully Funded Scholarships",
+    description: "These scholarships are designed to cover all expenses associated with studying in the UK, making them ideal for students who need complete financial support. They typically cover tuition fees, living expenses, travel costs, and health insurance.",
+    examples: [
+      "Rhodes Scholarship (Oxford University): One of the world’s most prestigious scholarships, providing full tuition, living costs, and travel expenses for international graduate students at Oxford University.",
+      "Gates Cambridge Scholarship (Cambridge University): Offers full tuition coverage, living stipends, and travel allowances for international graduate students at Cambridge University, funded by the Bill & Melinda Gates Foundation.",
+      "Chevening Scholarship (UK Government): A fully funded government scholarship that covers tuition, travel, accommodation, and a living stipend for students pursuing a Master’s degree in the UK."
+    ],
+    idealFor: "Students who are looking for complete financial support during their studies in the UK."
+  },
+  {
+    title: "Partial Scholarships",
+    description: "These scholarships provide partial funding, usually covering tuition fees or living costs, but not both. Partial scholarships are often awarded based on academic merit or financial need.",
+    examples: [
+      "Commonwealth Scholarship (UK Government): This scholarship offers partial funding for students from Commonwealth countries, covering tuition fees and a living allowance. The scholarship is aimed at graduate students studying development-related programs.",
+      "University-Specific Partial Scholarships: Many UK universities, such as University College London (UCL), University of Edinburgh, and King’s College London, offer partial scholarships to international students, which may cover tuition or living expenses."
+    ],
+    idealFor: "Students who may already have some financial resources but need extra assistance to cover part of their study costs."
+  },
+  {
+    title: "Merit-Based Scholarships",
+    description: "Merit-based scholarships are awarded to students who demonstrate academic excellence, exceptional talent, or leadership potential in specific fields of study. These scholarships are often highly competitive and are awarded based on academic records, research work, or extracurricular achievements.",
+    examples: [
+      "Clarendon Scholarship (Oxford University): A prestigious scholarship for graduate students at Oxford University, awarded to students with exceptional academic backgrounds. It covers full tuition and a living stipend.",
+      "Dean’s Excellence Scholarship (University of Westminster): Offered to international students who show outstanding academic achievement in their previous studies and wish to pursue a Master’s degree at the University of Westminster."
+    ],
+    idealFor: "Students who have shown exceptional academic or leadership performance."
+  },
+  {
+    title: "Need-Based Scholarships",
+    description: "Need-based scholarships are designed for students who demonstrate significant financial need. These scholarships help reduce the financial burden on students from low-income backgrounds by covering tuition fees, living expenses, and other educational costs.",
+    examples: [
+      "University of London International Scholarships: These are awarded to students from developing countries who demonstrate financial need, helping them cover tuition fees for distance learning programs.",
+      "The Great Scholarship (UK Universities): A scholarship funded by the UK government, available to students from specific countries who are pursuing postgraduate studies in the UK. It provides a partial contribution towards tuition fees for low-income students."
+    ],
+    idealFor: "Students who need assistance due to financial constraints but still have the academic potential to succeed."
+  },
+  {
+    title: "Research Scholarships",
+    description: "These scholarships are specifically for students who wish to pursue research-based degrees such as a PhD or MPhil. They often include funding for research projects and may also provide support for conferences, publications, and academic materials.",
+    examples: [
+      "Research Excellence Scholarship (University of Birmingham): Offers funding for international PhD students who demonstrate the potential to make a significant contribution to their field of research. It includes full tuition fees and a living stipend.",
+      "UK Research and Innovation (UKRI) Scholarships: Funded by the UK government, these scholarships are awarded to students who undertake innovative research in various fields, with a focus on solving global challenges such as climate change and public health."
+    ],
+    idealFor: "Graduate students pursuing research-focused programs in various fields."
+  },
+  {
+    title: "Sports Scholarships",
+    description: "Sports scholarships are awarded to students who excel in specific sports. These scholarships provide funding for tuition fees and living costs, allowing students to combine their academic studies with elite sports training.",
+    examples: [
+      "Loughborough University Sports Scholarships: Offers scholarships to students who excel in sports, providing full or partial funding for tuition fees, as well as access to professional training and development.",
+      "University of Bath Sports Scholarship: For athletes who demonstrate the potential to compete at a high level in sports. The scholarship covers tuition and provides a stipend for training and competition expenses."
+    ],
+    idealFor: "Students who are talented athletes and want to pursue both their academic and athletic careers simultaneously."
+  },
+  {
+    title: "Country-Specific Scholarships",
+    description: "Several UK scholarships are available based on the student’s home country, often in collaboration with the UK government or university partnerships.",
+    examples: [
+      "Commonwealth Scholarship: For students from Commonwealth countries, this scholarship covers tuition fees and a living stipend.",
+      "Chevening Scholarship: Funded by the UK Government, this scholarship is available for students from Chevening-eligible countries and provides full funding for Master’s programs."
+    ],
+    idealFor: "Students from specific countries looking for funding to pursue graduate studies in the UK."
+  },
+  {
+    title: "Exchange and Partnership Scholarships",
+    description: "These scholarships are typically offered through university exchange programs or partnerships between institutions. Students from partner universities are often eligible for reduced tuition or special funding arrangements for studying in the UK.",
+    examples: [
+      "Erasmus+ (EU Students): Students from EU countries who participate in Erasmus+ exchanges can receive scholarships to study in the UK. This program offers tuition assistance and a living stipend.",
+      "University-Specific Exchange Programs: Many UK universities offer exchange scholarships to students from partner universities around the world. These scholarships may cover tuition fees and provide living stipends."
+    ],
+    idealFor: "Students participating in international exchange programs or partnerships between universities."
+  },
+  {
+    title: "Women in STEM Scholarships",
+    description: "These scholarships aim to encourage female students to pursue STEM (Science, Technology, Engineering, and Mathematics) subjects, which are traditionally underrepresented by women. These scholarships often provide additional funding for research projects and participation in conferences.",
+    examples: [
+      "Women in Engineering Scholarship (University of Cambridge): Designed for female students pursuing engineering programs at Cambridge University, this scholarship provides funding for tuition fees and additional support for research and career development.",
+      "The STEM Women’s Scholarship (University of Oxford): Aimed at female students from underrepresented backgrounds, this scholarship encourages diversity and innovation in STEM fields."
+    ],
+    idealFor: "Female students pursuing STEM degrees and seeking to break barriers in traditionally male-dominated fields."
+  }
 ];
