@@ -1,4 +1,4 @@
-import type { Service, SuccessStory, BlogPost, TeamMember, FAQ, ServiceCategory, JobOpening } from './types';
+import type { Service, SuccessStory, BlogPost, TeamMember, FAQ, ServiceCategory, JobOpening, University } from './types';
 
 export const services: Service[] = [
   {
@@ -273,16 +273,16 @@ export const serviceCategories: ServiceCategory[] = [
       }
     },
     {
-      id: 'diploma',
-      title: 'Diploma Programs',
-      description: 'Fast-track your career with specialized diploma programs.',
-      details: {
-        longDescription: 'One-year diploma programs are an excellent way to gain practical skills and enter the job market quickly. We help you find accredited programs that offer strong career outcomes.',
-        offerings: ['Vocational & Technical Program Selection', 'Co-op & Internship Placement Assistance', 'Direct Pathway to Work Visas', 'Industry-Specific Career Counseling'],
-        steps: ['Career & Skills Assessment', 'Program Research & Application', 'Visa Process for Vocational Studies', 'Job Market Integration'],
-        benefits: ['Quicker entry into the workforce', 'Lower tuition and living costs', 'Practical, hands-on training', 'Strong connections with local employers']
-      }
-    },
+        id: 'diploma',
+        title: 'Diploma Programs',
+        description: 'Fast-track your career with specialized diploma programs.',
+        details: {
+          longDescription: 'One-year diploma programs are an excellent way to gain practical skills and enter the job market quickly. We help you find accredited programs that offer strong career outcomes.',
+          offerings: ['Vocational & Technical Program Selection', 'Co-op & Internship Placement Assistance', 'Direct Pathway to Work Visas', 'Industry-Specific Career Counseling'],
+          steps: ['Career & Skills Assessment', 'Program Research & Application', 'Visa Process for Vocational Studies', 'Job Market Integration'],
+          benefits: ['Quicker entry into the workforce', 'Lower tuition and living costs', 'Practical, hands-on training', 'Strong connections with local employers']
+        }
+      },
     {
       id: 'languages',
       title: 'Language Programs',
@@ -395,4 +395,66 @@ export const jobOpenings: JobOpening[] = [
         type: "Internship",
         description: "<p>This is an exciting opportunity for a creative individual to gain hands-on experience in digital marketing within the education sector. This is a remote internship role.</p><h3>Responsibilities:</h3><ul><li>Assist in creating and managing social media content.</li><li>Support SEO/SEM campaigns.</li><li>Help analyze marketing data and prepare reports.</li></ul>"
     }
+];
+
+export const universities: University[] = [
+  { name: 'Technical University of Munich' },
+  { name: 'LMU Munich' },
+  { name: 'Heidelberg University' },
+  { name: 'Free University of Berlin' },
+  { name: 'Humboldt University of Berlin' },
+  { name: 'RWTH Aachen University' },
+  { name: 'Karlsruhe Institute of Technology' },
+  { name: 'University of Hamburg' },
+  { name: 'University of Cologne' },
+  { name: 'University of Göttingen' },
+  { name: 'University of Stuttgart' },
+  { name: 'University of Tübingen' },
+  { name: 'University of Mannheim' },
+  { name: 'University of Leipzig' },
+  { name: 'University of Freiburg' },
+  { name: 'University of Würzburg' },
+  { name: 'University of Erlangen-Nuremberg' },
+  { name: 'University of Bielefeld' },
+  { name: 'University of Marburg' },
+  { name: 'Université Paris-Saclay' },
+  { name: 'Sorbonne University' },
+  { name: 'University of Strasbourg' },
+  { name: 'University of Bordeaux' },
+  { name: 'University of Lyon' },
+  { name: 'Université Grenoble Alpes' },
+  { name: 'Université Toulouse III - Paul Sabatier' },
+  { name: 'University of Montpellier' },
+  { name: 'University of Lille' },
+  { name: 'Aix-Marseille University' },
+  { name: 'University of Bologna' },
+  { name: 'University of Milan' },
+  { name: 'Sapienza University of Rome' },
+  { name: 'University of Padua' },
+  { name: 'University of Florence' },
+  { name: 'University of Pisa' },
+  { name: 'University of Turin' },
+  { name: 'University of Naples Federico II' },
+  { name: 'Ca\' Foscari University of Venice' },
+  { name: 'University of Siena' },
+  { name: 'University of Oxford' },
+  { name: 'University of Cambridge' },
+  { name: 'University College London' },
+  { name: 'University of Edinburgh' },
+  { name: 'University of Manchester' },
+  { name: 'University of Glasgow' },
+  { name: 'University of Birmingham' },
+  { name: 'University of Bristol' },
+  { name: 'University of Warwick' },
+  { name: 'University of Leeds' },
+  { name: 'University of California, Berkeley' },
+  { name: 'University of California, Los Angeles' },
+  { name: 'University of Michigan, Ann Arbor' },
+  { name: 'University of California, San Diego' },
+  { name: 'University of California, San Francisco' },
+  { name: 'University of Virginia' },
+  { name: 'University of North Carolina at Chapel Hill' },
+  { name: 'University of Illinois Urbana-Champaign' },
+  { name: 'University of Washington' },
+  { name: 'University of California, Santa Barbara' },
 ];

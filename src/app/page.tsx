@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { ArrowRight, BookOpen, GraduationCap, Briefcase, Users, Quote, CheckCircle2, Rocket, Eye, Award } from 'lucide-react';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { services, successStories, blogPosts, serviceCategories } from '@/lib/data';
+import { UniversitySlider } from '@/components/layout/university-slider';
 
 export default function Home() {
   const heroImage = PlaceHolderImages.find(p => p.id === 'hero-students');
@@ -41,6 +42,16 @@ export default function Home() {
                 <Link href="/contact">Get Started</Link>
               </Button>
             </div>
+          </div>
+        </section>
+
+        {/* University Partners Slider */}
+        <section className="py-12 bg-background">
+          <div className="container mx-auto px-4">
+            <h2 className="text-2xl font-bold text-center text-muted-foreground mb-8 font-headline">
+              Our University Partners
+            </h2>
+            <UniversitySlider />
           </div>
         </section>
 

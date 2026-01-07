@@ -62,3 +62,8 @@ export interface JobOpening {
     type: "Full-time" | "Part-time" | "Internship" | "Contract";
     description: string;
 }
+
+export interface University {
+    name: string;
+    logoUrl?: string;
+}
