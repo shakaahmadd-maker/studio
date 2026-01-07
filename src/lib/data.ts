@@ -7,10 +7,32 @@ export const services: Service[] = [
     description: 'World-class education with low or no tuition fees.',
     imageId: 'service-germany',
     details: {
-      longDescription: 'Germany is a top destination for international students, offering a unique combination of excellent universities, vibrant cities, and a high quality of life. With its strong economy and focus on research and innovation, Germany provides unparalleled opportunities for students across various fields.',
-      offerings: ['Public & Private University Applications', 'Blocked Account Assistance', 'German Language Course Guidance', 'Student Visa Support'],
-      steps: ['Profile Assessment', 'University Shortlisting', 'Application Submission', 'Visa Lodging'],
-      benefits: ['Access to tuition-free public universities', 'Post-study work opportunities', 'High standard of living', 'Central European location'],
+      longDescription: 'Germany consistently ranks as a top study destination for international students due to its unique combination of academic excellence and career prospects. At Uni Help Consultants, we have been providing expert guidance since 2014, with a proven track record of successful student placements in Germany. Our highly-trained specialists are committed to assisting you in all aspects of your journey, from personalized university selection to comprehensive visa and pre-departure facilitation. We even offer specialized German language training from A1 to B2 to ensure you have the necessary skills for success.',
+      offerings: [
+        'Profile evaluation and university shortlisting',
+        'SOP/motivation letter guidance',
+        'Assistance with German Blocked Account and health insurance',
+        'Expert support for visa application and mock interviews',
+        'Guidance on travel and pre-departure orientation',
+        'Specialized German language training (A1-B2)',
+        'Assistance in finding suitable accommodation',
+        'Advice for finding part-time jobs and internships'
+      ],
+      steps: [
+        'Profile evaluation & university shortlisting',
+        'Application submission & follow-up',
+        'Blocked Account & Insurance setup',
+        'Visa documentation & interview prep',
+        'Pre-departure briefing & travel arrangements'
+      ],
+      benefits: [
+        'Access to world-class, often tuition-free education',
+        'Globally recognized qualifications enhancing job prospects',
+        '18-month post-study work visa to find a qualified job',
+        'Clear pathway to Permanent Residency (PR) and citizenship',
+        'Right to work part-time while studying (140 full days/year)',
+        'Live in a safe, multicultural country with a high quality of life'
+      ]
     },
   },
   {
