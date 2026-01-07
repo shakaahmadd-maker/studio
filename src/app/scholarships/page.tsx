@@ -71,9 +71,9 @@ const whyChooseUsFeatures = [
 ];
 
 export default function ScholarshipsPage() {
-    const heroImage = PlaceHolderImages.find(p => p.id === 'hero-students');
+    const heroImage = PlaceHolderImages.find(p => p.id === 'scholarship-hero');
   return (
-    <div className="bg-background text-primary">
+    <div className="bg-background text-primary-foreground">
        
         <section className="relative bg-brand-blue text-white shadow-xl py-20 lg:py-32">
             {heroImage && (
@@ -86,10 +86,10 @@ export default function ScholarshipsPage() {
                 />
             )}
             <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h1 className="text-4xl sm:text-6xl font-extrabold mb-4 leading-tight">
+                <h1 className="text-4xl sm:text-6xl font-extrabold mb-4 leading-tight text-white">
                     Unlock Your Future with <span className="text-accent">Uni Help Consultants</span>
                 </h1>
-                <p className="text-xl sm:text-2xl mb-8 font-light max-w-3xl mx-auto">
+                <p className="text-xl sm:text-2xl mb-8 font-light max-w-3xl mx-auto text-white/90">
                     We are dedicated to helping you achieve your academic dreams by guiding you through the process of securing prestigious scholarships for studying abroad.
                 </p>
                 <div className="flex flex-wrap justify-center gap-4">
@@ -102,7 +102,7 @@ export default function ScholarshipsPage() {
             </div>
         </section>
 
-      <div className="container mx-auto px-4 py-16 md:py-24">
+      <div className="container mx-auto px-4 py-16 md:py-24 text-primary">
        
        <section className="py-16 lg:py-24">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
