@@ -2,12 +2,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowRight, BookOpen, GraduationCap, Briefcase, Users, Quote, Award, Eye, Rocket } from 'lucide-react';
+import { ArrowRight, BookOpen, GraduationCap, Briefcase, Users, Quote, CheckCircle2, Rocket, Eye, Award } from 'lucide-react';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { services, successStories, blogPosts, serviceCategories } from '@/lib/data';
 
 export default function Home() {
   const heroImage = PlaceHolderImages.find(p => p.id === 'hero-students');
+  const whyUsImage = PlaceHolderImages.find(p => p.id === 'why-us-feature');
 
   return (
     <div className="flex flex-col min-h-dvh">
@@ -116,49 +117,50 @@ export default function Home() {
         {/* Why Choose Us Section */}
         <section className="py-16 md:py-24 bg-secondary">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold font-headline">Why Choose Us?</h2>
-              <p className="mt-2 text-lg text-muted-foreground">360-degree support for your successful future.</p>
-            </div>
-            <div className="grid md:grid-cols-3 gap-8 text-center">
-                <Card className="border-none shadow-none bg-transparent">
-                    <CardHeader>
-                        <div className="mx-auto bg-background p-4 rounded-full w-fit">
-                            <Rocket className="h-8 w-8 text-primary" />
-                        </div>
-                        <CardTitle className="font-headline mt-4">Expert Guidance</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <p className="text-muted-foreground">Comprehensive support from application start to post-admission.</p>
-                    </CardContent>
-                </Card>
-                <Card className="border-none shadow-none bg-transparent">
-                    <CardHeader>
-                        <div className="mx-auto bg-background p-4 rounded-full w-fit">
-                            <Eye className="h-8 w-8 text-primary" />
-                        </div>
-                        <CardTitle className="font-headline mt-4">Personalized Counseling</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <p className="text-muted-foreground">Tailored advice based on your unique goals, strengths, and aspirations.</p>
-                    </CardContent>
-                </Card>
-                <Card className="border-none shadow-none bg-transparent">
-                    <CardHeader>
-                        <div className="mx-auto bg-background p-4 rounded-full w-fit">
-                            <Award className="h-8 w-8 text-primary" />
-                        </div>
-                        <CardTitle className="font-headline mt-4">Successful Track Record</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <p className="text-muted-foreground">Proven strategies resulting in client acceptance into leading universities worldwide.</p>
-                    </CardContent>
-                </Card>
-            </div>
-            <div className="text-center mt-12">
-              <Button asChild size="lg" variant="outline">
-                <Link href="/why-us">Learn More About Our Approach</Link>
-              </Button>
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <h2 className="text-3xl md:text-4xl font-bold font-headline text-primary">Why Choose Uni Help Consultants?</h2>
+                <p className="mt-4 text-lg text-muted-foreground">We provide 360-degree support for your successful future, ensuring a smooth journey from start to finish.</p>
+                <ul className="mt-8 space-y-4">
+                  <li className="flex items-start">
+                    <CheckCircle2 className="h-6 w-6 text-green-500 mr-4 mt-1 flex-shrink-0" />
+                    <div>
+                      <h3 className="font-semibold text-lg">Expert Guidance</h3>
+                      <p className="text-muted-foreground">Comprehensive support from application start to post-admission.</p>
+                    </div>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle2 className="h-6 w-6 text-green-500 mr-4 mt-1 flex-shrink-0" />
+                    <div>
+                      <h3 className="font-semibold text-lg">Personalized Counseling</h3>
+                      <p className="text-muted-foreground">Tailored advice based on your unique goals, strengths, and aspirations.</p>
+                    </div>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle2 className="h-6 w-6 text-green-500 mr-4 mt-1 flex-shrink-0" />
+                    <div>
+                      <h3 className="font-semibold text-lg">Successful Track Record</h3>
+                      <p className="text-muted-foreground">Proven strategies resulting in client acceptance into leading universities worldwide.</p>
+                    </div>
+                  </li>
+                </ul>
+                <div className="mt-8">
+                    <Button asChild size="lg" variant="outline" className="bg-background">
+                        <Link href="/why-us">Learn More About Our Approach</Link>
+                    </Button>
+                </div>
+              </div>
+              <div className="relative h-80 lg:h-full w-full rounded-lg overflow-hidden shadow-xl">
+                 {whyUsImage && (
+                    <Image
+                        src={whyUsImage.imageUrl}
+                        alt={whyUsImage.description}
+                        fill
+                        className="object-cover"
+                        data-ai-hint={whyUsImage.imageHint}
+                    />
+                 )}
+              </div>
             </div>
           </div>
         </section>

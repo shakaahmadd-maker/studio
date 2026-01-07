@@ -7,6 +7,12 @@
       "imageHint": "graduating students"
     },
     {
+      "id": "why-us-feature",
+      "description": "A counselor helping a student",
+      "imageUrl": "https://images.unsplash.com/photo-1543269865-cbf427effbad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxzdHVkZW50JTIwY291bnNlbGluZ3xlbnwwfHx8fDE3Njc4NjI0MDN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "student counseling"
+    },
+    {
       "id": "service-germany",
       "description": "Brandenburg Gate in Berlin",
       "imageUrl": "https://images.unsplash.com/photo-1679254205082-ba0b1d469ac4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxnZXJtYW55JTIwbGFuZG1hcmt8ZW58MHx8fHwxNzY3Nzg1ODY3fDA&ixlib=rb-4.1.0&q=80&w=1080",
@@ -87,7 +93,7 @@
     {
       "id": "visa-2",
       "description": "Sample visa document",
-      "imageUrl": "https://picsum.photos/seed/visa2/400/250",
+      "imageUrl": "https://images.unsplash.com/photo-1721138942121-a26751b520b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHx2aXNhJTIwZG9jdW1lbnR8ZW58MHx8fHwxNzY3Nzk0MjExfDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "visa document"
     },
     {
