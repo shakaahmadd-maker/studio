@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowRight, BookOpen, GraduationCap, Briefcase, Users, Quote } from 'lucide-react';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { services, successStories, blogPosts } from '@/lib/data';
+import { services, successStories, blogPosts, serviceCategories } from '@/lib/data';
 
 export default function Home() {
   const heroImage = PlaceHolderImages.find(p => p.id === 'hero-students');
@@ -43,11 +43,11 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Services Preview Section */}
+        {/* Study Abroad Services Preview Section */}
         <section id="services" className="py-16 md:py-24 bg-card">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold font-headline">Our Services</h2>
+              <h2 className="text-3xl md:text-4xl font-bold font-headline">Study Abroad Destinations</h2>
               <p className="mt-2 text-lg text-muted-foreground">Tailored guidance for every step of your academic journey.</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -77,8 +77,38 @@ export default function Home() {
             </div>
              <div className="text-center mt-12">
               <Button asChild size="lg">
-                <Link href="/services">View All Services</Link>
+                <Link href="/services">View All Destinations</Link>
               </Button>
+            </div>
+          </div>
+        </section>
+
+        {/* Service Categories Section */}
+        <section className="py-16 md:py-24 bg-background">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold font-headline">Services For Everyone</h2>
+              <p className="mt-2 text-lg text-muted-foreground">No matter your academic level, we have a tailored solution for you.</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {serviceCategories.map((category) => (
+                <Card key={category.id} className="flex flex-col text-center hover:shadow-lg transition-shadow duration-300">
+                  <CardHeader>
+                    <div className="mx-auto bg-secondary p-4 rounded-full w-fit">
+                      <GraduationCap className="h-8 w-8 text-primary" />
+                    </div>
+                    <CardTitle className="font-headline mt-4">{category.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent className="flex-grow">
+                    <p className="text-muted-foreground">{category.description}</p>
+                  </CardContent>
+                  <CardFooter className="justify-center">
+                    <Button asChild variant="link">
+                      <Link href={`/service-category/${category.id}`}>Learn More <ArrowRight className="ml-2 h-4 w-4" /></Link>
+                    </Button>
+                  </CardFooter>
+                </Card>
+              ))}
             </div>
           </div>
         </section>

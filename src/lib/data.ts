@@ -1,4 +1,4 @@
-import type { Service, SuccessStory, BlogPost, TeamMember, FAQ } from './types';
+import type { Service, SuccessStory, BlogPost, TeamMember, FAQ, ServiceCategory } from './types';
 
 export const services: Service[] = [
   {
@@ -7,7 +7,86 @@ export const services: Service[] = [
     description: 'World-class education with low or no tuition fees.',
     imageId: 'service-germany',
     details: {
-      longDescription: 'Germany consistently ranks as a top study destination for international students due to its unique combination of academic excellence and career prospects. At Uni Help Consultants, we have been providing expert guidance since 2014, with a proven track record of successful student placements in Germany. Our highly-trained specialists are committed to assisting you in all aspects of your journey, from personalized university selection to comprehensive visa and pre-departure facilitation. We even offer specialized German language training from A1 to B2 to ensure you have the necessary skills for success.',
+      longDescription: `🇩🇪 Your Gateway to German Excellence: Study in Germany with Uni Help Consultants
+
+Planning your future starts with choosing the right study destination, and Germany, a land of innovation and academic distinction, offers unparalleled opportunities. At Uni Help Consultants, we are dedicated to making your dream of studying in Germany a smooth, successful, and enriching reality.
+
+### Why Choose Uni Help Consultants?
+
+**A Decade of Expertise:** We have been in the market since 2014, providing expert guidance and a proven track record of successful student placements in Germany. Our experience translates directly into your success.
+
+**Dedicated & Excellent Team:** Our team consists of highly-trained specialists committed to assisting you in all aspects of your study in Germany journey. From initial counseling to post-arrival support, we offer personalized, end-to-end service.
+
+**Specialized German Language Training:** We help you prepare for the language requirements! Our team includes experts who specialize in teaching German from A1 to B2 level, ensuring you have the necessary language skills for university applications and integration into German life.
+
+**Personalized University Selection:** We understand that every profile is unique. We provide in-depth counseling to help you choose the right university and program that perfectly aligns with your academic background, career goals, and personal aspirations.
+
+**Comprehensive Visa & Pre-Departure Facilitation:** We take the stress out of the complex visa process, assisting you with:
+- Visa appointment booking.
+- Thorough document preparation and verification.
+- Interview coaching for the German Embassy/Consulate.
+- Blocked Account and Health Insurance support (essential for the visa).
+- Full pre-departure briefing and support to ensure a smooth journey and arrival.
+
+### 📚 Our A-to-Z Services for Studying in Germany
+
+Our full suite of services is designed to guide you from your first thought of studying abroad to settling into your new life in Germany:
+
+| Stage                  | Service Detail                                                                                                                  |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| **Admission**          | Profile evaluation, shortlisting universities, application submission, SOP/motivation letter guidance, and follow-up with universities. |
+| **Blocked Account & Insurance** | Assistance in setting up the mandatory German Blocked Account and securing approved health insurance coverage.         |
+| **Counseling**         | Personalized one-on-one sessions for course and university selection based on your field of study, test scores, and career vision. |
+| **Documentation**      | Thorough review, compilation, and preparation of all necessary academic and personal documents for university and visa applications. |
+| **Embassy & Visa**     | Expert support with visa application form filling, appointment scheduling, and comprehensive mock interview preparation.          |
+| **Flight & Pre-Departure** | Guidance on travel arrangements, required documentation for travel, and a detailed pre-departure orientation.               |
+| **German Language Training** | Specialized teaching for A1, A2, B1, and B2 German levels to meet university entry and visa requirements.                   |
+| **Housing/Accommodation** | Assistance in finding suitable and safe accommodation (student dormitories, shared flats, etc.) near your university.        |
+| **Internship & Job Guidance** | Advice and resources for finding part-time student jobs and professional internships (including post-study job search).    |
+| **Zealous Support**    | Continuous support and connection with our team until you are successfully settled and studying in Germany!                       |
+
+### 🌟 The Benefits and Outcomes of Studying in Germany
+
+Germany consistently ranks as a top study destination for international students due to its unique combination of academic excellence and career prospects.
+
+#### Top Benefits of a German Degree
+
+- **World-Class, Often Tuition-Free Education:** Many public universities offer programs with little to no tuition fees for both domestic and international students. You generally only pay a small semester contribution (€100-€350 per semester).
+- **Globally Recognized Qualifications:** German universities are renowned for their high-quality, research-intensive, and practical-oriented education, especially in Engineering, IT, and Business. A German degree is a powerful asset in the global job market.
+- **Strong, Stable Economy:** As Europe's largest economy, Germany offers a booming job market with high demand for skilled, international graduates.
+- **Multicultural Environment and High Quality of Life:** Live in a safe, modern, and diverse country with excellent infrastructure, transport, and a rich cultural scene.
+
+### Key Outcomes and Career Pathways
+
+#### 1. Working While Studying
+
+- **Working Hours:** Non-EU/EEA international students are generally allowed to work 140 full days or 280 half days per year. A 'half day' is a working day of up to 4 hours.
+- **Earning Potential:** The national minimum wage in Germany is €12.82 per hour (as of Jan 2025). Depending on your job type (e.g., student assistant/Werkstudent in your field vs. a 'Mini-Job'), you can earn more, often up to €15+ per hour.
+- **Note:** For a Minijob (earning up to €538/month), you are generally tax-exempt. Earning more may require paying taxes and social security contributions.
+
+#### 2. Post-Study Work (PSW) Opportunities
+
+- **Job-Seeking Residence Permit (PSW Visa):** Upon successful graduation from a German university, you can apply for an 18-month residence permit to search for a qualified job that is related to your degree.
+- **Work Rights:** During this 18-month period, you are permitted to take up any form of employment to support yourself while you search for a professional position.
+
+#### 3. Pathway to Permanent Residency (PR) and Citizenship
+
+Securing a qualified job after your studies opens up clear avenues for long-term settlement:
+
+- **Switch to a Work Permit or EU Blue Card:** Once you secure a qualified job, your residence permit can be converted into a standard work permit or the highly sought-after EU Blue Card (for highly-skilled workers meeting a certain salary threshold).
+- **Permanent Residency (Settlement Permit):**
+  - As an EU Blue Card holder, you can apply for PR after just 21 months (with B1 German language skills) or 33 months (with A1 German language skills).
+  - As a general Work Permit holder, you can typically apply for PR after 4 years of qualified employment.
+- **German Citizenship/Passport:** Under the new naturalization laws (as of June 2024), you can apply for German citizenship after legally residing in Germany for a minimum of five years (down from eight). This period can be shortened to three years for those with outstanding integration achievements (e.g., exceptional German language skills and professional performance).
+
+| Requirement                  | Time Frame                                                                                          |
+| ---------------------------- | --------------------------------------------------------------------------------------------------- |
+| **Post-Study Work Search**   | 18 Months                                                                                           |
+| **Permanent Residency (PR)** | 21-48 Months after securing qualified employment (depending on visa type and language skills).      |
+| **German Citizenship**       | Minimum 3 to 5 years of legal residence in Germany (excluding study period) after securing a long-term residency permit. |
+
+This clear pathway to PR and citizenship underscores the exceptional long-term career and life prospects Germany offers to international graduates.
+`,
       offerings: [
         'Profile evaluation and university shortlisting',
         'SOP/motivation letter guidance',
@@ -120,6 +199,64 @@ export const services: Service[] = [
     },
   },
 ];
+
+export const serviceCategories: ServiceCategory[] = [
+    {
+      id: 'bachelor',
+      title: 'Bachelor Students',
+      description: 'Comprehensive guidance for your undergraduate journey abroad.',
+      details: {
+        longDescription: 'Starting your undergraduate degree abroad is a life-changing decision. We provide end-to-end support to ensure you find the right university and program to kickstart your academic and professional career.',
+        offerings: ['University & Program Shortlisting', 'Application & Essay Guidance', 'Standardized Test Preparation (SAT, ACT)', 'Student Visa Support'],
+        steps: ['Profile Assessment', 'Application Strategy', 'Document Preparation', 'Pre-Departure Orientation'],
+        benefits: ['Build a strong academic foundation', 'Gain international exposure early', 'Develop cross-cultural communication skills', 'Enhance future career prospects']
+      }
+    },
+    {
+      id: 'master',
+      title: 'Master Students',
+      description: 'Expert advice to advance your education and career with a Master\'s degree.',
+      details: {
+        longDescription: 'A Master\'s degree from a top international university can significantly boost your career. We specialize in helping you navigate the competitive application process for graduate programs.',
+        offerings: ['Advanced Program & University Matching', 'Statement of Purpose (SOP) & Resume Building', 'GRE/GMAT Preparation Strategy', 'Scholarship & Funding Assistance'],
+        steps: ['Career Goal Alignment', 'Application Timeline Management', 'Visa & Financial Documentation', 'Networking & Alumni Connections'],
+        benefits: ['Specialize in your field of interest', 'Access to advanced research opportunities', 'Higher earning potential', 'Global professional network']
+      }
+    },
+    {
+      id: 'phd',
+      title: 'PhD Students',
+      description: 'Specialized support for aspiring researchers and academics.',
+      details: {
+        longDescription: 'Pursuing a PhD is a significant commitment. Our expert counselors, many with research backgrounds, guide you in finding the right supervisor and research environment to match your academic ambitions.',
+        offerings: ['Finding Potential Supervisors', 'Crafting a Compelling Research Proposal', 'PhD Funding & Stipend Applications', 'Interview Preparation for Academic Positions'],
+        steps: ['Research Interest Evaluation', 'Supervisor Outreach', 'Application Package Review', 'Post-acceptance Formalities'],
+        benefits: ['Contribute to cutting-edge research', 'Become an expert in your field', 'Opportunities for academic careers', 'Full funding and stipends often available']
+      }
+    },
+    {
+      id: 'diploma',
+      title: '1-Year Diplomas',
+      description: 'Fast-track your career with specialized diploma programs.',
+      details: {
+        longDescription: 'One-year diploma programs are an excellent way to gain practical skills and enter the job market quickly. We help you find accredited programs that offer strong career outcomes.',
+        offerings: ['Vocational & Technical Program Selection', 'Co-op & Internship Placement Assistance', 'Direct Pathway to Work Visas', 'Industry-Specific Career Counseling'],
+        steps: ['Career & Skills Assessment', 'Program Research & Application', 'Visa Process for Vocational Studies', 'Job Market Integration'],
+        benefits: ['Quicker entry into the workforce', 'Lower tuition and living costs', 'Practical, hands-on training', 'Strong connections with local employers']
+      }
+    },
+    {
+      id: 'language',
+      title: 'Language Classes',
+      description: 'Master a new language to unlock your study and career goals.',
+      details: {
+        longDescription: 'Language proficiency is often the key to unlocking educational opportunities. We offer guidance on and enrollment in top language schools abroad, including pathway programs that lead to university admission.',
+        offerings: ['German, French, and English Language School Selection', 'Pathway Program Guidance', 'Language Test Preparation (IELTS, TOEFL, TestDaF)', 'Student Visitor & Short-term Study Visas'],
+        steps: ['Language Goal Assessment', 'School & Program Selection', 'Enrollment & Visa Application', 'Cultural Immersion Planning'],
+        benefits: ['Achieve fluency through immersion', 'Meet university language requirements', 'Enhance your global communication skills', 'Experience a new culture firsthand']
+      }
+    }
+  ];
 
 
 export const successStories: SuccessStory[] = [

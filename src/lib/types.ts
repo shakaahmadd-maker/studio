@@ -11,6 +11,18 @@ export interface Service {
   };
 }
 
+export interface ServiceCategory {
+  id: string;
+  title: string;
+  description: string;
+  details: {
+    longDescription: string;
+    offerings: string[];
+    steps: string[];
+    benefits: string[];
+  };
+}
+
 export interface SuccessStory {
   id: string;
   name: string;
