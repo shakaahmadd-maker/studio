@@ -5,7 +5,7 @@ import { CheckCircle, Award, Briefcase, BookOpen, User, Star, Landmark } from 'l
 import Image from 'next/image';
 import { OtherEuropeSlider } from '@/components/layout/other-europe-slider';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { scholarshipData, ukScholarships } from '@/lib/data.tsx';
+import { scholarshipData } from '@/lib/data.tsx';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 const ScholarshipCard = ({ scholarship }: { scholarship: (typeof scholarshipData.europe)[0] }) => (
@@ -144,42 +144,6 @@ export default function ScholarshipsPage() {
             <p className="text-center text-muted-foreground mt-6 max-w-3xl mx-auto">
                 Many European governments and universities offer a wide range of scholarships. At Uni Help Consultants, we specialize in helping students find and apply for these prestigious opportunities.
             </p>
-        </section>
-
-        <section className="mb-16">
-          <h2 className="mb-8 text-3xl font-bold text-center font-headline text-primary">Scholarships in the UK</h2>
-          <div className="flex flex-col md:flex-row gap-8 items-center">
-            <div className="w-full md:w-1/3">
-              <Image src="https://images.unsplash.com/photo-1723126906313-bcbbe80947cc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHx1ayUyMGxhbmRtYXJrfGVufDB8fHx8MTc2Nzc4NTg2N3ww&ixlib=rb-4.1.0&q=80&w=1080" alt="UK Landmark" width={600} height={800} className="rounded-lg shadow-lg" data-ai-hint="uk landmark" />
-            </div>
-            <div className="w-full md:w-2/3">
-              <p className="text-muted-foreground mb-6">The UK offers a wide variety of scholarships for international students, ranging from fully funded scholarships that cover all expenses to partial scholarships that provide assistance with tuition or living costs. These scholarships are offered by the UK government, individual universities, and private organizations.</p>
-              <Accordion type="single" collapsible className="w-full">
-                {ukScholarships.map((scholarship, index) => (
-                  <AccordionItem value={`item-${index}`} key={index}>
-                    <AccordionTrigger className="text-lg font-semibold">{scholarship.title}</AccordionTrigger>
-                    <AccordionContent>
-                      <div className="space-y-4">
-                        <p className="text-muted-foreground">{scholarship.description}</p>
-                        <div>
-                          <h4 className="font-semibold text-primary">Key Examples:</h4>
-                          <ul className="list-disc list-inside text-muted-foreground">
-                            {scholarship.examples.map((example, i) => (
-                              <li key={i}>{example}</li>
-                            ))}
-                          </ul>
-                        </div>
-                        <div>
-                          <h4 className="font-semibold text-primary">Ideal for:</h4>
-                          <p className="text-muted-foreground">{scholarship.idealFor}</p>
-                        </div>
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
-            </div>
-          </div>
         </section>
 
         <RegionSection title="Scholarships in the USA" scholarships={scholarshipData.usa} />
