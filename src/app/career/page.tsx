@@ -1,6 +1,6 @@
 import { CareerForm } from "@/components/forms/career-form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { jobOpenings } from "@/lib/data";
+import { jobOpenings } from "@/lib/data.tsx";
 import { MapPin, Briefcase } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 

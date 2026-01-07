@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { services } from "@/lib/data";
+import { services } from "@/lib/data.tsx";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle2 } from "lucide-react";

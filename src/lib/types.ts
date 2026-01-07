@@ -68,6 +68,14 @@ export interface University {
     logoUrl?: string;
 }
 
+export interface Scholarship {
+    title: string;
+    level: string;
+    coverage: string[];
+    notes: string;
+    icon: JSX.Element;
+}
+
 export interface OtherEuropeScholarship {
     country: string;
     icon: JSX.Element;

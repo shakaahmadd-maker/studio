@@ -1,6 +1,6 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { BookOpen, Star, FileText, Briefcase, Users, Handshake, HelpCircle } from "lucide-react";
-import { team } from "@/lib/data";
+import { team } from "@/lib/data.tsx";
 
 const stats = [
     { title: "Services", value: "8", icon: BookOpen },

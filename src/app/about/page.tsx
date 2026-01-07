@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { team } from "@/lib/data";
+import { team } from "@/lib/data.tsx";
 import { PlaceHolderImages as placeholderImages } from "@/lib/placeholder-images";
 import { Award, Eye, Rocket } from "lucide-react";
 

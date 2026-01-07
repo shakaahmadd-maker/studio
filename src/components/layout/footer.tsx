@@ -1,7 +1,7 @@
 
 import Link from "next/link";
 import { GraduationCap, Linkedin, Twitter, Facebook } from "lucide-react";
-import { services, serviceCategories } from "@/lib/data";
+import { services, serviceCategories } from "@/lib/data.tsx";
 
 const socialLinks = [
   { name: "Facebook", icon: Facebook, href: "#" },

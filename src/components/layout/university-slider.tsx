@@ -8,7 +8,7 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
-import { universities } from "@/lib/data";
+import { universities } from "@/lib/data.tsx";
 import { Building2 } from "lucide-react";
 import Image from "next/image";
 

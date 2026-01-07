@@ -5,7 +5,7 @@ import { CheckCircle, Award, Briefcase, BookOpen, User, Star, Landmark } from 'l
 import Image from 'next/image';
 import { OtherEuropeSlider } from '@/components/layout/other-europe-slider';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { scholarshipData, ukScholarships } from '@/lib/data';
+import { scholarshipData, ukScholarships } from '@/lib/data.tsx';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 const ScholarshipCard = ({ scholarship }: { scholarship: (typeof scholarshipData.europe)[0] }) => (

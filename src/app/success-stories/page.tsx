@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { successStories } from "@/lib/data";
+import { successStories } from "@/lib/data.tsx";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";

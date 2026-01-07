@@ -15,7 +15,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
-import { services, serviceCategories } from "@/lib/data";
+import { services, serviceCategories } from "@/lib/data.tsx";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { ConsultationForm } from "../forms/consultation-form";
 
@@ -305,7 +305,3 @@ export function Header() {
     </header>
   );
 }
-
-    
-
-    

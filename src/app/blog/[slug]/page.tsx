@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { blogPosts } from "@/lib/data";
+import { blogPosts } from "@/lib/data.tsx";
 import { PlaceHolderImages as placeholderImages } from "@/lib/placeholder-images";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Calendar, User } from "lucide-react";

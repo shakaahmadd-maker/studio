@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowRight, BookOpen, GraduationCap, Briefcase, Users, Quote, CheckCircle2, Rocket, Eye, Award } from 'lucide-react';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { services, successStories, blogPosts, serviceCategories } from '@/lib/data';
+import { services, successStories, blogPosts, serviceCategories } from '@/lib/data.tsx';
 import { UniversitySlider } from '@/components/layout/university-slider';
 
 export default function Home() {

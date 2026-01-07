@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { blogPosts } from "@/lib/data";
+import { blogPosts } from "@/lib/data.tsx";
 import { PlaceHolderImages as placeholderImages } from "@/lib/placeholder-images";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";

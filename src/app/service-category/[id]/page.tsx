@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { serviceCategories, faqs, successStories } from "@/lib/data";
+import { serviceCategories, faqs, successStories } from "@/lib/data.tsx";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, CheckCircle2, Quote } from "lucide-react";
