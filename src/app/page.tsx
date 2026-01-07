@@ -45,16 +45,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* University Partners Slider */}
-        <section className="py-12 bg-background">
-          <div className="container mx-auto px-4">
-            <h2 className="text-2xl font-bold text-center text-muted-foreground mb-8 font-headline">
-              Our University Partners
-            </h2>
-            <UniversitySlider />
-          </div>
-        </section>
-
         {/* Study Abroad Services Preview Section */}
         <section id="services" className="py-16 md:py-24 bg-card">
           <div className="container mx-auto px-4">
@@ -173,6 +163,16 @@ export default function Home() {
                  )}
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* University Partners Slider */}
+        <section className="py-12 bg-background">
+          <div className="container mx-auto px-4">
+            <h2 className="text-2xl font-bold text-center text-muted-foreground mb-8 font-headline">
+              Our University Partners
+            </h2>
+            <UniversitySlider />
           </div>
         </section>
 
