@@ -54,3 +54,10 @@ export interface FAQ {
     answer: string;
     category: string;
 }
+
+export interface JobOpening {
+    title: string;
+    location: string;
+    type: "Full-time" | "Part-time" | "Internship" | "Contract";
+    description: string;
+}

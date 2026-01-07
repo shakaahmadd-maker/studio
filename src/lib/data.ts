@@ -1,4 +1,4 @@
-import type { Service, SuccessStory, BlogPost, TeamMember, FAQ, ServiceCategory } from './types';
+import type { Service, SuccessStory, BlogPost, TeamMember, FAQ, ServiceCategory, JobOpening } from './types';
 
 export const services: Service[] = [
   {
@@ -332,4 +332,25 @@ export const faqs: FAQ[] = [
     { id: '3', question: 'How much does your service cost?', answer: 'Our initial consultation is completely free. Service fees vary depending on the country and the extent of services required. We offer transparent pricing with no hidden costs.', category: 'general' },
     { id: '4', question: 'Can you help with scholarships?', answer: 'Absolutely. We actively help students find and apply for a wide range of scholarships, including university-specific, government-funded, and private awards to make education more affordable.', category: 'general' },
     { id: '5', question: 'Why are there no tuition fees in German public universities?', answer: 'In Germany, education is considered a public good. Most public universities are funded by the state, so they do not charge tuition fees for both domestic and international students for most Bachelor\'s and Master\'s programs.', category: 'germany' },
+];
+
+export const jobOpenings: JobOpening[] = [
+    {
+        title: "Senior Education Counselor",
+        location: "Remote",
+        type: "Full-time",
+        description: "<p>We are seeking an experienced Senior Education Counselor to join our remote team. The ideal candidate will have a passion for helping students achieve their dreams of studying abroad and a deep understanding of international education systems.</p><h3>Responsibilities:</h3><ul><li>Provide expert counseling to students on university and course selection.</li><li>Guide students through the entire application and admission process.</li><li>Stay up-to-date with changes in visa policies and admission requirements.</li></ul>"
+    },
+    {
+        title: "Visa Processing Officer",
+        location: "On-site",
+        type: "Full-time",
+        description: "<p>We are looking for a meticulous and organized Visa Processing Officer to handle all aspects of student visa applications. This is an on-site position requiring great attention to detail.</p><h3>Responsibilities:</h3><ul><li>Manage the end-to-end visa application process for multiple countries.</li><li>Ensure all documentation is accurate and complete.</li><li>Prepare students for visa interviews.</li></ul>"
+    },
+    {
+        title: "Digital Marketing Intern",
+        location: "Remote",
+        type: "Internship",
+        description: "<p>This is an exciting opportunity for a creative individual to gain hands-on experience in digital marketing within the education sector. This is a remote internship role.</p><h3>Responsibilities:</h3><ul><li>Assist in creating and managing social media content.</li><li>Support SEO/SEM campaigns.</li><li>Help analyze marketing data and prepare reports.</li></ul>"
+    }
 ];

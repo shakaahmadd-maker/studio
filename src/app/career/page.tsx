@@ -1,24 +1,8 @@
 import { CareerForm } from "@/components/forms/career-form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { jobOpenings } from "@/lib/data";
 import { MapPin, Briefcase } from "lucide-react";
-
-const jobOpenings = [
-    {
-        title: "Senior Education Counselor",
-        location: "Remote",
-        type: "Full-time"
-    },
-    {
-        title: "Visa Processing Officer",
-        location: "On-site",
-        type: "Full-time"
-    },
-    {
-        title: "Digital Marketing Intern",
-        location: "Remote",
-        type: "Internship"
-    }
-];
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export default function CareerPage() {
   return (
@@ -36,19 +20,24 @@ export default function CareerPage() {
         <div className="grid lg:grid-cols-5 gap-12">
             <main className="lg:col-span-3">
                 <h2 className="text-3xl font-bold font-headline mb-8">Current Openings</h2>
-                <div className="space-y-6">
+                <Accordion type="single" collapsible className="w-full space-y-4">
                     {jobOpenings.map(job => (
-                        <Card key={job.title}>
-                            <CardHeader>
-                                <CardTitle className="font-headline">{job.title}</CardTitle>
-                                <CardDescription className="flex items-center gap-4 pt-2">
-                                    <span className="flex items-center gap-1"><MapPin className="h-4 w-4" /> {job.location}</span>
-                                    <span className="flex items-center gap-1"><Briefcase className="h-4 w-4" /> {job.type}</span>
-                                </CardDescription>
-                            </CardHeader>
-                        </Card>
+                       <AccordionItem value={job.title} key={job.title} className="border rounded-lg">
+                            <AccordionTrigger className="p-6 hover:no-underline">
+                                <div className="text-left">
+                                    <h3 className="font-headline text-xl">{job.title}</h3>
+                                    <div className="flex items-center gap-4 pt-2 text-sm text-muted-foreground">
+                                        <span className="flex items-center gap-1"><MapPin className="h-4 w-4" /> {job.location}</span>
+                                        <span className="flex items-center gap-1"><Briefcase className="h-4 w-4" /> {job.type}</span>
+                                    </div>
+                                </div>
+                            </AccordionTrigger>
+                            <AccordionContent className="p-6 pt-0">
+                                <div className="prose prose-sm dark:prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: job.description }} />
+                            </AccordionContent>
+                        </AccordionItem>
                     ))}
-                </div>
+                </Accordion>
             </main>
             <aside className="lg:col-span-2">
                 <Card className="sticky top-24">
