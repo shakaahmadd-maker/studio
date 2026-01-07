@@ -1,6 +1,7 @@
 
 import Link from "next/link";
 import { GraduationCap, Linkedin, Twitter, Facebook } from "lucide-react";
+import { services, serviceCategories } from "@/lib/data";
 
 const socialLinks = [
   { name: "Facebook", icon: Facebook, href: "#" },
@@ -8,22 +9,11 @@ const socialLinks = [
   { name: "LinkedIn", icon: Linkedin, href: "#" },
 ];
 
-const quickLinks = [
-  { href: "/services", label: "Services" },
-  { href: "/about", label: "About Us" },
-  { href: "/why-us", label: "Why Choose Us" },
-  { href: "/scholarships", label: "Scholarships" },
-  { href: "/blog", label: "Blog" },
-  { href: "/contact", label: "Contact" },
-  { href: "/career", label: "Careers" },
-  { href: "/referral-program", label: "Referral Program" },
-];
-
 export function Footer() {
   return (
     <footer className="bg-secondary text-secondary-foreground border-t">
       <div className="container py-12 px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           <div className="md:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4">
               <GraduationCap className="h-8 w-8 text-primary" />
@@ -51,12 +41,25 @@ export function Footer() {
           </div>
 
           <div className="md:col-span-1">
-            <h3 className="font-semibold font-headline tracking-wider uppercase mb-4">Quick Links</h3>
+            <h3 className="font-semibold font-headline tracking-wider uppercase mb-4">Programmes</h3>
             <ul className="space-y-2">
-              {quickLinks.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                    {link.label}
+              {serviceCategories.map((category) => (
+                <li key={category.id}>
+                  <Link href={`/service-category/${category.id}`} className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                    {category.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          
+          <div className="md:col-span-1">
+            <h3 className="font-semibold font-headline tracking-wider uppercase mb-4">Study Abroad</h3>
+            <ul className="space-y-2">
+              {services.map((service) => (
+                <li key={service.id}>
+                  <Link href={`/services/${service.id}`} className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                    {service.title}
                   </Link>
                 </li>
               ))}
@@ -80,5 +83,3 @@ export function Footer() {
     </footer>
   );
 }
-
-    
