@@ -5,7 +5,7 @@ import { Footer } from '@/components/layout/footer';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: 'EduVision Consulting',
+  title: 'Uni Help Consultants',
   description: 'Helping Students Achieve Their Dreams of Studying Abroad.',
   icons: {
     icon: '/favicon.ico',

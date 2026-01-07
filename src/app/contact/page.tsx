@@ -24,8 +24,8 @@ export default function ContactPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">For general inquiries, please email us at:</p>
-                <a href="mailto:contact@eduvision.com" className="text-primary font-semibold hover:underline">
-                  contact@eduvision.com
+                <a href="mailto:contact@unihelpconsultants.com" className="text-primary font-semibold hover:underline">
+                  contact@unihelpconsultants.com
                 </a>
               </CardContent>
             </Card>
@@ -36,8 +36,8 @@ export default function ContactPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">Speak to one of our counselors directly:</p>
-                <a href="tel:+1234567890" className="text-primary font-semibold hover:underline">
-                  +1 (234) 567-890
+                <a href="tel:+923417548178" className="text-primary font-semibold hover:underline">
+                  +92 341 7548178
                 </a>
               </CardContent>
             </Card>

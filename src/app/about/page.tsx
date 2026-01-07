@@ -33,7 +33,7 @@ export default function AboutUsPage() {
       <div className="container mx-auto px-4 py-16 md:py-24">
         {/* Header Section */}
         <header className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-extrabold font-headline text-primary">About EduVision Consulting</h1>
+          <h1 className="text-4xl md:text-5xl font-extrabold font-headline text-primary">About Uni Help Consultants</h1>
           <p className="mt-4 max-w-3xl mx-auto text-lg text-muted-foreground">
             We are a dedicated team of education enthusiasts committed to helping students navigate their path to international education.
           </p>

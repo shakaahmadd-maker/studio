@@ -127,7 +127,7 @@ export const successStories: SuccessStory[] = [
     id: '1',
     name: 'Anjali Sharma',
     university: 'University of Toronto, Canada',
-    story: 'EduVision made my dream of studying computer science in Canada a reality. Their guidance was invaluable!',
+    story: 'Uni Help Consultants made my dream of studying computer science in Canada a reality. Their guidance was invaluable!',
     imageId: 'success-1',
   },
   {
@@ -141,7 +141,7 @@ export const successStories: SuccessStory[] = [
     id: '3',
     name: 'Priya Singh',
     university: 'University of Melbourne, Australia',
-    story: 'From shortlisting universities to my visa interview, EduVision was there for me every step of the way.',
+    story: 'From shortlisting universities to my visa interview, Uni Help Consultants was there for me every step of the way.',
     imageId: 'success-3',
   },
   {

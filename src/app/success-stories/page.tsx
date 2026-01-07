@@ -29,7 +29,7 @@ const SocialShare = ({ storyUrl, text }: { storyUrl: string, text: string }) => 
 }
 
 export default function SuccessStoriesPage() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://eduvision.com";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://unihelpconsultants.com";
 
   return (
     <div className="bg-secondary">
@@ -48,7 +48,7 @@ export default function SuccessStoriesPage() {
             {successStories.map((story) => {
               const storyImage = PlaceHolderImages.find(p => p.id === story.imageId);
               const storyUrl = `${siteUrl}/success-stories#${story.id}`;
-              const shareText = `Check out this success story from EduVision Consulting: ${story.name} at ${story.university}!`;
+              const shareText = `Check out this success story from Uni Help Consultants: ${story.name} at ${story.university}!`;
               
               return (
                 <Card key={story.id} id={story.id} className="overflow-hidden bg-card hover:shadow-xl transition-shadow duration-300 scroll-mt-20">
@@ -64,7 +64,7 @@ export default function SuccessStoriesPage() {
                             data-ai-hint={storyImage.imageHint}
                          />
                          <div className="absolute inset-0 rounded-full flex items-center justify-center bg-black/30 opacity-0 hover:opacity-100 transition-opacity">
-                            <span className="text-white font-bold text-xs font-headline tracking-widest uppercase">EduVision</span>
+                            <span className="text-white font-bold text-xs font-headline tracking-widest uppercase">Uni Help</span>
                          </div>
                       </div>
                     )}

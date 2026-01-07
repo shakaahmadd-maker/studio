@@ -25,7 +25,7 @@ export function Footer() {
             <Link href="/" className="flex items-center gap-2 mb-4">
               <GraduationCap className="h-8 w-8 text-primary" />
               <span className="text-xl font-bold font-headline">
-                EduVision
+                Uni Help
               </span>
             </Link>
             <p className="text-sm text-muted-foreground">
@@ -64,14 +64,14 @@ export function Footer() {
             <h3 className="font-semibold font-headline tracking-wider uppercase mb-4">Contact Us</h3>
             <div className="space-y-2 text-sm text-muted-foreground">
               <p>123 Education Lane, Knowledge City, 12345</p>
-              <p>Email: <a href="mailto:contact@eduvision.com" className="hover:text-primary">contact@eduvision.com</a></p>
-              <p>Phone: <a href="tel:+1234567890" className="hover:text-primary">+1 (234) 567-890</a></p>
+              <p>Email: <a href="mailto:contact@unihelpconsultants.com" className="hover:text-primary">contact@unihelpconsultants.com</a></p>
+              <p>Phone: <a href="tel:+923417548178" className="hover:text-primary">+92 341 7548178</a></p>
             </div>
           </div>
         </div>
 
         <div className="mt-8 border-t pt-6 text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} EduVision Consulting. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Uni Help Consultants. All rights reserved.</p>
         </div>
       </div>
     </footer>
