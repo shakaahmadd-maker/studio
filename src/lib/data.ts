@@ -203,7 +203,7 @@ This clear pathway to PR and citizenship underscores the exceptional long-term c
 export const serviceCategories: ServiceCategory[] = [
     {
       id: 'bachelor',
-      title: 'Bachelor Students',
+      title: 'Bachelor Programs',
       description: 'Comprehensive guidance for your undergraduate journey abroad.',
       details: {
         longDescription: 'Starting your undergraduate degree abroad is a life-changing decision. We provide end-to-end support to ensure you find the right university and program to kickstart your academic and professional career.',
@@ -214,7 +214,7 @@ export const serviceCategories: ServiceCategory[] = [
     },
     {
       id: 'master',
-      title: 'Master Students',
+      title: 'Master Programs',
       description: 'Expert advice to advance your education and career with a Master\'s degree.',
       details: {
         longDescription: 'A Master\'s degree from a top international university can significantly boost your career. We specialize in helping you navigate the competitive application process for graduate programs.',
@@ -225,7 +225,7 @@ export const serviceCategories: ServiceCategory[] = [
     },
     {
       id: 'phd',
-      title: 'PhD Students',
+      title: 'PhD Programs',
       description: 'Specialized support for aspiring researchers and academics.',
       details: {
         longDescription: 'Pursuing a PhD is a significant commitment. Our expert counselors, many with research backgrounds, guide you in finding the right supervisor and research environment to match your academic ambitions.',
@@ -236,7 +236,7 @@ export const serviceCategories: ServiceCategory[] = [
     },
     {
       id: 'diploma',
-      title: '1-Year Diplomas',
+      title: 'Diploma Programs',
       description: 'Fast-track your career with specialized diploma programs.',
       details: {
         longDescription: 'One-year diploma programs are an excellent way to gain practical skills and enter the job market quickly. We help you find accredited programs that offer strong career outcomes.',
@@ -246,12 +246,12 @@ export const serviceCategories: ServiceCategory[] = [
       }
     },
     {
-      id: 'language',
-      title: 'Language Classes',
+      id: 'languages',
+      title: 'Language Programs',
       description: 'Master a new language to unlock your study and career goals.',
       details: {
         longDescription: 'Language proficiency is often the key to unlocking educational opportunities. We offer guidance on and enrollment in top language schools abroad, including pathway programs that lead to university admission.',
-        offerings: ['German, French, and English Language School Selection', 'Pathway Program Guidance', 'Language Test Preparation (IELTS, TOEFL, TestDaF)', 'Student Visitor & Short-term Study Visas'],
+        offerings: ['German, French, Spanish, IELTS & TOEFL', 'Pathway Program Guidance', 'Language Test Preparation', 'Short-term Study Visas'],
         steps: ['Language Goal Assessment', 'School & Program Selection', 'Enrollment & Visa Application', 'Cultural Immersion Planning'],
         benefits: ['Achieve fluency through immersion', 'Meet university language requirements', 'Enhance your global communication skills', 'Experience a new culture firsthand']
       }
