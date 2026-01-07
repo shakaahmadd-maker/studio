@@ -1,7 +1,9 @@
 
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { CheckCircle, Award, Briefcase, BookOpen, User, Star } from 'lucide-react';
 import Image from 'next/image';
+import { OtherEuropeSlider } from '@/components/layout/other-europe-slider';
 
 const scholarshipData = {
   europe: [
@@ -229,15 +231,8 @@ export default function ScholarshipsPage() {
         <RegionSection title="Scholarships in Europe" scholarships={scholarshipData.europe} />
         
         <section className="mb-16">
-            <h3 className="text-2xl font-bold text-center font-headline text-primary/80 mb-8">More Government & University Scholarships Across Europe</h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-6 text-center">
-                {scholarshipData.otherEurope.map(s => (
-                    <div key={s.country} className="flex flex-col items-center">
-                        {s.icon}
-                        <p className="font-semibold mt-2 text-sm">{s.country}</p>
-                    </div>
-                ))}
-            </div>
+            <h3 className="text-2xl font-bold text-center font-headline text-primary/80 mb-8">More Government &amp; University Scholarships Across Europe</h3>
+            <OtherEuropeSlider scholarships={scholarshipData.otherEurope} />
             <p className="text-center text-muted-foreground mt-6 max-w-3xl mx-auto">
                 Many European governments and universities offer a wide range of scholarships. At Uni Help Consultants, we specialize in helping students find and apply for these prestigious opportunities.
             </p>
