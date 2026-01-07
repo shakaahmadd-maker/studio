@@ -22,6 +22,7 @@ import { ConsultationForm } from "../forms/consultation-form";
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About Us" },
+  { href: "/why-us", label: "Why Us"},
   { href: "/success-stories", label: "Success Stories" },
   { href: "/blog", label: "Blog" },
   { href: "/referral-program", label: "Referrals" },
@@ -181,6 +182,15 @@ export function Header() {
               )}
             >
               About Us
+            </Link>
+             <Link
+              href="/why-us"
+              className={cn(
+                "transition-colors hover:text-primary",
+                pathname === "/why-us" ? "text-primary" : "text-muted-foreground"
+              )}
+            >
+              Why Us
             </Link>
           <ServiceCategoryDropdown />
           <StudyAbroadDropdown />
