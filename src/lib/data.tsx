@@ -505,87 +505,236 @@ export const scholarshipData = {
     ],
 };
 
-export const ukScholarships: UKScholarship[] = [
+export const europeScholarships = {
+  major: [
+    {
+      icon: 'award',
+      title: 'Erasmus+ / Erasmus Mundus (EU)',
+      description: "Highly competitive, joint Master's programs across Europe.",
+      level: 'Bachelor’s / Master’s / PhD',
+      focus: 'Studying across multiple European countries.',
+      borderColor: 'border-blue-600',
+      titleColor: 'text-blue-600',
+      focusColor: 'text-blue-500',
+      coverage: [
+        { text: 'Full Tuition', icon: 'check-circle', color: 'green' },
+        { text: 'Monthly Stipend', icon: 'wallet', color: 'green' },
+        { text: 'Travel & Internship Support', icon: 'plane', color: 'green' },
+      ],
+    },
+    {
+      icon: 'book-open-text',
+      title: 'DAAD Scholarships (🇩🇪 Germany)',
+      description: 'German Academic Exchange Service.',
+      level: 'Master’s, PhD, Research Grants',
+      focus: 'Research-focused, extensive graduate coverage.',
+      borderColor: 'border-black',
+      titleColor: 'text-gray-800',
+      focusColor: 'text-red-500',
+      coverage: [
+        { text: 'Full Tuition/Fees', icon: 'check-circle', color: 'yellow' },
+        { text: 'Health Insurance', icon: 'wallet', color: 'yellow' },
+        { text: 'Travel Allowance', icon: 'plane', color: 'yellow' },
+      ],
+    },
+    {
+      icon: 'mountain',
+      title: 'Swiss Excellence (🇨🇭 Switzerland)',
+      description: 'Promoting academic exchange, open worldwide.',
+      level: 'Master’s / PhD / Research',
+      focus: 'Advanced research (Science, Engineering, Humanities).',
+      borderColor: 'border-red-600',
+      titleColor: 'text-red-600',
+      focusColor: 'text-red-500',
+      coverage: [
+        { text: 'Full Tuition', icon: 'check-circle', color: 'purple' },
+        { text: 'Monthly Stipend', icon: 'wallet', color: 'purple' },
+      ],
+    },
+    {
+        icon: 'medal',
+        title: 'Emile Boutmy (🇫🇷 France)',
+        description: 'Exclusive for non-EU students at Sciences Po University.',
+        level: 'Bachelor’s / Master’s',
+        focus: 'Social Sciences, Law, Political Science.',
+        borderColor: 'border-blue-500',
+        titleColor: 'text-blue-700',
+        focusColor: 'text-blue-600',
+        coverage: [
+            { text: 'Up to $21k/year', icon: 'check-circle', color: 'blue' },
+            { text: 'Partial Living Costs', icon: 'wallet', color: 'blue' },
+        ],
+    },
+    {
+        icon: 'trophy',
+        title: 'Eiffel Excellence (🇫🇷 France)',
+        description: 'Administered through French institutions to attract talent.',
+        level: 'Master’s / PhD',
+        focus: 'Science, Engineering, Economics, Law.',
+        borderColor: 'border-red-500',
+        titleColor: 'text-red-700',
+        focusColor: 'text-red-600',
+        coverage: [
+            { text: 'Monthly Allowance', icon: 'wallet', color: 'red' },
+            { text: 'Travel Costs', icon: 'plane', color: 'red' },
+            { text: 'No Tuition Coverage', icon: 'check-circle', color: 'gray' },
+        ],
+    },
+  ],
+  national: [
+    {
+      country: '🇧🇪 Belgium',
+      description: 'Focuses on developing human resources (Master’s/PhD) in social sciences, engineering, and public health.',
+      funding: 'Full/Partial Tuition & Stipend.',
+      bgColor: 'bg-indigo-50',
+      borderColor: 'border-indigo-500',
+      textColor: 'text-indigo-700',
+    },
+    {
+      country: '🇸🇪 Sweden (SI Scholarships)',
+      description: 'Promotes global sustainability and leadership for selected countries (Master\'s programs).',
+      funding: 'Full Tuition, Monthly Stipend & Travel.',
+      bgColor: 'bg-yellow-50',
+      borderColor: 'border-yellow-500',
+      textColor: 'text-yellow-700',
+    },
+    {
+      country: '🇮🇪 Ireland',
+      description: "Open to non-EU/EEA Master's/PhD students in all disciplines (Arts, Humanities, STEM).",
+      funding: 'Full Tuition, Monthly Stipend & Travel.',
+      bgColor: 'bg-green-50',
+      borderColor: 'border-green-500',
+      textColor: 'text-green-700',
+    },
+    {
+      country: '🇳🇱 Netherlands',
+      description: "Holland Scholarship & Orange Tulip Scholarship (Master's) promoting innovation and engineering.",
+      funding: 'Full/Partial Tuition & Stipend.',
+      bgColor: 'bg-orange-50',
+      borderColor: 'border-orange-500',
+      textColor: 'text-orange-700',
+    },
+    {
+      country: '🇫🇮 Finland',
+      description: 'Government Scholarship Pool targeting highly talented non-EU/EEA research students.',
+      funding: 'Full Tuition or Partial Funding & Stipends.',
+      bgColor: 'bg-sky-50',
+      borderColor: 'border-sky-500',
+      textColor: 'text-sky-700',
+    },
+    {
+      country: '🇩🇰 Denmark',
+      description: 'Strengthening cooperation, funding for Master’s/PhD in engineering, business, and health sciences.',
+      funding: 'Full/Partial Tuition & Living Stipend.',
+      bgColor: 'bg-red-50',
+      borderColor: 'border-red-500',
+      textColor: 'text-red-700',
+    },
+    {
+      country: '🇳🇴 Norway',
+      description: 'Tuition is generally free; government provides a living allowance for students from developing countries.',
+      funding: 'Monthly Living Stipend (Tuition usually Free).',
+      bgColor: 'bg-teal-50',
+      borderColor: 'border-teal-500',
+      textColor: 'text-teal-700',
+    },
+  ],
+};
+
+export const ukScholarshipsData = [
   {
-    title: "Fully Funded Scholarships",
-    description: "These scholarships are designed to cover all expenses associated with studying in the UK, making them ideal for students who need complete financial support. They typically cover tuition fees, living expenses, travel costs, and health insurance.",
-    examples: [
-      "Rhodes Scholarship (Oxford University): One of the world’s most prestigious scholarships, providing full tuition, living costs, and travel expenses for international graduate students at Oxford University.",
-      "Gates Cambridge Scholarship (Cambridge University): Offers full tuition coverage, living stipends, and travel allowances for international graduate students at Cambridge University, funded by the Bill & Melinda Gates Foundation.",
-      "Chevening Scholarship (UK Government): A fully funded government scholarship that covers tuition, travel, accommodation, and a living stipend for students pursuing a Master’s degree in the UK."
-    ],
-    idealFor: "Students who are looking for complete financial support during their studies in the UK."
+    icon: 'star',
+    title: 'Fully Funded Scholarships',
+    description: 'Covers all expenses: tuition, living costs, travel, and insurance.',
+    examples: ['Rhodes Scholarship (Oxford)', 'Gates Cambridge Scholarship (Cambridge)', 'Chevening Scholarship (UK Government)'],
+    borderColor: 'border-pink-600',
+    titleColor: 'text-pink-600',
   },
   {
-    title: "Partial Scholarships",
-    description: "These scholarships provide partial funding, usually covering tuition fees or living costs, but not both. Partial scholarships are often awarded based on academic merit or financial need.",
-    examples: [
-      "Commonwealth Scholarship (UK Government): This scholarship offers partial funding for students from Commonwealth countries, covering tuition fees and a living allowance. The scholarship is aimed at graduate students studying development-related programs.",
-      "University-Specific Partial Scholarships: Many UK universities, such as University College London (UCL), University of Edinburgh, and King’s College London, offer partial scholarships to international students, which may cover tuition or living expenses."
-    ],
-    idealFor: "Students who may already have some financial resources but need extra assistance to cover part of their study costs."
+    icon: 'award',
+    title: 'Merit-Based Scholarships',
+    description: 'Awarded for academic excellence and leadership potential.',
+    examples: ['Clarendon Scholarship (Oxford)', 'Dean’s Excellence Scholarship (Westminster)'],
+    borderColor: 'border-indigo-600',
+    titleColor: 'text-indigo-600',
   },
   {
-    title: "Merit-Based Scholarships",
-    description: "Merit-based scholarships are awarded to students who demonstrate academic excellence, exceptional talent, or leadership potential in specific fields of study. These scholarships are often highly competitive and are awarded based on academic records, research work, or extracurricular achievements.",
-    examples: [
-      "Clarendon Scholarship (Oxford University): A prestigious scholarship for graduate students at Oxford University, awarded to students with exceptional academic backgrounds. It covers full tuition and a living stipend.",
-      "Dean’s Excellence Scholarship (University of Westminster): Offered to international students who show outstanding academic achievement in their previous studies and wish to pursue a Master’s degree at the University of Westminster."
-    ],
-    idealFor: "Students who have shown exceptional academic or leadership performance."
+    icon: 'hand-coins',
+    title: 'Partial & Need-Based',
+    description: 'Assistance for specific costs or financial constraints.',
+    examples: ['Commonwealth Scholarship (Partial)', 'The Great Scholarship (Need-Based, Partial)', 'University-Specific Partial Funding'],
+    borderColor: 'border-green-600',
+    titleColor: 'text-green-600',
   },
   {
-    title: "Need-Based Scholarships",
-    description: "Need-based scholarships are designed for students who demonstrate significant financial need. These scholarships help reduce the financial burden on students from low-income backgrounds by covering tuition fees, living expenses, and other educational costs.",
-    examples: [
-      "University of London International Scholarships: These are awarded to students from developing countries who demonstrate financial need, helping them cover tuition fees for distance learning programs.",
-      "The Great Scholarship (UK Universities): A scholarship funded by the UK government, available to students from specific countries who are pursuing postgraduate studies in the UK. It provides a partial contribution towards tuition fees for low-income students."
+    icon: 'flask-round',
+    title: 'Research & STEM',
+    description: 'For PhD/MPhil programs and specific fields like technology.',
+    examples: ['UK Research and Innovation (UKRI)', 'Research Excellence Scholarship (Birmingham)', 'Women in Engineering Scholarship (Cambridge)'],
+    borderColor: 'border-red-600',
+    titleColor: 'text-red-600',
+  },
+];
+
+export const globalScholarships = [
+  {
+    title: '🇺🇸 Fulbright Foreign Student Program',
+    description: 'U.S. government exchange program (Master’s / PhD).',
+    borderColor: 'border-blue-800',
+    titleColor: 'text-blue-800',
+    coverage: [
+      { text: 'Full Funding', icon: 'check-circle', color: 'blue' },
+      { text: 'Airfare & Health Insurance', icon: 'plane', color: 'blue' },
     ],
-    idealFor: "Students who need assistance due to financial constraints but still have the academic potential to succeed."
   },
   {
-    title: "Research Scholarships",
-    description: "These scholarships are specifically for students who wish to pursue research-based degrees such as a PhD or MPhil. They often include funding for research projects and may also provide support for conferences, publications, and academic materials.",
-    examples: [
-      "Research Excellence Scholarship (University of Birmingham): Offers funding for international PhD students who demonstrate the potential to make a significant contribution to their field of research. It includes full tuition fees and a living stipend.",
-      "UK Research and Innovation (UKRI) Scholarships: Funded by the UK government, these scholarships are awarded to students who undertake innovative research in various fields, with a focus on solving global challenges such as climate change and public health."
+    title: '🇺🇸 Knight-Hennessy (Stanford)',
+    description: 'For global leaders and innovators (Graduate Level).',
+    borderColor: 'border-red-800',
+    titleColor: 'text-red-800',
+    coverage: [
+      { text: 'Full Tuition & Stipend', icon: 'star', color: 'red' },
+      { text: 'Leadership Training', icon: 'briefcase', color: 'red' },
     ],
-    idealFor: "Graduate students pursuing research-focused programs in various fields."
   },
   {
-    title: "Sports Scholarships",
-    description: "Sports scholarships are awarded to students who excel in specific sports. These scholarships provide funding for tuition fees and living costs, allowing students to combine their academic studies with elite sports training.",
-    examples: [
-      "Loughborough University Sports Scholarships: Offers scholarships to students who excel in sports, providing full or partial funding for tuition fees, as well as access to professional training and development.",
-      "University of Bath Sports Scholarship: For athletes who demonstrate the potential to compete at a high level in sports. The scholarship covers tuition and provides a stipend for training and competition expenses."
+    title: '🇨🇦 Canadian Gov & University Programs',
+    description: 'Programs like UoT National and UBC Doctoral Fellowships.',
+    borderColor: 'border-red-600',
+    titleColor: 'text-red-600',
+    coverage: [
+      { text: 'Full/Partial Tuition', icon: 'check-circle', color: 'red' },
+      { text: 'Research Funding', icon: 'search', color: 'red' },
     ],
-    idealFor: "Students who are talented athletes and want to pursue both their academic and athletic careers simultaneously."
   },
   {
-    title: "Country-Specific Scholarships",
-    description: "Several UK scholarships are available based on the student’s home country, often in collaboration with the UK government or university partnerships.",
-    examples: [
-      "Commonwealth Scholarship: For students from Commonwealth countries, this scholarship covers tuition fees and a living stipend.",
-      "Chevening Scholarship: Funded by the UK Government, this scholarship is available for students from Chevening-eligible countries and provides full funding for Master’s programs."
+    title: '🇳🇿 Manaaki New Zealand Scholarships',
+    description: 'For students from developing countries focusing on sustainable development.',
+    borderColor: 'border-black',
+    titleColor: 'text-gray-800',
+    coverage: [
+      { text: 'Full Tuition & Stipend', icon: 'check-circle', color: 'gray' },
+      { text: 'Travel & Health', icon: 'plane', color: 'gray' },
     ],
-    idealFor: "Students from specific countries looking for funding to pursue graduate studies in the UK."
   },
   {
-    title: "Exchange and Partnership Scholarships",
-    description: "These scholarships are typically offered through university exchange programs or partnerships between institutions. Students from partner universities are often eligible for reduced tuition or special funding arrangements for studying in the UK.",
-    examples: [
-      "Erasmus+ (EU Students): Students from EU countries who participate in Erasmus+ exchanges can receive scholarships to study in the UK. This program offers tuition assistance and a living stipend.",
-      "University-Specific Exchange Programs: Many UK universities offer exchange scholarships to students from partner universities around the world. These scholarships may cover tuition fees and provide living stipends."
+    title: '🇨🇳 China Scholarship Council (CSC)',
+    description: 'Prominent government funding for international students at Chinese universities.',
+    borderColor: 'border-red-500',
+    titleColor: 'text-red-500',
+    coverage: [
+      { text: 'Full Funding', icon: 'check-circle', color: 'red' },
+      { text: 'Accommodation Covered', icon: 'home', color: 'red' },
     ],
-    idealFor: "Students participating in international exchange programs or partnerships between universities."
   },
   {
-    title: "Women in STEM Scholarships",
-    description: "These scholarships aim to encourage female students to pursue STEM (Science, Technology, Engineering, and Mathematics) subjects, which are traditionally underrepresented by women. These scholarships often provide additional funding for research projects and participation in conferences.",
-    examples: [
-      "Women in Engineering Scholarship (University of Cambridge): Designed for female students pursuing engineering programs at Cambridge University, this scholarship provides funding for tuition fees and additional support for research and career development.",
-      "The STEM Women’s Scholarship (University of Oxford): Aimed at female students from underrepresented backgrounds, this scholarship encourages diversity and innovation in STEM fields."
+    title: '🇺🇸 Elite University Need-Based Aid',
+    description: 'e.g., Harvard, Yale, Princeton.',
+    borderColor: 'border-yellow-500',
+    titleColor: 'text-yellow-700',
+    coverage: [
+        { text: '100% Need Met', icon: 'check-circle', color: 'yellow' },
+        { text: 'Full Tuition & Living', icon: 'wallet', color: 'yellow' },
     ],
-    idealFor: "Female students pursuing STEM degrees and seeking to break barriers in traditionally male-dominated fields."
-  }
+  },
 ];
