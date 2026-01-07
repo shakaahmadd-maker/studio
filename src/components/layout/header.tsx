@@ -163,7 +163,7 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
         <Logo />
-        <nav className="hidden md:flex items-center gap-4 text-sm font-medium flex-grow">
+        <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
           {navLinks.map(({ href, label }) => (
             <Link
               key={label}
@@ -179,7 +179,7 @@ export function Header() {
           <ServiceCategoryDropdown />
           <StudyAbroadDropdown />
         </nav>
-        <div className="hidden md:flex items-center ml-4">
+        <div className="hidden md:flex items-center ml-auto">
           <ConsultationButton />
         </div>
         <div className="flex md:hidden items-center ml-auto">
