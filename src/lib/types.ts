@@ -68,23 +68,32 @@ export interface University {
     logoUrl?: string;
 }
 
-export interface Scholarship {
-    title: string;
-    level: string;
-    coverage: string[];
-    notes: string;
-    icon: JSX.Element;
+export interface UKScholarship {
+  icon: string;
+  title: string;
+  description: string;
+  examples: string[];
+  borderColor: string;
+  titleColor: string;
 }
 
 export interface OtherEuropeScholarship {
     country: string;
-    icon: JSX.Element;
-    note: string;
+    description: string;
+    funding: string;
+    bgColor: string;
+    borderColor: string;
+    textColor: string;
 }
 
-export interface UKScholarship {
-  title: string;
-  description: string;
-  examples: string[];
-  idealFor: string;
+export interface GlobalScholarship {
+    title: string;
+    description: string;
+    borderColor: string;
+    titleColor: string;
+    coverage: {
+        text: string;
+        icon: string;
+        color: string;
+    }[];
 }

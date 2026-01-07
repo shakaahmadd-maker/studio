@@ -1,4 +1,4 @@
-import type { Service, SuccessStory, BlogPost, TeamMember, FAQ, ServiceCategory, JobOpening, University, UKScholarship, OtherEuropeScholarship } from './types';
+import type { Service, SuccessStory, BlogPost, TeamMember, FAQ, ServiceCategory, JobOpening, University, UKScholarship, OtherEuropeScholarship, GlobalScholarship } from './types';
 import { Award, Briefcase, Landmark } from 'lucide-react';
 import React from 'react';
 
@@ -412,99 +412,6 @@ export const universities: University[] = [
   { name: 'University of Göttingen', logoUrl: 'https://logo.clearbit.com/uni-goettingen.de' },
 ];
 
-export const scholarshipData = {
-    europe: [
-        {
-          title: 'Erasmus+ / Erasmus Mundus Joint Master Degrees (EU)',
-          level: 'Bachelor’s / Master’s / PhD',
-          coverage: [
-            'Full tuition coverage for the duration of the program.',
-            'A monthly stipend to cover accommodation and daily expenses.',
-            'Travel allowance to cover travel costs.',
-            'Opportunities for gaining work experience in Europe.'
-          ],
-          notes: 'This program fosters academic exchange, offering a global experience with a consortium of European institutions.',
-          icon: <Award className="h-8 w-8 text-primary" />,
-        },
-        {
-          title: 'DAAD Scholarships (Germany)',
-          level: 'Master’s, PhD, Research Grants',
-          coverage: [
-            'Full coverage of university fees.',
-            'Monthly stipend to cover living expenses.',
-            'Travel allowance and health insurance are provided.'
-          ],
-          notes: 'One of the most generous government-funded scholarships in Europe, ideal for research, technology, and international relations.',
-          icon: <Landmark className="h-8 w-8 text-primary" />,
-        },
-        {
-          title: 'Swiss Government Excellence Scholarships (Switzerland)',
-          level: 'Master’s / PhD / Research',
-          coverage: [
-            'Full tuition coverage for students studying in Switzerland.',
-            'Monthly stipend for living costs.',
-            'Travel allowances for students traveling to and from Switzerland.'
-          ],
-          notes: 'Ideal for students in fields like engineering, technology, and natural sciences.',
-          icon: <Briefcase className="h-8 w-8 text-primary" />,
-        },
-    ],
-    otherEurope: [
-        { country: "Belgium", icon: <Award className="h-8 w-8" />, note: "Government of Belgium Scholarships" },
-        { country: "Sweden", icon: <Landmark className="h-8 w-8" />, note: "Swedish Institute Scholarships" },
-        { country: "Ireland", icon: <Award className="h-8 w-8" />, note: "Government of Ireland Scholarships" },
-        { country: "Netherlands", icon: <Briefcase className="h-8 w-8" />, note: "Dutch Government Scholarships" },
-        { country: "Finland", icon: <Landmark className="h-8 w-8" />, note: "Finnish Government Scholarships" },
-        { country: "Denmark", icon: <Award className="h-8 w-8" />, note: "Danish Government Scholarships" },
-        { country: "Norway", icon: <Briefcase className="h-8 w-8" />, note: "Norwegian Government Scholarships" },
-    ] as OtherEuropeScholarship[],
-    usa: [
-        {
-          title: 'Fulbright Foreign Student Program',
-          level: 'Master’s / PhD',
-          coverage: ['Full tuition coverage.', 'Monthly allowance to cover living expenses.', 'Travel allowance and health insurance coverage.'],
-          notes: 'One of the most prestigious U.S. government scholarships designed to promote cultural exchange.',
-          icon: <Award className="h-8 w-8 text-primary" />,
-        },
-    ],
-    canada: [
-         {
-          title: 'Government & University Scholarships',
-          level: 'Varies',
-          coverage: ['Full coverage of tuition fees.', 'Monthly allowance for accommodation and food.'],
-          notes: 'Numerous scholarships for graduate and research programs at universities like Toronto and UBC.',
-          icon: <Landmark className="h-8 w-8 text-primary" />,
-        },
-    ],
-    australia: [
-        {
-          title: 'Australia Awards Scholarships',
-          level: 'Bachelor’s / Master’s / PhD',
-          coverage: ['Full tuition fees', 'Travel allowance', 'Living stipend', 'Health coverage'],
-          notes: 'Offered by the Australian government to support students from developing countries to study at top Australian universities.',
-          icon: <Award className="h-8 w-8 text-primary" />,
-        },
-    ],
-    newZealand: [
-        {
-          title: 'Manaaki New Zealand Scholarships',
-          level: 'Bachelor’s / Master’s / PhD',
-          coverage: ['Full tuition fees', 'Living allowance', 'Travel and insurance'],
-          notes: 'For students from developing countries, focusing on sustainable development.',
-          icon: <Briefcase className="h-8 w-8 text-primary" />,
-        },
-    ],
-    china: [
-        {
-          title: 'Confucius Institute Scholarship',
-          level: 'Bachelor’s / Master’s / PhD / Language Programs',
-          coverage: ['Full tuition fees', 'Stipends for living costs', 'Accommodation and travel expenses'],
-          notes: 'Excellent opportunity for students who wish to study the Chinese language and culture.',
-          icon: <Landmark className="h-8 w-8 text-primary" />,
-        },
-    ],
-};
-
 export const europeScholarships = {
   major: [
     {
@@ -532,8 +439,8 @@ export const europeScholarships = {
       titleColor: 'text-gray-800',
       focusColor: 'text-red-500',
       coverage: [
-        { text: 'Full Tuition/Fees', icon: 'check-circle', color: 'yellow' },
-        { text: 'Health Insurance', icon: 'wallet', color: 'yellow' },
+        { text: 'Full Tuition/Fees', icon: 'dollar-sign', color: 'yellow' },
+        { text: 'Health Insurance', icon: 'heart-pulse', color: 'yellow' },
         { text: 'Travel Allowance', icon: 'plane', color: 'yellow' },
       ],
     },
@@ -577,7 +484,7 @@ export const europeScholarships = {
         coverage: [
             { text: 'Monthly Allowance', icon: 'wallet', color: 'red' },
             { text: 'Travel Costs', icon: 'plane', color: 'red' },
-            { text: 'No Tuition Coverage', icon: 'check-circle', color: 'gray' },
+            { text: 'No Tuition Coverage', icon: 'x-circle', color: 'gray' },
         ],
     },
   ],
@@ -703,7 +610,7 @@ export const globalScholarships = [
     borderColor: 'border-red-600',
     titleColor: 'text-red-600',
     coverage: [
-      { text: 'Full/Partial Tuition', icon: 'check-circle', color: 'red' },
+      { text: 'Full/Partial Tuition', icon: 'dollar-sign', color: 'red' },
       { text: 'Research Funding', icon: 'search', color: 'red' },
     ],
   },
@@ -733,7 +640,7 @@ export const globalScholarships = [
     borderColor: 'border-yellow-500',
     titleColor: 'text-yellow-700',
     coverage: [
-        { text: '100% Need Met', icon: 'check-circle', color: 'yellow' },
+        { text: '100% Need Met', icon: 'dollar-sign', color: 'yellow' },
         { text: 'Full Tuition & Living', icon: 'wallet', color: 'yellow' },
     ],
   },

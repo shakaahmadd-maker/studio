@@ -1,11 +1,12 @@
-
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { europeScholarships, ukScholarshipsData, globalScholarships } from '@/lib/data.tsx';
 import Image from 'next/image';
-import { Award, BookOpenText, Mountain, Medal, Trophy, Star, HandCoins, FlaskRound, CheckCircle, Wallet, Plane, Briefcase, Search, Home, SendHorizontal } from 'lucide-react';
-import { Card } from '@/components/ui/card';
+import { Award, BookOpenText, Mountain, Medal, Trophy, Star, HandCoins, FlaskRound, CheckCircle, Wallet, Plane, Briefcase, Search, Home, SendHorizontal, DollarSign, HeartPulse, XCircle, Lightbulb, FileSignature, Gem, LifeBuoy, Route } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { OtherEuropeSlider } from '@/components/layout/other-europe-slider';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 const iconMap: { [key: string]: React.ReactNode } = {
   award: <Award />,
@@ -17,11 +18,14 @@ const iconMap: { [key: string]: React.ReactNode } = {
   'hand-coins': <HandCoins />,
   'flask-round': <FlaskRound />,
   'check-circle': <CheckCircle size={16} className="mr-1" />,
+  'x-circle': <XCircle size={16} className="mr-1" />,
   wallet: <Wallet size={16} className="mr-1" />,
   plane: <Plane size={16} className="mr-1" />,
   briefcase: <Briefcase size={16} className="mr-1" />,
   search: <Search size={16} className="mr-1" />,
   home: <Home size={16} className="mr-1" />,
+  'dollar-sign': <DollarSign size={16} className="mr-1" />,
+  'heart-pulse': <HeartPulse size={16} className="mr-1" />,
 };
 
 const badgeColors: { [key: string]: string } = {
@@ -33,30 +37,95 @@ const badgeColors: { [key: string]: string } = {
   gray: 'bg-gray-100 text-gray-700',
 };
 
+const whyChooseUsData = [
+    {
+        icon: <Lightbulb className="text-4xl text-amber-500" />,
+        title: "Expert Scholarship Guidance",
+        description: "We offer personalized guidance based on your unique academic background, career aspirations, and financial needs, identifying the right merit-based, need-based, or research opportunities for you."
+    },
+    {
+        icon: <FileSignature className="text-4xl text-amber-500" />,
+        title: "Comprehensive Application Support",
+        description: "Receive step-by-step support for writing compelling personal statements, crafting standout essays, and ensuring all necessary documentation is perfectly in order to highlight your strengths."
+    },
+    {
+        icon: <Trophy className="text-4xl text-amber-500" />,
+        title: "Maximize Your Chances of Winning",
+        description: "Our deep understanding of scholarship panels gives you a competitive edge. We ensure your application reflects the leadership, academic excellence, and passion they look for in highly competitive programs."
+    },
+    {
+        icon: <Gem className="text-4xl text-amber-500" />,
+        title: "Access to Exclusive Scholarships",
+        description: "Benefit from our wide network of universities and private organizations, granting you awareness of hidden gems and fully funded opportunities not available through conventional channels."
+    },
+    {
+        icon: <LifeBuoy className="text-4xl text-amber-500" />,
+        title: "Ongoing Support and Mentorship",
+        description: "Our support doesn't end with the award. We assist with visa applications, accommodation, and transition to ensure a smooth and successful start to your academic life abroad."
+    },
+    {
+        icon: <Route className="text-4xl text-amber-500" />,
+        title: "Customized Scholarship Strategy",
+        description: "We create a tailored strategy, aligning your scholarship applications for undergraduate, graduate, or fellowship programs directly with your academic background and ultimate career goals."
+    }
+]
+
 export default function ScholarshipsPage() {
     const heroImage = PlaceHolderImages.find(p => p.id === 'scholarship-hero');
 
   return (
-    <div className="bg-background">
-        <section className="relative bg-brand-blue text-white shadow-xl py-20 lg:py-32">
+    <div className="bg-slate-50">
+
+       <header className="relative bg-indigo-800 text-white p-8 sm:p-12 text-center rounded-t-xl overflow-hidden">
             {heroImage && (
-                <Image
-                src={heroImage.imageUrl}
-                alt="Students celebrating graduation"
-                fill
-                className="absolute inset-0 object-cover w-full h-full opacity-20"
-                data-ai-hint={heroImage.imageHint}
+                 <Image
+                    src={heroImage.imageUrl}
+                    alt={heroImage.description}
+                    fill
+                    className="absolute inset-0 object-cover w-full h-full opacity-20"
+                    data-ai-hint={heroImage.imageHint}
                 />
             )}
-            <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h1 className="text-4xl sm:text-6xl font-extrabold mb-4 leading-tight text-white">
-                    <span className="text-accent">Global Scholarship Guide</span>
+            <div className="relative">
+                <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-2">
+                    Unlock Your Future with Uni Help Consultants
                 </h1>
-                <p className="text-xl sm:text-2xl mb-8 font-light max-w-3xl mx-auto text-white/90">
-                    Your Pathway to Fully Funded Study Abroad
+                <p className="text-indigo-200 text-lg sm:text-xl font-medium max-w-3xl mx-auto">
+                    Guiding you through the process of securing prestigious scholarships for studying abroad.
                 </p>
+                <div className="mt-6 flex flex-wrap justify-center gap-2 sm:gap-4 text-sm sm:text-base font-semibold">
+                    <span className="bg-amber-400 text-indigo-900 px-3 py-1 rounded-full shadow-md">Europe</span>
+                    <span className="bg-amber-400 text-indigo-900 px-3 py-1 rounded-full shadow-md">USA</span>
+                    <span className="bg-amber-400 text-indigo-900 px-3 py-1 rounded-full shadow-md">Canada</span>
+                    <span className="bg-amber-400 text-indigo-900 px-3 py-1 rounded-full shadow-md">Australia</span>
+                    <span className="bg-amber-400 text-indigo-900 px-3 py-1 rounded-full shadow-md">New Zealand</span>
+                    <span className="bg-amber-400 text-indigo-900 px-3 py-1 rounded-full shadow-md">China</span>
+                </div>
             </div>
-        </section>
+        </header>
+
+        <main className="p-6 sm:p-10 bg-white">
+            <h2 className="text-3xl sm:text-4xl font-bold text-center text-indigo-800 mb-4">
+                Why Choose Uni Help Consultants?
+            </h2>
+            <p className="text-center text-gray-600 mb-10 max-w-4xl mx-auto">
+                We specialize in finding the best scholarships and providing personalized support to ensure your application is a success. Here is our 6-step path to success:
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                {whyChooseUsData.map((item, index) => (
+                    <div key={index} className="p-6 rounded-xl border-t-4 border-amber-400 bg-white shadow-lg hover:shadow-2xl transition-shadow duration-300 transform hover:-translate-y-1">
+                        <div className="flex items-center space-x-4 mb-4">
+                            {item.icon}
+                            <span className="text-2xl font-extrabold text-indigo-800">0{index + 1}</span>
+                        </div>
+                        <h3 className="text-xl font-bold text-indigo-800 mb-2">{item.title}</h3>
+                        <p className="text-gray-600">{item.description}</p>
+                    </div>
+                ))}
+            </div>
+        </main>
+
 
         <div className="max-w-7xl mx-auto p-4 md:p-8">
             <div id="scholarship-container" className="space-y-16">
@@ -69,7 +138,7 @@ export default function ScholarshipsPage() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {europeScholarships.major.map((scholarship, index) => (
-                            <Card key={index} className={`p-6 flex flex-col justify-between border-t-4 ${scholarship.borderColor}`}>
+                            <Card key={index} className={`p-6 flex flex-col justify-between border-t-4 ${scholarship.borderColor} shadow-lg hover:shadow-xl transition-shadow duration-300`}>
                                 <div>
                                     <div className={`text-2xl font-bold ${scholarship.titleColor} mb-2 flex items-center`}>
                                         <div className="mr-2">{iconMap[scholarship.icon]}</div> {scholarship.title}
@@ -93,25 +162,17 @@ export default function ScholarshipsPage() {
                     </div>
 
                     <h3 className="text-2xl font-bold text-gray-700 mt-12 mb-6 border-b pb-2">National Government & University Funding</h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {europeScholarships.national.map((scholarship, index) => (
-                             <div key={index} className={`p-4 rounded-lg border-l-4 ${scholarship.bgColor} ${scholarship.borderColor}`}>
-                                <p className={`font-bold text-lg ${scholarship.textColor}`}>{scholarship.country}</p>
-                                <p className="text-sm text-muted-foreground">{scholarship.description}</p>
-                                <span className={`text-xs font-medium ${scholarship.textColor}`}>{scholarship.funding}</span>
-                            </div>
-                        ))}
-                    </div>
+                    <OtherEuropeSlider scholarships={europeScholarships.national} />
                 </section>
 
                 {/* SCHOLARSHIPS IN THE UK SECTION */}
-                <section>
+                 <section>
                     <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-8 border-b-4 border-pink-200 pb-3">
                         🇬🇧 Scholarships in the UK: By Funding Type
                     </h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                          {ukScholarshipsData.map((scholarship, index) => (
-                            <Card key={index} className={`p-6 border-t-4 ${scholarship.borderColor}`}>
+                            <Card key={index} className={`p-6 border-t-4 ${scholarship.borderColor} shadow-lg hover:shadow-xl transition-shadow duration-300`}>
                                 <div className={`text-2xl font-bold ${scholarship.titleColor} mb-3 flex items-center`}>
                                    <div className="mr-2">{iconMap[scholarship.icon]}</div> {scholarship.title}
                                 </div>
@@ -133,7 +194,7 @@ export default function ScholarshipsPage() {
                     </h2>
                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                         {globalScholarships.map((scholarship, index) => (
-                            <Card key={index} className={`p-6 border-t-4 ${scholarship.borderColor}`}>
+                            <Card key={index} className={`p-6 border-t-4 ${scholarship.borderColor} shadow-lg hover:shadow-xl transition-shadow duration-300`}>
                                 <div className={`text-xl font-bold ${scholarship.titleColor} mb-2`}>
                                     {scholarship.title}
                                 </div>
@@ -153,17 +214,17 @@ export default function ScholarshipsPage() {
 
             </div>
 
-             <footer className="mt-16 text-center p-8 bg-card rounded-xl shadow-lg border-t-4 border-primary">
-                <h3 className="text-2xl font-bold text-foreground mb-3">Ready to Start Your Journey?</h3>
-                <p className="text-lg text-muted-foreground mb-4">
-                    These prestigious scholarships offer financial support, career advancement, and personal growth.
+             <footer className="mt-12 pt-8 border-t border-indigo-200 text-center">
+                <p className="text-lg font-semibold text-indigo-800">
+                    Your dream of studying abroad is closer than you think. Let Uni Help Consultants map your path to success.
                 </p>
-                <Button asChild size="lg">
-                    <Link href="/contact">
-                         <SendHorizontal className="mr-2" /> Contact Uni Help Consultants Today
-                    </Link>
-                </Button>
-                <p className="mt-4 text-sm text-muted-foreground">Note: Apply early and tailor your application for the best chance of success!</p>
+                <div className="mt-4">
+                    <Button asChild size="lg" className="bg-amber-400 hover:bg-amber-500 text-indigo-900 font-bold shadow-lg hover:shadow-xl">
+                        <Link href="/contact">
+                            Start Your Application Today
+                        </Link>
+                    </Button>
+                </div>
             </footer>
         </div>
     </div>
