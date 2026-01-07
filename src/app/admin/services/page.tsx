@@ -8,6 +8,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { PlusCircle, MoreHorizontal } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
+import Link from "next/link";
 
 export default function AdminServicesPage() {
     const firestore = useFirestore();
@@ -22,9 +23,11 @@ export default function AdminServicesPage() {
                         <CardTitle className="font-headline">Services</CardTitle>
                         <CardDescription>Manage your consultancy services.</CardDescription>
                     </div>
-                    <Button size="sm">
-                        <PlusCircle className="h-4 w-4 mr-2" />
-                        Add Service
+                    <Button asChild size="sm">
+                        <Link href="/admin/services/new">
+                            <PlusCircle className="h-4 w-4 mr-2" />
+                            Add Service
+                        </Link>
                     </Button>
                 </div>
             </CardHeader>

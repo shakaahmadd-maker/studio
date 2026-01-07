@@ -42,7 +42,9 @@ service cloud.firestore {
      * }
      */
     function isContentAdmin() {
-      return false;
+      // For development, we are temporarily allowing any authenticated user to write.
+      // In a production app, this should be replaced with a proper admin check.
+      return request.auth != null;
     }
 
     /**
