@@ -1,7 +1,7 @@
 
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -13,7 +13,7 @@ import { Building2 } from "lucide-react";
 import Image from "next/image";
 
 export function UniversitySlider() {
-  const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true, playOnInit: true }));
+  const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: false, playOnInit: true }));
 
   return (
     <Carousel
@@ -24,7 +24,7 @@ export function UniversitySlider() {
         loop: true,
       }}
       onMouseEnter={plugin.current.stop}
-      onMouseLeave={plugin.current.reset}
+      onMouseLeave={plugin.current.play}
     >
       <CarouselContent>
         {universities.map((uni, index) => (
