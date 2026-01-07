@@ -1,13 +1,13 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { BookOpen, Star, FileText, Briefcase, Users, Handshake } from "lucide-react";
+import { BookOpen, Star, FileText, Briefcase, Users, Handshake, HelpCircle } from "lucide-react";
 
 const stats = [
-    { title: "Services", value: "5", icon: BookOpen },
+    { title: "Services", value: "8", icon: BookOpen },
     { title: "Success Stories", value: "4", icon: Star },
     { title: "Blog Posts", value: "3", icon: FileText },
-    { title: "Job Applications", value: "12", icon: Briefcase },
-    { title: "Referrals", value: "8", icon: Handshake },
-    { title: "FAQs", value: "5", icon: Users },
+    { title: "Job Applications", value: "2", icon: Briefcase },
+    { title: "Referrals", value: "3", icon: Handshake },
+    { title: "FAQs", value: "5", icon: HelpCircle },
 ]
 
 export default function AdminDashboard() {

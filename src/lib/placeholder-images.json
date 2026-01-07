@@ -3,109 +3,127 @@
     {
       "id": "hero-students",
       "description": "Happy students graduating",
-      "imageUrl": "https://images.unsplash.com/photo-1758270703648-1559ddc68a22?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxncmFkdWF0aW5nJTIwc3R1ZGVudHN8ZW58MHx8fHwxNzY3Nzg1MDk3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1728511840262-549724e5149a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxncmFkdWF0aW5nJTIwc3R1ZGVudHN8ZW58MHx8fHwxNzY3Nzg1MDk3fDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "graduating students"
     },
     {
-      "id": "service-bachelor",
-      "description": "Students in a university campus",
-      "imageUrl": "https://images.unsplash.com/photo-1583373834259-46cc92173cb7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHx1bml2ZXJzaXR5JTIwY2FtcHVzfGVufDB8fHx8MTc2Nzc4NTA5N3ww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "university campus"
+      "id": "service-germany",
+      "description": "Brandenburg Gate in Berlin",
+      "imageUrl": "https://images.unsplash.com/photo-1679254205082-ba0b1d469ac4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxnZXJtYW55JTIwbGFuZG1hcmt8ZW58MHx8fHwxNzY3Nzg1ODY3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "germany landmark"
     },
     {
-      "id": "service-master",
-      "description": "A student reading a book in a library",
-      "imageUrl": "https://images.unsplash.com/photo-1595315343110-9b445a960442?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxsaWJyYXJ5JTIwc3R1ZGVudHxlbnwwfHx8fDE3Njc3ODUwOTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "library student"
+      "id": "service-france",
+      "description": "Eiffel Tower in Paris",
+      "imageUrl": "https://images.unsplash.com/photo-1627654065786-bd0375235c13?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8ZnJhbmNlJTIwbGFuZG1hcmt8ZW58MHx8fHwxNzY3Nzg1ODY3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "france landmark"
     },
     {
-      "id": "service-phd",
-      "description": "A scientist in a lab",
-      "imageUrl": "https://images.unsplash.com/photo-1532094349884-543bc11b234d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxzY2llbmNlJTIwbGFifGVufDB8fHx8MTc2Nzc3MjU2MHww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "science lab"
+      "id": "service-italy",
+      "description": "Colosseum in Rome",
+      "imageUrl": "https://images.unsplash.com/photo-1540757496893-b9e77b0ec802?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxpdGFseSUyMGxhbmRtYXJrfGVufDB8fHx8MTc2Nzc4NTg2N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "italy landmark"
     },
     {
-      "id": "service-diploma",
-      "description": "A group of students collaborating",
-      "imageUrl": "https://images.unsplash.com/photo-1681487097558-8856c9212cb0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxzdHVkZW50cyUyMGNvbGxhYm9yYXRpbmd8ZW58MHx8fHwxNzY3Nzg1MDk3fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "students collaborating"
+      "id": "service-malta",
+      "description": "View of Valletta, Malta",
+      "imageUrl": "https://images.unsplash.com/photo-1687033722810-08b7072236c2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxtYWx0YSUyMGNpdHl8ZW58MHx8fHwxNzY3Nzg1ODY3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "malta city"
     },
     {
-      "id": "service-language",
-      "description": "People from different cultures talking",
-      "imageUrl": "https://images.unsplash.com/photo-1657581443324-eafb54f644d6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxsYW5ndWFnZSUyMGV4Y2hhbmdlfGVufDB8fHx8MTc2Nzc4NTA5N3ww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "language exchange"
+      "id": "service-ireland",
+      "description": "Cliffs of Moher in Ireland",
+      "imageUrl": "https://images.unsplash.com/photo-1693342563508-75ff43f43198?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxpcmVsYW5kJTIwbGFuZHNjYXBlfGVufDB8fHx8MTc2Nzc4NTg2N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "ireland landscape"
+    },
+    {
+      "id": "service-uk",
+      "description": "Tower Bridge in London",
+      "imageUrl": "https://images.unsplash.com/photo-1723126906313-bcbbe80947cc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHx1ayUyMGxhbmRtYXJrfGVufDB8fHx8MTc2Nzc4NTg2N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "uk landmark"
+    },
+    {
+      "id": "service-usa",
+      "description": "Statue of Liberty in New York",
+      "imageUrl": "https://images.unsplash.com/photo-1719585891737-99eae89beee6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHx1c2ElMjBsYW5kbWFya3xlbnwwfHx8fDE3Njc3ODU4Njd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "usa landmark"
+    },
+    {
+      "id": "service-australia",
+      "description": "Sydney Opera House",
+      "imageUrl": "https://images.unsplash.com/photo-1767259120555-268a31275b8d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxhdXN0cmFsaWElMjBsYW5kbWFya3xlbnwwfHx8fDE3Njc3ODU4Njd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "australia landmark"
     },
     {
       "id": "success-1",
       "description": "Portrait of a happy student",
-      "imageUrl": "https://images.unsplash.com/photo-1621274790572-7c32596bc67f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxzdHVkZW50JTIwcG9ydHJhaXR8ZW58MHx8fHwxNzY3NzAwMDkzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1568880893176-fb2bdab44e41?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxzdHVkZW50JTIwcG9ydHJhaXR8ZW58MHx8fHwxNzY3NzAwMDkzfDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "student portrait"
     },
     {
       "id": "success-2",
       "description": "Portrait of a smiling student",
-      "imageUrl": "https://images.unsplash.com/photo-1529068755536-a5ade0dcb4e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzdHVkZW50JTIwcG9ydHJhaXR8ZW58MHx8fHwxNzY3NzAwMDkzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1619431667975-e93b820cde63?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxzdHVkZW50JTIwcG9ydHJhaXR8ZW58MHx8fHwxNzY3NzAwMDkzfDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "student portrait"
     },
     {
       "id": "success-3",
       "description": "Portrait of a confident student",
-      "imageUrl": "https://images.unsplash.com/photo-1650153265880-889a8b60a10b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8c3R1ZGVudCUyMHBvcnRyYWl0fGVufDB8fHx8MTc2NzcwMDA5M3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1619431667975-e93b820cde63?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxzdHVkZW50JTIwcG9ydHJhaXR8ZW58MHx8fHwxNzY3NzAwMDkzfDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "student portrait"
     },
     {
       "id": "success-4",
       "description": "Portrait of a student in a graduation gown",
-      "imageUrl": "https://images.unsplash.com/photo-1629905650427-bddf3b64e09a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Z3JhZHVhdGlvbiUyMHBvcnRyYWl0fGVufDB8fHx8MTc2Nzc4NTA5N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1616701318247-e87eb43e79e3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxncmFkdWF0aW9uJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzY3Nzg1MDk3fDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "graduation portrait"
     },
     {
       "id": "blog-1",
       "description": "A person writing in a notebook",
-      "imageUrl": "https://images.unsplash.com/photo-1488748809185-53ad203ca5cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHx3cml0aW5nJTIwbm90ZWJvb2t8ZW58MHx8fHwxNzY3NzY0MDEyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/flagged/photo-1572455039929-2760c4f1ab1d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8d3JpdGluZyUyMG5vdGVib29rfGVufDB8fHx8MTc2Nzc2NDAxMnww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "writing notebook"
     },
     {
       "id": "blog-2",
       "description": "A world map with pins",
-      "imageUrl": "https://images.unsplash.com/photo-1650526087824-163941841b52?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHx3b3JsZCUyMG1hcHxlbnwwfHx8fDE3Njc3MjE4MjV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1713098965471-d324f294a71d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHx3b3JsZCUyMG1hcHxlbnwwfHx8fDE3Njc3MjE4MjV8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "world map"
     },
     {
       "id": "blog-3",
       "description": "A stack of books on a desk",
-      "imageUrl": "https://images.unsplash.com/photo-1584628804801-aa1a640cba8e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxib29rcyUyMGRlc2t8ZW58MHx8fHwxNzY3Nzc2OTM4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1596123068611-c89d922a0f0a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxib29rcyUyMGRlc2t8ZW58MHx8fHwxNzY3Nzc2OTM4fDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "books desk"
     },
     {
       "id": "blog-4",
       "description": "A plane flying over clouds",
-      "imageUrl": "https://images.unsplash.com/photo-1627663412345-aad473f2ba39?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxwbGFuZSUyMGNsb3Vkc3xlbnwwfHx8fDE3Njc3ODUwOTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1676559628393-c758954a1153?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxwbGFuZSUyMGNsb3Vkc3xlbnwwfHx8fDE3Njc3ODUwOTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "plane clouds"
     },
     {
       "id": "team-1",
       "description": "Portrait of a team member",
-      "imageUrl": "https://images.unsplash.com/photo-1595211877493-41a4e5f236b3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxwcm9mZXNzaW9uYWwlMjBwb3J0cmFpdHxlbnwwfHx8fDE3Njc3NDk5NzJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1607990283143-e81e7a2c9349?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxwcm9mZXNzaW9uYWwlMjBwb3J0cmFpdHxlbnwwfHx8fDE3Njc3NDk5NzJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "professional portrait"
     },
     {
       "id": "team-2",
       "description": "Portrait of a team member",
-      "imageUrl": "https://images.unsplash.com/photo-1595211877493-41a4e5f236b3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxwcm9mZXNzaW9uYWwlMjBwb3J0cmFpdHxlbnwwfHx8fDE3Njc3NDk5NzJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxwcm9mZXNzaW9uYWwlMjBwb3J0cmFpdHxlbnwwfHx8fDE3Njc3NDk5NzJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "professional portrait"
     },
     {
       "id": "team-3",
       "description": "Portrait of a team member",
-      "imageUrl": "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxwcm9mZXNzaW9uYWwlMjBwb3J0cmFpdHxlbnwwfHx8fDE3Njc3NDk5NzJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1581065178047-8ee15951ede6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxwcm9mZXNzaW9uYWwlMjBwb3J0cmFpdHxlbnwwfHx8fDE3Njc3NDk5NzJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "professional portrait"
     },
     {
       "id": "about-office",
       "description": "A modern office space",
-      "imageUrl": "https://images.unsplash.com/photo-1623177623442-979c1e42c255?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxtb2Rlcm4lMjBvZmZpY2V8ZW58MHx8fHwxNzY3Njg1NTgxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1556761175-4b46a572b786?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxtb2Rlcm4lMjBvZmZpY2V8ZW58MHx8fHwxNzY3Njg1NTgxfDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "modern office"
     }
   ]

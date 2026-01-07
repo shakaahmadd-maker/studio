@@ -34,7 +34,7 @@ export default function AdminFaqPage() {
                         {faqs.map(faq => (
                             <TableRow key={faq.id}>
                                 <TableCell className="font-medium">{faq.question}</TableCell>
-                                <TableCell><Badge variant="secondary">{faq.category}</Badge></TableCell>
+                                <TableCell><Badge variant="outline" className="capitalize">{faq.category}</Badge></TableCell>
                                 <TableCell>
                                     <DropdownMenu>
                                         <DropdownMenuTrigger asChild>

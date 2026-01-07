@@ -7,11 +7,8 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
-  SidebarTrigger,
-  SidebarFooter
 } from "@/components/ui/sidebar";
-import { Home, BookOpen, Star, FileText, Briefcase, Handshake, Mail, PanelLeft } from "lucide-react";
-import Link from "next/link";
+import { Home, BookOpen, Star, FileText, Briefcase, Handshake, HelpCircle, PanelLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const AdminSidebar = () => {
@@ -51,7 +48,7 @@ const AdminSidebar = () => {
                      <SidebarMenuItem>
                         <SidebarMenuButton href="/admin/careers" tooltip="Careers">
                             <Briefcase />
-                            <span>Career</span>
+                            <span>Careers</span>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
                      <SidebarMenuItem>
@@ -62,15 +59,12 @@ const AdminSidebar = () => {
                     </SidebarMenuItem>
                      <SidebarMenuItem>
                         <SidebarMenuButton href="/admin/faq" tooltip="FAQ">
-                            <Mail />
+                            <HelpCircle />
                             <span>FAQ</span>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
                 </SidebarMenu>
             </SidebarContent>
-            <SidebarFooter>
-                {/* Footer content if needed */}
-            </SidebarFooter>
         </Sidebar>
     )
 }
@@ -78,9 +72,9 @@ const AdminSidebar = () => {
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
-      <div className="flex">
+      <div className="flex min-h-screen bg-background">
         <AdminSidebar />
-        <SidebarInset className="flex-1 p-4 md:p-8 bg-secondary">
+        <SidebarInset className="flex-1 p-4 md:p-8 bg-muted/30">
           {children}
         </SidebarInset>
       </div>

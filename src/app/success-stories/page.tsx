@@ -1,28 +1,26 @@
 import Image from "next/image";
-import Link from "next/link";
 import { successStories } from "@/lib/data";
-import { PlaceHolderImages as placeholderImages } from "@/lib/placeholder-images";
+import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Quote, Facebook, Twitter, Linkedin } from "lucide-react";
 
-const SocialShare = ({ storyUrl }: { storyUrl: string }) => {
-    const text = "Check out this success story from EduVision Consulting!";
+const SocialShare = ({ storyUrl, text }: { storyUrl: string, text: string }) => {
     return (
         <div className="flex items-center gap-2 mt-4">
             <span className="text-sm font-semibold">Share:</span>
             <Button asChild variant="ghost" size="icon" className="h-8 w-8">
-                <a href={`https://www.facebook.com/sharer/sharer.php?u=${storyUrl}`} target="_blank" rel="noopener noreferrer">
+                <a href={`https://www.facebook.com/sharer/sharer.php?u=${storyUrl}`} target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook">
                     <Facebook className="h-4 w-4" />
                 </a>
             </Button>
             <Button asChild variant="ghost" size="icon" className="h-8 w-8">
-                <a href={`https://twitter.com/intent/tweet?url=${storyUrl}&text=${text}`} target="_blank" rel="noopener noreferrer">
+                <a href={`https://twitter.com/intent/tweet?url=${storyUrl}&text=${encodeURIComponent(text)}`} target="_blank" rel="noopener noreferrer" aria-label="Share on Twitter">
                     <Twitter className="h-4 w-4" />
                 </a>
             </Button>
             <Button asChild variant="ghost" size="icon" className="h-8 w-8">
-                <a href={`https://www.linkedin.com/shareArticle?mini=true&url=${storyUrl}`} target="_blank" rel="noopener noreferrer">
+                <a href={`https://www.linkedin.com/shareArticle?mini=true&url=${storyUrl}`} target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn">
                     <Linkedin className="h-4 w-4" />
                 </a>
             </Button>
@@ -31,6 +29,8 @@ const SocialShare = ({ storyUrl }: { storyUrl: string }) => {
 }
 
 export default function SuccessStoriesPage() {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://eduvision.com";
+
   return (
     <div className="bg-secondary">
       <div className="container mx-auto px-4 py-16 md:py-24">
@@ -46,11 +46,12 @@ export default function SuccessStoriesPage() {
         <main>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {successStories.map((story) => {
-              const storyImage = placeholderImages.find(p => p.id === story.imageId);
-              const storyUrl = `https://eduvision.com/success-stories#${story.id}`;
+              const storyImage = PlaceHolderImages.find(p => p.id === story.imageId);
+              const storyUrl = `${siteUrl}/success-stories#${story.id}`;
+              const shareText = `Check out this success story from EduVision Consulting: ${story.name} at ${story.university}!`;
               
               return (
-                <Card key={story.id} className="overflow-hidden bg-card hover:shadow-xl transition-shadow duration-300">
+                <Card key={story.id} id={story.id} className="overflow-hidden bg-card hover:shadow-xl transition-shadow duration-300 scroll-mt-20">
                   <CardContent className="p-6 text-center">
                     {storyImage && (
                       <div className="relative mx-auto mb-4 w-32 h-32">
@@ -73,7 +74,7 @@ export default function SuccessStoriesPage() {
                     </blockquote>
                     <p className="font-bold text-lg font-headline">{story.name}</p>
                     <p className="text-sm text-primary">{story.university}</p>
-                    <SocialShare storyUrl={storyUrl} />
+                    <SocialShare storyUrl={storyUrl} text={shareText} />
                   </CardContent>
                 </Card>
               );

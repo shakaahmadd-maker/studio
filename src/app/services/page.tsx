@@ -1,11 +1,14 @@
+import Link from "next/link";
 import { services } from "@/lib/data";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle2 } from "lucide-react";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
+import Image from "next/image";
+import { PlaceHolderImages } from "@/lib/placeholder-images";
 
 export default function ServicesPage() {
   return (
-    <div className="bg-card">
+    <div className="bg-background">
       <div className="container mx-auto px-4 py-16 md:py-24">
         <header className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-extrabold font-headline text-primary">
@@ -16,62 +19,46 @@ export default function ServicesPage() {
           </p>
         </header>
 
-        <main>
-          <Tabs defaultValue={services[0].id} className="w-full">
-            <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 mb-8">
-              {services.map((service) => (
-                <TabsTrigger key={service.id} value={service.id}>{service.title}</TabsTrigger>
-              ))}
-            </TabsList>
-            
-            {services.map((service) => (
-              <TabsContent key={service.id} value={service.id}>
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="font-headline text-3xl">{service.title}</CardTitle>
-                    <CardDescription className="text-base pt-2">{service.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="grid md:grid-cols-3 gap-8">
-                      <div>
-                        <h3 className="font-semibold text-lg font-headline text-primary mb-4">What We Offer</h3>
-                        <ul className="space-y-2">
-                          {service.details.offerings.map((item, index) => (
-                            <li key={index} className="flex items-start">
-                              <CheckCircle2 className="h-5 w-5 text-green-500 mr-2 mt-1 flex-shrink-0" />
-                              <span className="text-muted-foreground">{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-lg font-headline text-primary mb-4">Our Process</h3>
-                        <ul className="space-y-2">
-                          {service.details.steps.map((item, index) => (
-                             <li key={index} className="flex items-start">
-                              <span className="font-bold text-primary mr-2">{index + 1}.</span>
-                              <span className="text-muted-foreground">{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-lg font-headline text-primary mb-4">Benefits</h3>
-                        <ul className="space-y-2">
-                          {service.details.benefits.map((item, index) => (
-                            <li key={index} className="flex items-start">
-                              <CheckCircle2 className="h-5 w-5 text-green-500 mr-2 mt-1 flex-shrink-0" />
-                              <span className="text-muted-foreground">{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-            ))}
-          </Tabs>
+        <main className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {services.map((service) => {
+                const serviceImage = PlaceHolderImages.find(p => p.id === service.imageId);
+                return (
+                    <Card key={service.id} className="flex flex-col">
+                        {serviceImage && (
+                            <div className="relative h-48 w-full">
+                                <Image 
+                                    src={serviceImage.imageUrl} 
+                                    alt={service.title}
+                                    fill
+                                    className="object-cover rounded-t-lg"
+                                    data-ai-hint={serviceImage.imageHint}
+                                />
+                            </div>
+                        )}
+                        <CardHeader>
+                            <CardTitle className="font-headline">{service.title}</CardTitle>
+                            <CardDescription>{service.description}</CardDescription>
+                        </CardHeader>
+                        <CardContent className="flex-grow">
+                             <ul className="space-y-2 text-sm text-muted-foreground">
+                                {service.details.offerings.slice(0,3).map((item, index) => (
+                                    <li key={index} className="flex items-center">
+                                    <CheckCircle2 className="h-4 w-4 text-green-500 mr-2 flex-shrink-0" />
+                                    <span>{item}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </CardContent>
+                        <CardFooter>
+                            <Button asChild variant="link" className="p-0">
+                                <Link href={`/services/${service.id}`}>
+                                    Learn More <ArrowRight className="ml-2 h-4 w-4" />
+                                </Link>
+                            </Button>
+                        </CardFooter>
+                    </Card>
+                )
+            })}
         </main>
       </div>
     </div>

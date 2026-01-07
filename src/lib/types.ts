@@ -4,6 +4,7 @@ export interface Service {
   description: string;
   imageId: string;
   details: {
+    longDescription: string;
     offerings: string[];
     steps: string[];
     benefits: string[];
@@ -39,5 +40,5 @@ export interface FAQ {
     id: string;
     question: string;
     answer: string;
-    category: 'bachelor' | 'master' | 'phd' | 'general';
+    category: string;
 }

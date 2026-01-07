@@ -3,11 +3,11 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowRight, BookOpen, GraduationCap, Briefcase, Users, Quote } from 'lucide-react';
-import { PlaceHolderImages as placeholderImages } from '@/lib/placeholder-images';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { services, successStories, blogPosts } from '@/lib/data';
 
 export default function Home() {
-  const heroImage = placeholderImages.find(p => p.id === 'hero-students');
+  const heroImage = PlaceHolderImages.find(p => p.id === 'hero-students');
 
   return (
     <div className="flex flex-col min-h-dvh">
@@ -52,24 +52,23 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {services.slice(0, 4).map((service) => {
-                const serviceImage = placeholderImages.find(p => p.id === service.imageId);
+                const serviceImage = PlaceHolderImages.find(p => p.id === service.imageId);
                 return (
                   <Card key={service.id} className="flex flex-col items-center text-center hover:shadow-lg transition-shadow duration-300">
+                     {serviceImage && (
+                        <div className="relative h-40 w-full">
+                            <Image src={serviceImage.imageUrl} alt={service.title} layout="fill" objectFit="cover" className='rounded-t-lg' data-ai-hint={serviceImage.imageHint} />
+                        </div>
+                     )}
                     <CardHeader>
-                      <div className="mx-auto bg-secondary p-4 rounded-full">
-                        {service.id === 'bachelor' && <GraduationCap className="h-8 w-8 text-primary" />}
-                        {service.id === 'master' && <BookOpen className="h-8 w-8 text-primary" />}
-                        {service.id === 'phd' && <Briefcase className="h-8 w-8 text-primary" />}
-                        {service.id === 'diploma' && <Users className="h-8 w-8 text-primary" />}
-                      </div>
                       <CardTitle className="font-headline mt-4">{service.title}</CardTitle>
                     </CardHeader>
-                    <CardContent>
-                      <p className="text-muted-foreground">{service.description.substring(0,100)}...</p>
+                    <CardContent className='flex-grow'>
+                      <p className="text-muted-foreground">{service.description}</p>
                     </CardContent>
                     <CardFooter>
                        <Button asChild variant="link">
-                        <Link href={`/services#${service.id}`}>Learn More <ArrowRight className="ml-2 h-4 w-4" /></Link>
+                        <Link href={`/services/${service.id}`}>Learn More <ArrowRight className="ml-2 h-4 w-4" /></Link>
                       </Button>
                     </CardFooter>
                   </Card>
@@ -93,7 +92,7 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {successStories.slice(0, 3).map((story) => {
-                const storyImage = placeholderImages.find(p => p.id === story.imageId);
+                const storyImage = PlaceHolderImages.find(p => p.id === story.imageId);
                 return (
                   <Card key={story.id} className="overflow-hidden">
                     {storyImage && (
@@ -143,7 +142,7 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {blogPosts.slice(0, 3).map(post => {
-                const postImage = placeholderImages.find(p => p.id === post.imageId);
+                const postImage = PlaceHolderImages.find(p => p.id === post.imageId);
                 return (
                   <Card key={post.slug} className="overflow-hidden flex flex-col">
                     {postImage && <Image src={postImage.imageUrl} alt={post.title} width={600} height={400} className="w-full h-48 object-cover" data-ai-hint={postImage.imageHint} />}
@@ -155,7 +154,7 @@ export default function Home() {
                       <p className="text-muted-foreground">{post.excerpt}</p>
                     </CardContent>
                     <CardFooter>
-                      <Button asChild variant="link">
+                      <Button asChild variant="link" className="p-0">
                         <Link href={`/blog/${post.slug}`}>Read More <ArrowRight className="ml-2 h-4 w-4" /></Link>
                       </Button>
                     </CardFooter>
