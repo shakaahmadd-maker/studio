@@ -1,12 +1,12 @@
 
 import Link from "next/link";
-import { GraduationCap, Linkedin, Twitter, Facebook } from "lucide-react";
+import { GraduationCap, Linkedin, Twitter, Facebook, Instagram } from "lucide-react";
 import { services, serviceCategories } from "@/lib/data.tsx";
 
 const socialLinks = [
-  { name: "Facebook", icon: Facebook, href: "#" },
-  { name: "Twitter", icon: Twitter, href: "#" },
-  { name: "LinkedIn", icon: Linkedin, href: "#" },
+  { name: "Facebook", icon: Facebook, href: "https://www.facebook.com/unihelp.consultant" },
+  { name: "Instagram", icon: Instagram, href: "https://www.instagram.com/unihelp.consultant" },
+  { name: "LinkedIn", icon: Linkedin, href: "https://www.linkedin.com/company/unihelp.consultant" },
 ];
 
 const quickLinks = [
@@ -75,7 +75,7 @@ export function Footer() {
             </ul>
           </div>
 
-          <div className="md:col-span-1">
+          <div className="md-col-span-1">
             <h3 className="font-semibold font-headline tracking-wider uppercase mb-4">Quick Links</h3>
             <ul className="space-y-2">
               {quickLinks.map((link) => (
