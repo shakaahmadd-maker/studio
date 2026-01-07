@@ -1,0 +1,345 @@
+{
+  "entities": {
+    "Service": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Service",
+      "type": "object",
+      "description": "Represents a consulting service offered by EduVision Consulting.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the service."
+        },
+        "category": {
+          "type": "string",
+          "description": "Category of the service (e.g., Bachelor Students, Master Students, PhD Students, Language Classes)."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the service."
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed description of the service, including what's offered, steps involved, and benefits. Supports rich text and images."
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "URL of the image associated with the service.",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "id",
+        "category",
+        "title",
+        "description"
+      ]
+    },
+    "FAQ": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "FAQ",
+      "type": "object",
+      "description": "Represents a frequently asked question.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the FAQ."
+        },
+        "category": {
+          "type": "string",
+          "description": "Category of the FAQ (e.g., Bachelor Students, Master Students)."
+        },
+        "question": {
+          "type": "string",
+          "description": "The FAQ question."
+        },
+        "answer": {
+          "type": "string",
+          "description": "The answer to the FAQ question. Supports rich text."
+        }
+      },
+      "required": [
+        "id",
+        "category",
+        "question",
+        "answer"
+      ]
+    },
+    "SuccessStory": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "SuccessStory",
+      "type": "object",
+      "description": "Represents a success story of a student who used EduVision Consulting's services.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the success story."
+        },
+        "studentName": {
+          "type": "string",
+          "description": "Name of the student."
+        },
+        "story": {
+          "type": "string",
+          "description": "The student's success story. Supports rich text."
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "URL of the student's image (e.g., passport photo).",
+          "format": "uri"
+        },
+        "watermarkedImageUrl": {
+          "type": "string",
+          "description": "URL of the watermarked image.",
+          "format": "uri"
+        },
+        "socialMediaShares": {
+          "type": "number",
+          "description": "Number of times the story has been shared on social media."
+        }
+      },
+      "required": [
+        "id",
+        "studentName",
+        "story",
+        "imageUrl"
+      ]
+    },
+    "BlogPost": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "BlogPost",
+      "type": "object",
+      "description": "Represents a blog post.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the blog post."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the blog post."
+        },
+        "content": {
+          "type": "string",
+          "description": "Content of the blog post. Supports rich text and images."
+        },
+        "author": {
+          "type": "string",
+          "description": "Author of the blog post."
+        },
+        "publicationDate": {
+          "type": "string",
+          "description": "Date and time the blog post was published.",
+          "format": "date-time"
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "URL of the blog post's image.",
+          "format": "uri"
+        },
+        "socialMediaShares": {
+          "type": "number",
+          "description": "Number of times the blog post has been shared on social media."
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "content",
+        "author",
+        "publicationDate"
+      ]
+    },
+    "JobApplication": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "JobApplication",
+      "type": "object",
+      "description": "Represents a job application submitted through the career portal.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the job application."
+        },
+        "applicantName": {
+          "type": "string",
+          "description": "Name of the applicant."
+        },
+        "email": {
+          "type": "string",
+          "description": "Email address of the applicant.",
+          "format": "email"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "description": "Phone number of the applicant."
+        },
+        "cvUrl": {
+          "type": "string",
+          "description": "URL of the applicant's CV.",
+          "format": "uri"
+        },
+        "coverLetter": {
+          "type": "string",
+          "description": "The applicant's cover letter."
+        }
+      },
+      "required": [
+        "id",
+        "applicantName",
+        "email",
+        "cvUrl"
+      ]
+    },
+    "Referral": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Referral",
+      "type": "object",
+      "description": "Represents a user referral.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the referral."
+        },
+        "referrerName": {
+          "type": "string",
+          "description": "Name of the referrer."
+        },
+        "referrerEmail": {
+          "type": "string",
+          "description": "Email address of the referrer.",
+          "format": "email"
+        },
+        "referredClientName": {
+          "type": "string",
+          "description": "Name of the referred client."
+        },
+        "referredClientContact": {
+          "type": "string",
+          "description": "Contact information of the referred client."
+        },
+        "referralCode": {
+          "type": "string",
+          "description": "Referral code associated with the referral."
+        },
+        "commissionEarned": {
+          "type": "number",
+          "description": "Commission earned by the referrer for this referral."
+        }
+      },
+      "required": [
+        "id",
+        "referrerName",
+        "referrerEmail",
+        "referredClientName",
+        "referredClientContact"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/services/{serviceId}",
+        "definition": {
+          "entityName": "Service",
+          "schema": {
+            "$ref": "#/backend/entities/Service"
+          },
+          "description": "Stores consulting services offered by EduVision Consulting. Includes fields for category, title, description, and image URL.",
+          "params": [
+            {
+              "name": "serviceId",
+              "description": "Unique identifier for the service."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/faqs/{faqId}",
+        "definition": {
+          "entityName": "FAQ",
+          "schema": {
+            "$ref": "#/backend/entities/FAQ"
+          },
+          "description": "Stores frequently asked questions. Includes fields for category, question, and answer.",
+          "params": [
+            {
+              "name": "faqId",
+              "description": "Unique identifier for the FAQ."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/success_stories/{successStoryId}",
+        "definition": {
+          "entityName": "SuccessStory",
+          "schema": {
+            "$ref": "#/backend/entities/SuccessStory"
+          },
+          "description": "Stores success stories of students who used EduVision Consulting's services. Includes fields for student name, story, and image URLs.",
+          "params": [
+            {
+              "name": "successStoryId",
+              "description": "Unique identifier for the success story."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/blog_posts/{blogPostId}",
+        "definition": {
+          "entityName": "BlogPost",
+          "schema": {
+            "$ref": "#/backend/entities/BlogPost"
+          },
+          "description": "Stores blog posts. Includes fields for title, content, author, publication date, and image URL.",
+          "params": [
+            {
+              "name": "blogPostId",
+              "description": "Unique identifier for the blog post."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/job_applications/{jobApplicationId}",
+        "definition": {
+          "entityName": "JobApplication",
+          "schema": {
+            "$ref": "#/backend/entities/JobApplication"
+          },
+          "description": "Stores job applications submitted through the career portal. Includes fields for applicant name, email, phone number, CV URL, and cover letter.",
+          "params": [
+            {
+              "name": "jobApplicationId",
+              "description": "Unique identifier for the job application."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/referrals/{referralId}",
+        "definition": {
+          "entityName": "Referral",
+          "schema": {
+            "$ref": "#/backend/entities/Referral"
+          },
+          "description": "Stores user referrals. Includes fields for referrer name, referrer email, referred client name, referred client contact, referral code, and commission earned.",
+          "params": [
+            {
+              "name": "referralId",
+              "description": "Unique identifier for the referral."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore structure is designed to support EduVision Consulting's content management system, focusing on services, success stories, blog posts, job applications, and referrals. To ensure authorization independence, no `get()` calls are needed in the security rules. This is achieved through structural segregation and denormalization, especially for collaborative data (none in this case) by avoiding dependencies on parent documents for child document access.\n\nThe database uses separate collections for each entity type (Services, FAQs, SuccessStories, BlogPosts, JobApplications, and Referrals). This structural segregation ensures a homogeneous security posture, simplifying rules by aligning documents with similar access needs. The absence of user-owned data eliminates the necessity of path-based ownership structures (e.g., `/users/{userId}/...`).\n\nEach collection is designed to support secure `list` operations (QAPs) by ensuring that all documents within a collection share the same security requirements. For example, all `Services` have the same access control needs, which is also true for `SuccessStories`, `BlogPosts`, `JobApplications`, and `Referrals`. This ensures predictability and avoids the need for complex filtering logic in the rules.\n\nSince no collaborative data or user specific data is available in the specification, a membership map is not required.\n\nInvariants such as timestamps and ownership are not specified in the data entities. Should they be required they could be added without breaking the authorization model. Data clarity is enhanced through explicit state modeling using a `status` field (if needed), predictable schemas, and consistent naming conventions (e.g., always use `id` for document IDs)."
+  }
+}

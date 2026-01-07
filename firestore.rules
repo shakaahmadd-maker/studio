@@ -1,0 +1,135 @@
+/**
+ * Core Philosophy: This ruleset implements a security model for a public-facing content management system (CMS).
+ * The primary goal is to make content like services, FAQs, blog posts, and success stories publicly readable by anyone,
+ * while strictly controlling all data modification. Due to the absence of a defined administrator role or document
+ * ownership fields in the data model, all write operations (create, update, delete) on content are disabled by default.
+ * This creates a secure, read-only state for public data.
+ *
+ * Data Structure: The database uses a flat hierarchy of top-level collections for different types of content
+ * (e.g., /services, /faqs, /blog_posts). Sensitive data, such as job applications and referrals, is also stored
+ * in separate top-level collections to enforce stricter access controls. There are no user-specific subcollections.
+ *
+ * Key Security Decisions:
+ * - Public Read-Only Content: Collections like `services`, `faqs`, `success_stories`, and `blog_posts` are publicly
+ *   readable by any user, including unauthenticated ones.
+ * - Locked-Down Writes: All write operations on public content are denied (`if false;`) as a secure default.
+ *   This prevents unauthorized modification. A placeholder function `isContentAdmin()` is included to show where
+ *   admin-only logic should be implemented once an admin system is in place.
+ * - "Write-Once" Collections for Submissions: Collections like `job_applications` and `referrals` contain sensitive
+ *   information. They are configured to allow anyone to create (submit) a document but prevent anyone from reading,
+ *   updating, or deleting them via the client. This allows data to be collected securely for backend processing.
+ *
+ * Denormalization for Authorization: This principle is acknowledged but not currently applied, as the data model
+ * does not yet include features like user ownership or collaborative documents that would require denormalized
+ * authorization fields (e.g., an `ownerId` on a blog post).
+ *
+ * Structural Segregation: The use of separate collections for each data entity (e.g., `/services`, `/blog_posts`)
+ * is a core design choice. This ensures that a simple, uniform security policy can be applied to all documents
+ * of the same type, which is more secure and performant than mixing public and private documents in one collection.
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions to improve readability and maintainability of the rules.
+
+    /**
+     * Placeholder for content administrator role check.
+     * Currently returns false to lock down all write operations on public content.
+     * TODO: Implement a real admin check, e.g., by looking up a user's custom claims.
+     * function isContentAdmin() {
+     *   return request.auth.token.isAdmin == true;
+     * }
+     */
+    function isContentAdmin() {
+      return false;
+    }
+
+    /**
+     * @description Controls access to the 'services' collection.
+     * @path /services/{serviceId}
+     * @allow (get, list) any user, authenticated or not, can read service information.
+     * @deny (create, update, delete) all users are blocked from modifying services.
+     * @principle Public read-only access for marketing content. Writes are locked pending an admin implementation.
+     */
+    match /services/{serviceId} {
+      allow get, list: if true;
+      allow create: if isContentAdmin(); // TODO: Implement admin logic in isContentAdmin()
+      allow update: if isContentAdmin(); // TODO: Implement admin logic in isContentAdmin()
+      allow delete: if isContentAdmin(); // TODO: Implement admin logic in isContentAdmin()
+    }
+
+    /**
+     * @description Controls access to the 'faqs' collection.
+     * @path /faqs/{faqId}
+     * @allow (get, list) any user, authenticated or not, can read FAQs.
+     * @deny (create, update, delete) all users are blocked from modifying FAQs.
+     * @principle Public read-only access for informational content. Writes are locked pending an admin implementation.
+     */
+    match /faqs/{faqId} {
+      allow get, list: if true;
+      allow create: if isContentAdmin(); // TODO: Implement admin logic in isContentAdmin()
+      allow update: if isContentAdmin(); // TODO: Implement admin logic in isContentAdmin()
+      allow delete: if isContentAdmin(); // TODO: Implement admin logic in isContentAdmin()
+    }
+
+    /**
+     * @description Controls access to the 'success_stories' collection.
+     * @path /success_stories/{successStoryId}
+     * @allow (get, list) any user, authenticated or not, can read success stories.
+     * @deny (create, update, delete) all users are blocked from modifying success stories.
+     * @principle Public read-only access for marketing content. Writes are locked pending an admin implementation.
+     */
+    match /success_stories/{successStoryId} {
+      allow get, list: if true;
+      allow create: if isContentAdmin(); // TODO: Implement admin logic in isContentAdmin()
+      allow update: if isContentAdmin(); // TODO: Implement admin logic in isContentAdmin()
+      allow delete: if isContentAdmin(); // TODO: Implement admin logic in isContentAdmin()
+    }
+
+    /**
+     * @description Controls access to the 'blog_posts' collection.
+     * @path /blog_posts/{blogPostId}
+     * @allow (get, list) any user, authenticated or not, can read blog posts.
+     * @deny (create, update, delete) all users are blocked from modifying blog posts.
+     * @principle Public read-only access for content. Writes are locked pending an admin or author ownership implementation.
+     */
+    match /blog_posts/{blogPostId} {
+      // CRITICAL: Cannot implement owner-only writes. The 'BlogPost' entity is missing a UID-based 'authorId' field.
+      allow get, list: if true;
+      allow create: if isContentAdmin(); // TODO: Add owner validation once the schema is updated with an 'authorId' (UID) field.
+      allow update: if isContentAdmin(); // TODO: Add owner validation once the schema is updated with an 'authorId' (UID) field.
+      allow delete: if isContentAdmin(); // TODO: Add owner validation once the schema is updated with an 'authorId' (UID) field.
+    }
+
+    /**
+     * @description Controls access to the 'job_applications' collection. This is a "write-once" collection.
+     * @path /job_applications/{jobApplicationId}
+     * @allow (create) any user can submit a job application.
+     * @deny (get, list, update, delete) all users are blocked from reading or modifying submitted applications to protect PII.
+     * @principle Secures sensitive user-submitted data by allowing creation but preventing any client-side read or modification access.
+     */
+    match /job_applications/{jobApplicationId} {
+      allow create: if true;
+      allow get: if false;
+      allow list: if false;
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    /**
+     * @description Controls access to the 'referrals' collection. This is a "write-once" collection.
+     * @path /referrals/{referralId}
+     * @allow (create) any user can submit a referral.
+     * @deny (get, list, update, delete) all users are blocked from reading or modifying submitted referrals to protect private information.
+     * @principle Secures sensitive user-submitted data by allowing creation but preventing any client-side read or modification access.
+     */
+    match /referrals/{referralId} {
+      allow create: if true;
+      allow get: if false;
+      allow list: if false;
+      allow update: if false;
+      allow delete: if false;
+    }
+  }
+}
