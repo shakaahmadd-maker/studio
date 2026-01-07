@@ -3,15 +3,22 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { GraduationCap, Menu, X } from "lucide-react";
+import { GraduationCap, Menu, X, ChevronDown } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
+import { services } from "@/lib/data";
 
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/services", label: "Services" },
+  // The "Services" link is now replaced by the StudyAbroadDropdown
   { href: "/success-stories", label: "Success Stories" },
   { href: "/blog", label: "Blog" },
   { href: "/career", label: "Career" },
@@ -28,6 +35,53 @@ const Logo = () => (
     </span>
   </Link>
 );
+
+const StudyAbroadDropdown = ({ isMobile = false, onLinkClick }: { isMobile?: boolean, onLinkClick?: () => void }) => {
+  const pathname = usePathname();
+
+  if (isMobile) {
+    return (
+      <div className="flex flex-col space-y-4">
+        <span className="text-lg font-semibold text-primary">Study Abroad</span>
+        {services.map((service) => (
+          <Link
+            key={service.id}
+            href={`/services/${service.id}`}
+            className={cn(
+              "text-lg transition-colors hover:text-primary pl-4",
+              pathname === `/services/${service.id}` ? "text-primary font-semibold" : "text-muted-foreground"
+            )}
+            onClick={onLinkClick}
+          >
+            {service.title}
+          </Link>
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-primary p-0 h-auto">
+          Study Abroad
+          <ChevronDown className="h-4 w-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start">
+        {services.map((service) => (
+          <DropdownMenuItem key={service.id} asChild>
+            <Link href={`/services/${service.id}`}>{service.title}</Link>
+          </DropdownMenuItem>
+        ))}
+         <DropdownMenuItem asChild>
+            <Link href="/services">View All Services</Link>
+          </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};
+
 
 export function Header() {
   const pathname = usePathname();
@@ -50,6 +104,7 @@ export function Header() {
               {label}
             </Link>
           ))}
+          <StudyAbroadDropdown />
         </nav>
         <div className="flex md:hidden items-center ml-auto">
           <Sheet open={isMobileMenuOpen} onOpenChange={setMobileMenuOpen}>
@@ -82,6 +137,7 @@ export function Header() {
                       {label}
                     </Link>
                   ))}
+                  <StudyAbroadDropdown isMobile={true} onLinkClick={() => setMobileMenuOpen(false)}/>
                 </nav>
               </div>
             </SheetContent>
