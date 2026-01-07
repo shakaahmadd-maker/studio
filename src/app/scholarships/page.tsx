@@ -66,7 +66,7 @@ const whyChooseUsFeatures = [
     },
     {
       title: 'Tailored Scholarship Strategy for Every Student',
-      description: 'At Uni Help Consultants, we understand that every student’s journey is different. That’s why we create a customized scholarship strategy based on your unique academic background, career goals, and personal circumstances. Whether you\'re applying for undergraduate programs, graduate research, or specialized fellowships, we tailor our approach to ensure that your scholarship applications are aligned with your strengths and aspirations.',
+      description: 'At Uni Help Consultants, we craft a personalized scholarship strategy based on your goals and background, ensuring your applications align with your strengths and aspirations.',
     },
 ];
 
