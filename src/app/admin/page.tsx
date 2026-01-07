@@ -1,5 +1,6 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { BookOpen, Star, FileText, Briefcase, Users, Handshake, HelpCircle } from "lucide-react";
+import { team } from "@/lib/data";
 
 const stats = [
     { title: "Services", value: "8", icon: BookOpen },
@@ -8,6 +9,7 @@ const stats = [
     { title: "Job Applications", value: "2", icon: Briefcase },
     { title: "Referrals", value: "3", icon: Handshake },
     { title: "FAQs", value: "5", icon: HelpCircle },
+    { title: "Team Members", value: team.length.toString(), icon: Users },
 ]
 
 export default function AdminDashboard() {
