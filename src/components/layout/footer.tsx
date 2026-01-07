@@ -1,3 +1,4 @@
+
 import Link from "next/link";
 import { GraduationCap, Linkedin, Twitter, Facebook } from "lucide-react";
 
@@ -11,6 +12,7 @@ const quickLinks = [
   { href: "/services", label: "Services" },
   { href: "/about", label: "About Us" },
   { href: "/why-us", label: "Why Choose Us" },
+  { href: "/scholarships", label: "Scholarships" },
   { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
   { href: "/career", label: "Careers" },
@@ -78,3 +80,5 @@ export function Footer() {
     </footer>
   );
 }
+
+    

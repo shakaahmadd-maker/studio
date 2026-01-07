@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -23,6 +24,7 @@ const navLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About Us" },
   { href: "/why-us", label: "Why Us"},
+  { href: "/scholarships", label: "Scholarships" },
   { href: "/success-stories", label: "Success Stories" },
   { href: "/blog", label: "Blog" },
   { href: "/referral-program", label: "Referrals" },
@@ -164,7 +166,7 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
         <Logo />
-        <nav className="hidden md:flex items-center gap-4 text-sm font-medium">
+        <nav className="hidden lg:flex items-center gap-4 text-sm font-medium">
           <Link
               href="/"
               className={cn(
@@ -194,6 +196,15 @@ export function Header() {
             </Link>
           <ServiceCategoryDropdown />
           <StudyAbroadDropdown />
+           <Link
+              href="/scholarships"
+              className={cn(
+                "transition-colors hover:text-primary",
+                pathname === "/scholarships" ? "text-primary" : "text-muted-foreground"
+              )}
+            >
+              Scholarships
+            </Link>
           <Link
               href="/success-stories"
               className={cn(
@@ -241,12 +252,12 @@ export function Header() {
             </Link>
         </nav>
         <div className="flex items-center ml-auto">
-          <div className="hidden md:block">
+          <div className="hidden lg:block">
             <ConsultationButton />
           </div>
           <Sheet open={isMobileMenuOpen} onOpenChange={setMobileMenuOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden ml-4">
+              <Button variant="ghost" size="icon" className="lg:hidden ml-4">
                 <Menu className="h-6 w-6" />
                 <span className="sr-only">Open menu</span>
               </Button>
@@ -294,5 +305,7 @@ export function Header() {
     </header>
   );
 }
+
+    
 
     

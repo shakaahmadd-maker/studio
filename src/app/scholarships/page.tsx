@@ -1,0 +1,264 @@
+
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { CheckCircle, Award, Briefcase, BookOpen, User, Star } from 'lucide-react';
+import Image from 'next/image';
+
+const scholarshipData = {
+  europe: [
+    {
+      title: 'Erasmus+ / Erasmus Mundus Joint Master Degrees (EU)',
+      level: 'Bachelor’s / Master’s / PhD',
+      coverage: [
+        'Full tuition coverage',
+        'Monthly stipend for living costs',
+        'Travel allowance',
+        'Internship/Work opportunities',
+      ],
+      notes: 'Highly competitive scholarships for international students to study in prestigious universities across Europe, fostering academic exchange and a global experience.',
+      icon: <Image src="/flags/eu.svg" alt="EU Flag" width={48} height={48} className="rounded-full" />,
+    },
+    {
+      title: 'DAAD Scholarships (Germany)',
+      level: 'Master’s, PhD, Research Grants',
+      coverage: [
+        'Full coverage of university fees',
+        'Monthly stipend',
+        'Travel & health insurance',
+      ],
+      notes: 'One of the most generous government-funded scholarships in Europe, ideal for students in research, technology, and international relations.',
+      icon: <Image src="/flags/de.svg" alt="Germany Flag" width={48} height={48} className="rounded-full" />,
+    },
+    {
+        title: 'Swiss Government Excellence Scholarships (Switzerland)',
+        level: 'Master’s / PhD / Research',
+        coverage: ['Full tuition coverage', 'Monthly living allowance', 'Travel allowances'],
+        notes: 'Administered by the Swiss government for international students to conduct research or study at Swiss universities, particularly in STEM fields.',
+        icon: <Image src="/flags/ch.svg" alt="Switzerland Flag" width={48} height={48} className="rounded-full" />,
+    },
+    {
+        title: 'Emile Boutmy Scholarship (France)',
+        level: 'Bachelor’s / Master’s',
+        coverage: ['Up to $21,000 per year for tuition and living expenses.'],
+        notes: 'Exclusively for non-EU students applying to Sciences Po in France, aiming to attract top global talent.',
+        icon: <Image src="/flags/fr.svg" alt="France Flag" width={48} height={48} className="rounded-full" />,
+    },
+    {
+        title: 'Eiffel Excellence Scholarship (France)',
+        level: 'Master’s / PhD',
+        coverage: ['Monthly living allowance', 'Covers travel expenses'],
+        notes: 'A prestigious scholarship administered through French universities for top international talent in science, law, engineering, and social sciences.',
+        icon: <Image src="/flags/fr.svg" alt="France Flag" width={48} height={48} className="rounded-full" />,
+    }
+  ],
+  otherEurope: [
+    {
+        country: 'Belgium',
+        icon: <Image src="/flags/be.svg" alt="Belgium Flag" width={32} height={32} />,
+        note: 'Scholarships focus on developing human resources in developing countries for Master\'s and PhD programs.'
+    },
+    {
+        country: 'Sweden',
+        icon: <Image src="/flags/se.svg" alt="Sweden Flag" width={32} height={32} />,
+        note: 'Promotes global sustainability, innovation, and leadership through academic exchange, mainly for Master\'s programs.'
+    },
+    {
+        country: 'Ireland',
+        icon: <Image src="/flags/ie.svg" alt="Ireland Flag" width={32} height={32} />,
+        note: 'Open to all disciplines for non-EU/EEA students pursuing a Master\'s or PhD, enhancing global research partnerships.'
+    },
+    {
+        country: 'Netherlands',
+        icon: <Image src="/flags/nl.svg" alt="Netherlands Flag" width={32} height={32} />,
+        note: 'Includes the Holland Scholarship and Orange Tulip Scholarship, focusing on innovation and strengthening educational ties.'
+    },
+    {
+        country: 'Finland',
+        icon: <Image src="/flags/fi.svg" alt="Finland Flag" width={32} height={32} />,
+        note: 'Targeted at highly talented non-EU/EEA students, primarily for research or doctoral programs in STEM and social sciences.'
+    },
+    {
+        country: 'Denmark',
+        icon: <Image src="/flags/dk.svg" alt="Denmark Flag" width={32} height={32} />,
+        note: 'Aimed at strengthening academic cooperation with developing countries, funding Master’s or PhD studies.'
+    },
+     {
+        country: 'Norway',
+        icon: <Image src="/flags/no.svg" alt="Norway Flag" width={32} height={32} />,
+        note: 'Tuition is often free, but scholarships provide living stipends, especially for students from developing countries.'
+    },
+  ],
+  usa: [
+    {
+      title: 'Fulbright Foreign Student Program',
+      level: 'Master’s / PhD',
+      coverage: ['Full tuition', 'Living stipend', 'Airfare & health insurance'],
+      notes: 'One of the most prestigious U.S. government scholarships designed to promote cultural exchange and graduate-level studies.',
+      icon: <Image src="/flags/us.svg" alt="USA Flag" width={48} height={48} className="rounded-full" />,
+    },
+    {
+      title: 'Knight-Hennessy Scholarships (Stanford)',
+      level: 'Graduate',
+      coverage: ['Full tuition', 'Living stipend', 'Travel allowance'],
+      notes: 'For exceptional international graduate students at Stanford University, covering all expenses and including leadership development programs.',
+      icon: <Star className="h-10 w-10 text-yellow-500" />,
+    },
+     {
+      title: 'University Aid & Endowments (Harvard, Yale, etc.)',
+      level: 'Undergraduate / Graduate',
+      coverage: ['Full funding for tuition, living expenses, and travel.'],
+      notes: 'Top U.S. universities offer generous need-based financial aid to international students based on academic excellence and financial need.',
+      icon: <BookOpen className="h-10 w-10 text-primary" />,
+    },
+     {
+      title: 'Harkness Fellowship',
+      level: 'Postgraduate professional exchange',
+      coverage: ['Covers tuition fees and living costs for the program duration.'],
+      notes: 'Offers international students the chance to engage in research focused on healthcare policy in the U.S.',
+      icon: <Briefcase className="h-10 w-10 text-teal-500" />,
+    },
+  ],
+  canada: [
+    {
+      title: 'Government & University Scholarships',
+      level: 'Varies',
+      coverage: ['Full tuition coverage', 'Living stipends'],
+      notes: 'Canada offers numerous scholarships, particularly for graduate and research programs at top universities like Toronto and UBC.',
+      icon: <Image src="/flags/ca.svg" alt="Canada Flag" width={48} height={48} className="rounded-full" />,
+    },
+  ],
+  australia: [
+    {
+      title: 'Australia Awards Scholarships',
+      level: 'Bachelor’s / Master’s / PhD',
+      coverage: ['Full tuition fees', 'Travel allowance', 'Living stipend', 'Health coverage'],
+      notes: 'Offered by the Australian government to support students from developing countries to study at top Australian universities.',
+       icon: <Image src="/flags/au.svg" alt="Australia Flag" width={48} height={48} className="rounded-full" />,
+    },
+     {
+      title: 'RTP Research Scholarships (e.g., Monash)',
+      level: 'Master’s by Research / PhD',
+      coverage: ['Full tuition fees', 'Research funding', 'Stipend for living costs'],
+      notes: 'The Research Training Program (RTP) is a highly competitive opportunity for research-focused students across Australia.',
+       icon: <Image src="/flags/au.svg" alt="Australia Flag" width={48} height={48} className="rounded-full" />,
+    },
+  ],
+  newZealand: [
+    {
+      title: 'Manaaki New Zealand Scholarships',
+      level: 'Bachelor’s / Master’s / PhD',
+      coverage: ['Full tuition fees', 'Living allowance', 'Travel and insurance'],
+      notes: 'Full-funding scholarships for students from developing countries, focusing on sustainable development.',
+      icon: <Image src="/flags/nz.svg" alt="New Zealand Flag" width={48} height={48} className="rounded-full" />,
+    },
+  ],
+  china: [
+    {
+      title: 'Confucius Institute Scholarship',
+      level: 'All levels + Language Programs',
+      coverage: ['Full tuition, stipends, accommodation, and travel.'],
+      notes: 'An excellent opportunity for students wishing to study Chinese language and culture, offered through Confucius Institutes worldwide.',
+      icon: <Image src="/flags/cn.svg" alt="China Flag" width={48} height={48} className="rounded-full" />,
+    },
+     {
+      title: 'China Scholarship Council (CSC) Scholarships',
+      level: 'Bachelor’s / Master’s / PhD',
+      coverage: ['Full tuition, monthly stipend, accommodation, and medical insurance.'],
+      notes: 'Provides full funding for international students to pursue degrees at Chinese universities, administered by the CSC.',
+      icon: <Image src="/flags/cn.svg" alt="China Flag" width={48} height={48} className="rounded-full" />,
+    },
+  ],
+};
+
+
+const ScholarshipCard = ({ scholarship }: { scholarship: (typeof scholarshipData.europe)[0] }) => (
+  <Card className="flex flex-col overflow-hidden transition-shadow duration-300 hover:shadow-xl">
+    <CardHeader className="flex flex-row items-start gap-4 pb-4">
+      <div className="flex-shrink-0">{scholarship.icon}</div>
+      <div className="flex-grow">
+        <CardTitle className="text-lg font-headline leading-tight">{scholarship.title}</CardTitle>
+        <CardDescription className="text-sm font-semibold text-primary">{scholarship.level}</CardDescription>
+      </div>
+    </CardHeader>
+    <CardContent className="flex-grow">
+      <p className="mb-3 text-sm text-muted-foreground">{scholarship.notes}</p>
+      <h4 className="mb-2 text-sm font-semibold">Coverage:</h4>
+      <ul className="space-y-1">
+        {scholarship.coverage.map((item, index) => (
+          <li key={index} className="flex items-center text-xs text-muted-foreground">
+            <CheckCircle className="mr-2 h-3 w-3 flex-shrink-0 text-green-500" />
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </CardContent>
+  </Card>
+);
+
+const RegionSection = ({ title, scholarships }: { title: string; scholarships: any[] }) => (
+  <section className="mb-16">
+    <h2 className="mb-8 text-3xl font-bold text-center font-headline text-primary">{title}</h2>
+    <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      {scholarships.map((scholarship) => (
+        <ScholarshipCard key={scholarship.title} scholarship={scholarship} />
+      ))}
+    </div>
+  </section>
+);
+
+
+export default function ScholarshipsPage() {
+  return (
+    <div className="bg-background">
+      <div className="container mx-auto px-4 py-16 md:py-24">
+        <header className="mb-16 text-center">
+          <h1 className="text-4xl font-extrabold text-primary sm:text-5xl lg:text-6xl tracking-tight font-headline">
+            Unlock Your Future with Uni Help Consultants
+          </h1>
+          <p className="mt-4 max-w-4xl mx-auto text-xl text-muted-foreground">
+            We are committed to helping you achieve your academic dreams by guiding you through the process of securing prestigious scholarships for studying abroad.
+          </p>
+        </header>
+
+        <section className="mb-16 max-w-4xl mx-auto text-center">
+             <h2 className="mb-4 text-3xl font-bold font-headline text-primary">How We Can Help</h2>
+            <p className="text-muted-foreground">
+                Our team at Uni Help Consultants provides comprehensive scholarship guidance, including personalized advice, expert application support, and access to exclusive scholarship opportunities. Let’s explore the key scholarships that we can help you secure.
+            </p>
+        </section>
+
+        <RegionSection title="Scholarships in Europe" scholarships={scholarshipData.europe} />
+        
+        <section className="mb-16">
+            <h3 className="text-2xl font-bold text-center font-headline text-primary/80 mb-8">More Government & University Scholarships Across Europe</h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-6 text-center">
+                {scholarshipData.otherEurope.map(s => (
+                    <div key={s.country} className="flex flex-col items-center">
+                        {s.icon}
+                        <p className="font-semibold mt-2 text-sm">{s.country}</p>
+                    </div>
+                ))}
+            </div>
+            <p className="text-center text-muted-foreground mt-6 max-w-3xl mx-auto">
+                Many European governments and universities offer a wide range of scholarships. At Uni Help Consultants, we specialize in helping students find and apply for these prestigious opportunities.
+            </p>
+        </section>
+
+        <RegionSection title="Scholarships in the USA" scholarships={scholarshipData.usa} />
+        <RegionSection title="Scholarships in Canada" scholarships={scholarshipData.canada} />
+        <RegionSection title="Scholarships in Australia" scholarships={scholarshipData.australia} />
+        <RegionSection title="Scholarships in New Zealand" scholarships={scholarshipData.newZealand} />
+        <RegionSection title="Scholarships in China" scholarships={scholarshipData.china} />
+
+        <section className="mt-16 text-center bg-secondary py-12 rounded-lg">
+            <h2 className="text-3xl font-bold font-headline text-primary">Ready to Start Your Journey?</h2>
+            <p className="mt-4 max-w-2xl mx-auto text-muted-foreground">
+               Let Uni Help Consultants help you unlock prestigious scholarships and pave your way to academic success. Contact us today to begin your scholarship journey!
+            </p>
+        </section>
+
+      </div>
+    </div>
+  );
+}
+
+    
