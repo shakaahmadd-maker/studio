@@ -47,7 +47,7 @@ const ServiceCategoryDropdown = ({ isMobile = false, onLinkClick }: { isMobile?:
   if (isMobile) {
     return (
       <div className="flex flex-col space-y-4">
-        <span className="text-lg font-semibold text-primary">Our Services</span>
+        <span className="text-lg font-semibold text-primary">Programmes</span>
         {serviceCategories.map((category) => (
           <Link
             key={category.id}
@@ -69,7 +69,7 @@ const ServiceCategoryDropdown = ({ isMobile = false, onLinkClick }: { isMobile?:
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-primary p-0 h-auto">
-          Our Services
+          Programmes
           <ChevronDown className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
