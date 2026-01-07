@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -16,9 +17,11 @@ export default function AdminTeamPage() {
                         <CardTitle className="font-headline">Team Members</CardTitle>
                         <CardDescription>Manage your team members.</CardDescription>
                     </div>
-                    <Button size="sm">
-                        <PlusCircle className="h-4 w-4 mr-2" />
-                        New Member
+                    <Button asChild size="sm">
+                        <Link href="/admin/team/new">
+                            <PlusCircle className="h-4 w-4 mr-2" />
+                            New Member
+                        </Link>
                     </Button>
                 </div>
             </CardHeader>
