@@ -21,7 +21,7 @@ export async function generateStaticParams() {
 }
 
 const SuccessStoryCard = ({ story }: { story: (typeof successStories)[0] }) => {
-    const storyImage = PlaceHolderImages.find(p => p.id === story.imageId);
+    const storyImage = PlaceHolderImages.find(p => p.id === story.clientImageId);
     return (
         <Card className="overflow-hidden">
             {storyImage && (

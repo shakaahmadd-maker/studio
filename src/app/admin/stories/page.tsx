@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -16,9 +17,11 @@ export default function AdminStoriesPage() {
                         <CardTitle className="font-headline">Success Stories</CardTitle>
                         <CardDescription>Manage student success stories.</CardDescription>
                     </div>
-                    <Button size="sm">
-                        <PlusCircle className="h-4 w-4 mr-2" />
-                        Add Story
+                    <Button asChild size="sm">
+                        <Link href="/admin/stories/new">
+                            <PlusCircle className="h-4 w-4 mr-2" />
+                            Add Story
+                        </Link>
                     </Button>
                 </div>
             </CardHeader>
@@ -34,7 +37,7 @@ export default function AdminStoriesPage() {
                     </TableHeader>
                     <TableBody>
                         {successStories.map(story => {
-                            const image = placeholderImages.find(p => p.id === story.imageId);
+                            const image = placeholderImages.find(p => p.id === story.clientImageId);
                             return (
                                 <TableRow key={story.id}>
                                     <TableCell className="hidden sm:table-cell">

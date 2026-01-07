@@ -28,7 +28,8 @@ export interface SuccessStory {
   name: string;
   university: string;
   story: string;
-  imageId: string;
+  clientImageId: string;
+  visaImageId: string;
 }
 
 export interface BlogPost {

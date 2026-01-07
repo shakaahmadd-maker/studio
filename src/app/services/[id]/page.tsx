@@ -21,7 +21,7 @@ export async function generateStaticParams() {
 }
 
 const SuccessStoryCard = ({ story }: { story: (typeof successStories)[0] }) => {
-    const storyImage = PlaceHolderImages.find(p => p.id === story.imageId);
+    const storyImage = PlaceHolderImages.find(p => p.id === story.clientImageId);
     return (
         <Card className="overflow-hidden">
             {storyImage && (
@@ -84,7 +84,7 @@ export default function ServicePage({ params }: ServicePageProps) {
           )}
         
         <div className="prose prose-lg dark:prose-invert max-w-none mx-auto mb-16 text-foreground/80">
-            <p>{service.details.longDescription}</p>
+            <div dangerouslySetInnerHTML={{ __html: service.details.longDescription }} />
         </div>
 
         <div className="grid md:grid-cols-3 gap-8 mb-20">

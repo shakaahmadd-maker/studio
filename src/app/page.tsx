@@ -122,7 +122,7 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {successStories.slice(0, 3).map((story) => {
-                const storyImage = PlaceHolderImages.find(p => p.id === story.imageId);
+                const storyImage = PlaceHolderImages.find(p => p.id === story.clientImageId);
                 return (
                   <Card key={story.id} className="overflow-hidden">
                     {storyImage && (
