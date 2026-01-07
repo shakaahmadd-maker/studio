@@ -21,12 +21,12 @@ import { ConsultationForm } from "../forms/consultation-form";
 
 const navLinks = [
   { href: "/", label: "Home" },
+  { href: "/about", label: "About Us" },
   { href: "/success-stories", label: "Success Stories" },
   { href: "/blog", label: "Blog" },
+  { href: "/referral-program", label: "Referrals" },
   { href: "/career", label: "Career" },
-  { href: "/about", label: "About Us" },
-  { href: "/referral-program", label: "Referral Program" },
-  { href: "/contact", label: "Contact Us" },
+  { href: "/contact", label: "Contact" },
 ];
 
 const Logo = () => (
@@ -163,29 +163,80 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
         <Logo />
-        <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-          {navLinks.map(({ href, label }) => (
-            <Link
-              key={label}
-              href={href}
+        <nav className="hidden md:flex items-center gap-4 text-sm font-medium">
+          <Link
+              href="/"
               className={cn(
                 "transition-colors hover:text-primary",
-                pathname === href ? "text-primary" : "text-muted-foreground"
+                pathname === "/" ? "text-primary" : "text-muted-foreground"
               )}
             >
-              {label}
+              Home
             </Link>
-          ))}
+          <Link
+              href="/about"
+              className={cn(
+                "transition-colors hover:text-primary",
+                pathname === "/about" ? "text-primary" : "text-muted-foreground"
+              )}
+            >
+              About Us
+            </Link>
           <ServiceCategoryDropdown />
           <StudyAbroadDropdown />
+          <Link
+              href="/success-stories"
+              className={cn(
+                "transition-colors hover:text-primary",
+                pathname === "/success-stories" ? "text-primary" : "text-muted-foreground"
+              )}
+            >
+              Success Stories
+            </Link>
+             <Link
+              href="/blog"
+              className={cn(
+                "transition-colors hover:text-primary",
+                pathname === "/blog" ? "text-primary" : "text-muted-foreground"
+              )}
+            >
+              Blog
+            </Link>
+             <Link
+              href="/referral-program"
+              className={cn(
+                "transition-colors hover:text-primary",
+                pathname === "/referral-program" ? "text-primary" : "text-muted-foreground"
+              )}
+            >
+              Referrals
+            </Link>
+            <Link
+              href="/career"
+              className={cn(
+                "transition-colors hover:text-primary",
+                pathname === "/career" ? "text-primary" : "text-muted-foreground"
+              )}
+            >
+              Career
+            </Link>
+            <Link
+              href="/contact"
+              className={cn(
+                "transition-colors hover:text-primary",
+                pathname === "/contact" ? "text-primary" : "text-muted-foreground"
+              )}
+            >
+              Contact
+            </Link>
         </nav>
-        <div className="hidden md:flex items-center ml-auto">
-          <ConsultationButton />
-        </div>
-        <div className="flex md:hidden items-center ml-auto">
+        <div className="flex items-center ml-auto">
+          <div className="hidden md:block">
+            <ConsultationButton />
+          </div>
           <Sheet open={isMobileMenuOpen} onOpenChange={setMobileMenuOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon">
+              <Button variant="ghost" size="icon" className="md:hidden ml-4">
                 <Menu className="h-6 w-6" />
                 <span className="sr-only">Open menu</span>
               </Button>
@@ -233,3 +284,5 @@ export function Header() {
     </header>
   );
 }
+
+    
