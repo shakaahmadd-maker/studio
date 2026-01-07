@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { CheckCircle, Award, Briefcase, BookOpen, User, Star } from 'lucide-react';
 import Image from 'next/image';
 import { OtherEuropeSlider } from '@/components/layout/other-europe-slider';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 const scholarshipData = {
   europe: [
@@ -207,19 +208,87 @@ const RegionSection = ({ title, scholarships }: { title: string; scholarships: a
   </section>
 );
 
+const whyChooseUsFeatures = [
+    {
+      title: 'Expert Scholarship Guidance',
+      description: 'We offer personalized advice on the best scholarships suited to your academic background, career goals, and financial needs. Our experienced consultants will help you identify perfect opportunities, ensuring you don’t miss out.',
+    },
+    {
+      title: 'Comprehensive Application Support',
+      description: 'We provide step-by-step assistance with scholarship applications, from writing compelling personal statements and essays to gathering necessary documents. We help you prepare a winning application that stands out.',
+    },
+    {
+      title: 'Maximize Your Chances of Winning',
+      description: 'With a deep understanding of the scholarship landscape, we know exactly what panels look for. Whether it’s for the Rhodes Scholarship, Erasmus+, or DAAD, our experts highlight your strengths and achievements.',
+    },
+    {
+      title: 'Access to Exclusive Scholarships',
+      description: 'Through our network and partnerships, we provide access to a wide range of exclusive scholarships that you might not find through traditional channels. We bring you opportunities from top universities and governments.',
+    },
+    {
+      title: 'Ongoing Support and Mentorship',
+      description: 'Securing a scholarship is just the beginning. We continue to provide guidance even after you\'ve been awarded a scholarship, offering support with visa applications, accommodation, and settling in.',
+    },
+];
 
 export default function ScholarshipsPage() {
+    const heroImage = PlaceHolderImages.find(p => p.id === 'hero-students');
   return (
-    <div className="bg-background">
+    <div className="bg-background text-primary">
+       
+        <section className="relative bg-brand-blue text-white shadow-xl py-20 lg:py-32">
+            {heroImage && (
+                <Image
+                src={heroImage.imageUrl}
+                alt="Students celebrating graduation"
+                fill
+                className="absolute inset-0 object-cover w-full h-full opacity-20"
+                data-ai-hint={heroImage.imageHint}
+                />
+            )}
+            <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h1 className="text-4xl sm:text-6xl font-extrabold mb-4 leading-tight">
+                    Unlock Your Future with <span className="text-accent">Uni Help Consultants</span>
+                </h1>
+                <p className="text-xl sm:text-2xl mb-8 font-light max-w-3xl mx-auto">
+                    We are dedicated to helping you achieve your academic dreams by guiding you through the process of securing prestigious scholarships for studying abroad.
+                </p>
+                <div className="flex flex-wrap justify-center gap-4">
+                    <span className="text-lg font-semibold bg-white text-primary rounded-full px-5 py-2 shadow-lg">Europe</span>
+                    <span className="text-lg font-semibold bg-white text-primary rounded-full px-5 py-2 shadow-lg">USA</span>
+                    <span className="text-lg font-semibold bg-white text-primary rounded-full px-5 py-2 shadow-lg">Canada</span>
+                    <span className="text-lg font-semibold bg-white text-primary rounded-full px-5 py-2 shadow-lg">Australia & NZ</span>
+                    <span className="text-lg font-semibold bg-white text-primary rounded-full px-5 py-2 shadow-lg">China</span>
+                </div>
+            </div>
+        </section>
+
       <div className="container mx-auto px-4 py-16 md:py-24">
-        <header className="mb-16 text-center">
-          <h1 className="text-4xl font-extrabold text-primary sm:text-5xl lg:text-6xl tracking-tight font-headline">
-            Unlock Your Future with Uni Help Consultants
-          </h1>
-          <p className="mt-4 max-w-4xl mx-auto text-xl text-muted-foreground">
-            We are committed to helping you achieve your academic dreams by guiding you through the process of securing prestigious scholarships for studying abroad.
-          </p>
-        </header>
+       
+       <section className="py-16 lg:py-24">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 className="text-3xl sm:text-4xl font-bold text-center mb-4 text-primary">
+                    Why Choose Uni Help Consultants for Scholarship Guidance?
+                </h2>
+                <p className="text-center text-lg text-muted-foreground mb-12 max-w-2xl mx-auto">
+                    Our tailored approach ensures your application stands out in a competitive global landscape.
+                </p>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                    {whyChooseUsFeatures.map((feature, index) => (
+                        <Card key={index} className="bg-card p-8 rounded-xl shadow-lg hover:shadow-xl transition-transform duration-300 hover:-translate-y-1 border-t-4 border-accent">
+                            <div className="flex items-center space-x-4 mb-4">
+                                <span className="text-4xl font-extrabold text-accent">{index + 1}.</span>
+                                <h3 className="text-xl font-semibold text-primary">{feature.title}</h3>
+                            </div>
+                            <p className="text-muted-foreground">
+                                {feature.description}
+                            </p>
+                        </Card>
+                    ))}
+                </div>
+            </div>
+        </section>
 
         <section className="mb-16 max-w-4xl mx-auto text-center">
              <h2 className="mb-4 text-3xl font-bold font-headline text-primary">How We Can Help</h2>
@@ -257,3 +326,4 @@ export default function ScholarshipsPage() {
 }
 
     
+
