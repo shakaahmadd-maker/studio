@@ -229,6 +229,10 @@ const whyChooseUsFeatures = [
       title: 'Ongoing Support and Mentorship',
       description: 'Securing a scholarship is just the beginning. We continue to provide guidance even after you\'ve been awarded a scholarship, offering support with visa applications, accommodation, and settling in.',
     },
+    {
+      title: 'Tailored Scholarship Strategy for Every Student',
+      description: 'At Uni Help Consultants, we understand that every student’s journey is different. That’s why we create a customized scholarship strategy based on your unique academic background, career goals, and personal circumstances. Whether you\'re applying for undergraduate programs, graduate research, or specialized fellowships, we tailor our approach to ensure that your scholarship applications are aligned with your strengths and aspirations.',
+    },
 ];
 
 export default function ScholarshipsPage() {
@@ -324,6 +328,3 @@ export default function ScholarshipsPage() {
     </div>
   );
 }
-
-    
-
