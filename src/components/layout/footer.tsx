@@ -10,6 +10,7 @@ const socialLinks = [
 const quickLinks = [
   { href: "/services", label: "Services" },
   { href: "/about", label: "About Us" },
+  { href: "/why-us", label: "Why Choose Us" },
   { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
   { href: "/career", label: "Careers" },
