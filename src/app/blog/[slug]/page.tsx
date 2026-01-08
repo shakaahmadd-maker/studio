@@ -1,10 +1,16 @@
+
+'use client';
+
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { blogPosts } from "@/lib/data.tsx";
-import { PlaceHolderImages as placeholderImages } from "@/lib/placeholder-images";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Calendar, User } from "lucide-react";
+import { useCollection, useFirestore, useMemoFirebase } from "@/firebase";
+import { collection, query, where, limit } from "firebase/firestore";
+import { type BlogPost } from "@/lib/types";
+import { Skeleton } from "@/components/ui/skeleton";
+
 
 type BlogPostPageProps = {
   params: {
@@ -12,20 +18,42 @@ type BlogPostPageProps = {
   };
 };
 
-export async function generateStaticParams() {
-  return blogPosts.map((post) => ({
-    slug: post.slug,
-  }));
-}
-
 export default function BlogPostPage({ params }: BlogPostPageProps) {
-  const post = blogPosts.find((p) => p.slug === params.slug);
+  const firestore = useFirestore();
+  const postQuery = useMemoFirebase(() => {
+    if (!firestore || !params.slug) return null;
+    return query(collection(firestore, 'blog_posts'), where('slug', '==', params.slug), limit(1));
+  }, [firestore, params.slug]);
+
+  const { data: posts, isLoading } = useCollection<BlogPost>(postQuery);
+  const post = posts?.[0];
+
+  if (isLoading) {
+    return (
+      <div className="bg-card py-16 md:py-24">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <Skeleton className="h-8 w-32 mb-8" />
+           <header className="mb-8">
+            <Skeleton className="h-12 w-3/4 mb-4" />
+            <div className="flex gap-4">
+              <Skeleton className="h-5 w-48" />
+              <Skeleton className="h-5 w-32" />
+            </div>
+           </header>
+           <Skeleton className="h-96 w-full mb-8" />
+           <div className="space-y-4">
+              <Skeleton className="h-5 w-full" />
+              <Skeleton className="h-5 w-full" />
+              <Skeleton className="h-5 w-3/4" />
+           </div>
+        </div>
+      </div>
+    )
+  }
 
   if (!post) {
     notFound();
   }
-
-  const postImage = placeholderImages.find(p => p.id === post.imageId);
 
   return (
     <div className="bg-card py-16 md:py-24">
@@ -44,8 +72,8 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
             <div className="flex items-center space-x-4 text-muted-foreground text-sm">
                 <div className="flex items-center gap-2">
                     <Calendar className="h-4 w-4" />
-                    <time dateTime={post.date}>
-                        {new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                    <time dateTime={post.publicationDate.toDate().toISOString()}>
+                        {new Date(post.publicationDate.toDate()).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
                     </time>
                 </div>
                 <div className="flex items-center gap-2">
@@ -55,15 +83,14 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
             </div>
           </header>
 
-          {postImage && (
+          {post.imageUrl && (
             <div className="relative w-full h-64 md:h-96 mb-8 rounded-lg overflow-hidden shadow-lg">
               <Image
-                src={postImage.imageUrl}
+                src={post.imageUrl}
                 alt={post.title}
                 fill
                 className="object-cover"
                 priority
-                data-ai-hint={postImage.imageHint}
               />
             </div>
           )}

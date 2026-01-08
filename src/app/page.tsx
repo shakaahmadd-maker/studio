@@ -7,10 +7,12 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowRight, BookOpen, GraduationCap, Briefcase, Users, Quote, CheckCircle2, Rocket, Eye, Award } from 'lucide-react';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { successStories, blogPosts, serviceCategories } from '@/lib/data.tsx';
+import { successStories, serviceCategories } from '@/lib/data.tsx';
 import { UniversitySlider } from '@/components/layout/university-slider';
 import { useCollection, useFirestore, useMemoFirebase } from '@/firebase';
-import { collection, query, limit } from 'firebase/firestore';
+import { collection, query, limit, orderBy } from 'firebase/firestore';
+import { type BlogPost } from '@/lib/types';
+
 
 export default function Home() {
   const heroImage = PlaceHolderImages.find(p => p.id === 'hero-students');
@@ -22,6 +24,12 @@ export default function Home() {
     return query(collection(firestore, "services"), limit(4))
   }, [firestore]);
   const { data: services } = useCollection(servicesQuery);
+
+  const postsQuery = useMemoFirebase(() => {
+    if (!firestore) return null;
+    return query(collection(firestore, "blog_posts"), orderBy("publicationDate", "desc"), limit(3))
+  }, [firestore]);
+  const { data: blogPosts } = useCollection<BlogPost>(postsQuery);
 
   return (
     <div className="flex flex-col min-h-dvh">
@@ -245,14 +253,13 @@ export default function Home() {
               <p className="mt-2 text-lg text-muted-foreground">Latest news, tips, and insights on studying abroad.</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {blogPosts.slice(0, 3).map(post => {
-                const postImage = PlaceHolderImages.find(p => p.id === post.imageId);
+              {blogPosts && blogPosts.slice(0, 3).map(post => {
                 return (
-                  <Card key={post.slug} className="overflow-hidden flex flex-col">
-                    {postImage && <Image src={postImage.imageUrl} alt={post.title} width={600} height={400} className="w-full h-48 object-cover" data-ai-hint={postImage.imageHint} />}
+                  <Card key={post.id} className="overflow-hidden flex flex-col">
+                    {post.imageUrl && <div className="relative w-full h-48"><Image src={post.imageUrl} alt={post.title} fill className="object-cover" /></div>}
                     <CardHeader>
                       <CardTitle className="font-headline text-xl">{post.title}</CardTitle>
-                      <CardDescription>{new Date(post.date).toLocaleDateString()}</CardDescription>
+                      <CardDescription>{new Date(post.publicationDate.toDate()).toLocaleDateString()}</CardDescription>
                     </CardHeader>
                     <CardContent className="flex-grow">
                       <p className="text-muted-foreground">{post.excerpt}</p>

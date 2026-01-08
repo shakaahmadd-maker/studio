@@ -1,12 +1,22 @@
+
+'use client';
+
 import Link from "next/link";
 import Image from "next/image";
-import { blogPosts } from "@/lib/data.tsx";
-import { PlaceHolderImages as placeholderImages } from "@/lib/placeholder-images";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, PlusCircle } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { useCollection, useFirestore, useMemoFirebase } from "@/firebase";
+import { collection, query, orderBy, limit } from "firebase/firestore";
+import { Skeleton } from "@/components/ui/skeleton";
+import { type BlogPost } from "@/lib/types";
+
 
 export default function BlogPage() {
+  const firestore = useFirestore();
+  const postsQuery = useMemoFirebase(() => query(collection(firestore, "blog_posts"), orderBy("publicationDate", "desc")), [firestore]);
+  const { data: blogPosts, isLoading } = useCollection<BlogPost>(postsQuery);
+
   return (
     <div className="bg-background">
       <div className="container mx-auto px-4 py-16 md:py-24">
@@ -18,30 +28,37 @@ export default function BlogPage() {
               <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
                 Insights, tips, and updates on navigating the world of international education.
               </p>
-              <Button asChild size="lg" className="mt-8">
-                  <Link href="/blog/new">
-                      <PlusCircle className="mr-2 h-5 w-5" />
-                      Write a Post
-                  </Link>
-              </Button>
           </div>
         </header>
 
         <main>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {blogPosts.map((post) => {
-              const postImage = placeholderImages.find(p => p.id === post.imageId);
+            {isLoading && Array.from({length: 3}).map((_,i) => (
+                <Card key={i}>
+                    <Skeleton className="w-full h-48 object-cover rounded-t-lg" />
+                     <CardHeader>
+                        <Skeleton className="h-6 w-3/4" />
+                        <Skeleton className="h-4 w-1/2 mt-2" />
+                    </CardHeader>
+                    <CardContent>
+                        <Skeleton className="h-4 w-full" />
+                         <Skeleton className="h-4 w-full mt-2" />
+                    </CardContent>
+                    <CardFooter>
+                        <Skeleton className="h-6 w-24" />
+                    </CardFooter>
+                </Card>
+            ))}
+            {blogPosts && blogPosts.map((post) => {
               return (
-                <Card key={post.slug} className="overflow-hidden flex flex-col hover:shadow-xl transition-shadow duration-300">
-                  {postImage && (
-                    <Link href={`/blog/${post.slug}`} className="block">
+                <Card key={post.id} className="overflow-hidden flex flex-col hover:shadow-xl transition-shadow duration-300">
+                  {post.imageUrl && (
+                    <Link href={`/blog/${post.slug}`} className="block relative h-48 w-full">
                       <Image
-                        src={postImage.imageUrl}
+                        src={post.imageUrl}
                         alt={post.title}
-                        width={600}
-                        height={400}
-                        className="w-full h-48 object-cover"
-                        data-ai-hint={postImage.imageHint}
+                        fill
+                        className="object-cover"
                       />
                     </Link>
                   )}
@@ -50,7 +67,7 @@ export default function BlogPage() {
                        <Link href={`/blog/${post.slug}`} className="hover:text-primary transition-colors">{post.title}</Link>
                     </CardTitle>
                     <CardDescription>
-                      {new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })} by {post.author}
+                      {new Date(post.publicationDate.toDate()).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })} by {post.author}
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="flex-grow">

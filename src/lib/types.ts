@@ -1,3 +1,4 @@
+
 import type { Timestamp } from "firebase/firestore";
 
 export interface Service {
@@ -36,13 +37,14 @@ export interface SuccessStory {
 }
 
 export interface BlogPost {
+  id: string;
   slug: string;
   title: string;
-  date: string;
   author: string;
   excerpt: string;
   content: string;
-  imageId: string;
+  imageUrl: string;
+  publicationDate: Timestamp;
 }
 
 export interface TeamMember {
