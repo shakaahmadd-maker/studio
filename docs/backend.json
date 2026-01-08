@@ -360,6 +360,33 @@
         }
       },
       "required": ["id", "name", "address", "email", "phone", "createdAt"]
+    },
+    "University": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "University",
+      "type": "object",
+      "description": "Represents a university partner.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the university."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the university."
+        },
+        "logoUrl": {
+          "type": "string",
+          "description": "URL of the university's logo.",
+          "format": "uri"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the university was added."
+        }
+      },
+      "required": ["id", "name", "logoUrl", "createdAt"]
     }
   },
   "auth": {
@@ -526,6 +553,22 @@
             {
               "name": "locationId",
               "description": "Unique identifier for the office location."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/universities/{universityId}",
+        "definition": {
+          "entityName": "University",
+          "schema": {
+            "$ref": "#/backend/entities/University"
+          },
+          "description": "Stores university partner information, including name and logo.",
+          "params": [
+            {
+              "name": "universityId",
+              "description": "Unique identifier for the university."
             }
           ]
         }

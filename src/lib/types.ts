@@ -71,8 +71,10 @@ export interface JobOpening {
 }
 
 export interface University {
+    id: string;
     name: string;
-    logoUrl?: string;
+    logoUrl: string;
+    createdAt?: Timestamp;
 }
 
 export interface UKScholarship {

@@ -11,7 +11,7 @@
  * in separate top-level collections to enforce stricter access controls. There are no user-specific subcollections.
  *
  * Key Security Decisions:
- * - Public Read-Only Content: Collections like `services`, `faqs`, `success_stories`, `blog_posts`, and `locations` are publicly
+ * - Public Read-Only Content: Collections like `services`, `faqs`, `success_stories`, `blog_posts`, `locations`, and `universities` are publicly
  *   readable by any user, including unauthenticated ones.
  * - Locked-Down Writes: All write operations on public content are denied (`if false;`) as a secure default.
  *   A placeholder function `isContentAdmin()` is included to show where
@@ -171,6 +171,18 @@ service cloud.firestore {
      * @principle Allows public read for contact details while securing write access.
      */
     match /locations/{locationId} {
+        allow get, list: if true;
+        allow create, update, delete: if isContentAdmin();
+    }
+
+    /**
+     * @description Controls access to the 'universities' collection.
+     * @path /universities/{universityId}
+     * @allow (get, list) Publicly readable to display partner logos.
+     * @deny (create, update, delete) Only admins can manage university partners.
+     * @principle Allows public read for homepage slider while securing write access.
+     */
+    match /universities/{universityId} {
         allow get, list: if true;
         allow create, update, delete: if isContentAdmin();
     }

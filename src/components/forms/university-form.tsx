@@ -1,8 +1,13 @@
+
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useRouter } from "next/navigation";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { v4 as uuidv4 } from 'uuid';
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,6 +20,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import { useFirestore } from "@/firebase";
 
 const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp", "image/svg+xml"];
@@ -30,22 +36,56 @@ const formSchema = z.object({
     ),
 });
 
+type UniversityFormValues = z.infer<typeof formSchema>;
+
 export function UniversityForm() {
   const { toast } = useToast();
-  const form = useForm<z.infer<typeof formSchema>>({
+  const firestore = useFirestore();
+  const storage = getStorage();
+  const router = useRouter();
+
+  const form = useForm<UniversityFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    toast({
-      title: "University Added!",
-      description: `${values.name} has been added to the list of partners.`,
-    });
-    form.reset();
+  const uploadLogo = async (logoFile: File): Promise<string> => {
+    const storageRef = ref(storage, `universities/${uuidv4()}-${logoFile.name}`);
+    await uploadBytes(storageRef, logoFile);
+    const downloadURL = await getDownloadURL(storageRef);
+    return downloadURL;
+  };
+
+  async function onSubmit(values: UniversityFormValues) {
+    if (!firestore) return;
+
+    try {
+      const logoUrl = await uploadLogo(values.logo[0]);
+      
+      await addDoc(collection(firestore, 'universities'), {
+        name: values.name,
+        logoUrl: logoUrl,
+        createdAt: serverTimestamp(),
+      });
+
+      toast({
+        title: "University Added!",
+        description: `${values.name} has been added to the list of partners.`,
+      });
+      
+      router.push("/admin/universities");
+      router.refresh();
+
+    } catch (error) {
+      console.error("Error adding university:", error);
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request. Please try again.",
+      });
+    }
   }
 
   return (
@@ -82,7 +122,9 @@ export function UniversityForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">Add University</Button>
+        <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+            {form.formState.isSubmitting ? 'Adding...' : 'Add University'}
+        </Button>
       </form>
     </Form>
   );
