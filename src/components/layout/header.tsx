@@ -1,6 +1,6 @@
 
 
-"use client";
+'use client';
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -105,10 +105,10 @@ const StudyAbroadDropdown = ({ isMobile = false, onLinkClick }: { isMobile?: boo
         {services && services.map((service) => (
           <Link
             key={service.id}
-            href={`/services/${service.slug}`}
+            href={`/services/${service.id}`}
             className={cn(
               "text-lg transition-colors hover:text-primary pl-4",
-              pathname === `/services/${service.slug}` ? "text-primary font-semibold" : "text-muted-foreground"
+              pathname === `/services/${service.id}` ? "text-primary font-semibold" : "text-muted-foreground"
             )}
             onClick={onLinkClick}
           >
@@ -140,7 +140,7 @@ const StudyAbroadDropdown = ({ isMobile = false, onLinkClick }: { isMobile?: boo
       <DropdownMenuContent align="start">
         {services && services.map((service) => (
           <DropdownMenuItem key={service.id} asChild>
-            <Link href={`/services/${service.slug}`}>{service.title}</Link>
+            <Link href={`/services/${service.id}`}>{service.title}</Link>
           </DropdownMenuItem>
         ))}
          <DropdownMenuItem asChild>
@@ -315,5 +315,3 @@ export function Header() {
     </header>
   );
 }
-
-    

@@ -78,7 +78,7 @@ export function Footer() {
             <ul className="space-y-2">
               {services && services.map((service) => (
                 <li key={service.id}>
-                  <Link href={`/services/${service.slug}`} className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                  <Link href={`/services/${service.id}`} className="text-sm text-muted-foreground hover:text-primary transition-colors">
                     {service.title}
                   </Link>
                 </li>
@@ -116,5 +116,3 @@ export function Footer() {
     </footer>
   );
 }
-
-    

@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useCollection, useFirestore, useMemoFirebase } from "@/firebase";
@@ -20,8 +21,8 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { useState } from "react";
 
 export default function AdminServicesPage() {
     const firestore = useFirestore();
@@ -29,20 +30,27 @@ export default function AdminServicesPage() {
     const servicesQuery = useMemoFirebase(() => query(collection(firestore, "services"), orderBy("createdAt", "desc")), [firestore]);
     const { data: services, isLoading } = useCollection(servicesQuery);
 
-    const handleDelete = async (serviceId: string) => {
-        if (!firestore) return;
-        const docRef = doc(firestore, "services", serviceId);
+    const [dialogOpen, setDialogOpen] = useState(false);
+    const [serviceToDelete, setServiceToDelete] = useState<string | null>(null);
+
+    const handleDelete = async () => {
+        if (!firestore || !serviceToDelete) return;
+        const docRef = doc(firestore, "services", serviceToDelete);
         try {
             await deleteDoc(docRef);
             toast({ title: "Success", description: "Service deleted successfully." });
         } catch (error) {
             console.error("Error deleting document: ", error);
             toast({ variant: "destructive", title: "Error", description: "Could not delete service." });
+        } finally {
+            setDialogOpen(false);
+            setServiceToDelete(null);
         }
     };
 
 
     return (
+      <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <Card>
             <CardHeader>
                 <div className="flex items-center justify-between">
@@ -108,30 +116,21 @@ export default function AdminServicesPage() {
                                                 <Link href={`/admin/services/edit/${service.id}`}><Pencil className="mr-2"/>Edit</Link>
                                             </DropdownMenuItem>
                                             <DropdownMenuItem asChild>
-                                                <Link href={`/services/${service.slug}`} target="_blank"><ExternalLink className="mr-2"/>View</Link>
+                                                <Link href={`/services/${service.id}`} target="_blank"><ExternalLink className="mr-2"/>View</Link>
                                             </DropdownMenuItem>
-                                            <AlertDialogTrigger asChild>
-                                                <DropdownMenuItem className="text-red-500 focus:bg-red-50 focus:text-red-600" onSelect={(e) => e.preventDefault()}>
-                                                    <Trash2 className="mr-2"/>Delete
-                                                </DropdownMenuItem>
-                                            </AlertDialogTrigger>
+                                           
+                                            <DropdownMenuItem 
+                                              className="text-red-500 focus:bg-red-50 focus:text-red-600" 
+                                              onSelect={(e) => {
+                                                e.preventDefault();
+                                                setServiceToDelete(service.id);
+                                                setDialogOpen(true);
+                                              }}
+                                            >
+                                                <Trash2 className="mr-2"/>Delete
+                                            </DropdownMenuItem>
                                         </DropdownMenuContent>
                                     </DropdownMenu>
-                                    <AlertDialog>
-                                        <AlertDialogContent>
-                                            <AlertDialogHeader>
-                                            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                                            <AlertDialogDescription>
-                                                This action cannot be undone. This will permanently delete the service
-                                                and remove its data from our servers.
-                                            </AlertDialogDescription>
-                                            </AlertDialogHeader>
-                                            <AlertDialogFooter>
-                                            <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                            <AlertDialogAction onClick={() => handleDelete(service.id)} className="bg-destructive hover:bg-destructive/90">Delete</AlertDialogAction>
-                                            </AlertDialogFooter>
-                                        </AlertDialogContent>
-                                    </AlertDialog>
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -146,5 +145,19 @@ export default function AdminServicesPage() {
                 </Table>
             </CardContent>
         </Card>
+        <AlertDialogContent>
+            <AlertDialogHeader>
+            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+                This action cannot be undone. This will permanently delete the service
+                and remove its data from our servers.
+            </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDelete} className="bg-destructive hover:bg-destructive/90">Delete</AlertDialogAction>
+            </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     )
 }

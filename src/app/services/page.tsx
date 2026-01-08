@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from "next/link";
@@ -73,7 +74,7 @@ export default function ServicesPage() {
                         </CardContent>
                         <CardFooter>
                             <Button asChild variant="link" className="p-0">
-                                <Link href={`/services/${service.slug}`}>
+                                <Link href={`/services/${service.id}`}>
                                     Learn More <ArrowRight className="ml-2 h-4 w-4" />
                                 </Link>
                             </Button>

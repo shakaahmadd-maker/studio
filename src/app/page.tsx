@@ -81,7 +81,7 @@ export default function Home() {
                     </CardContent>
                     <CardFooter>
                        <Button asChild variant="link">
-                        <Link href={`/services/${service.slug}`}>Learn More <ArrowRight className="ml-2 h-4 w-4" /></Link>
+                        <Link href={`/services/${service.id}`}>Learn More <ArrowRight className="ml-2 h-4 w-4" /></Link>
                       </Button>
                     </CardFooter>
                   </Card>
@@ -280,5 +280,3 @@ export default function Home() {
     </div>
   );
 }
-
-    
