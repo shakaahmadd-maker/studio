@@ -5,7 +5,7 @@ import Link from "next/link";
 import { GraduationCap, Linkedin, Twitter, Facebook, Instagram } from "lucide-react";
 import { serviceCategories, locations as staticLocations } from "@/lib/data.tsx";
 import { useCollection, useFirestore, useMemoFirebase } from "@/firebase";
-import { collection, query, limit, orderBy } from "firebase/firestore";
+import { collection, query, orderBy } from "firebase/firestore";
 import type { OfficeLocation } from "@/lib/types";
 
 const socialLinks = [
@@ -27,7 +27,7 @@ export function Footer() {
   const firestore = useFirestore();
   const servicesQuery = useMemoFirebase(() => {
     if (!firestore) return null;
-    return query(collection(firestore, "services"), limit(5));
+    return query(collection(firestore, "services"), orderBy("createdAt", "asc"));
   }, [firestore]);
   const { data: services } = useCollection(servicesQuery);
 
