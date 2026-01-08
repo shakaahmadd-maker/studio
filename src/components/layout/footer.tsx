@@ -3,10 +3,10 @@
 
 import Link from "next/link";
 import { GraduationCap, Linkedin, Twitter, Facebook, Instagram } from "lucide-react";
-import { serviceCategories, locations as staticLocations } from "@/lib/data.tsx";
+import { serviceCategories, locations as staticLocations, services as staticServices } from "@/lib/data.tsx";
 import { useCollection, useFirestore, useMemoFirebase } from "@/firebase";
 import { collection, query, orderBy } from "firebase/firestore";
-import type { OfficeLocation } from "@/lib/types";
+import type { OfficeLocation, Service } from "@/lib/types";
 
 const socialLinks = [
   { name: "Facebook", icon: Facebook, href: "https://www.facebook.com/unihelp.consultant" },
@@ -29,15 +29,17 @@ export function Footer() {
     if (!firestore) return null;
     return query(collection(firestore, "services"), orderBy("createdAt", "asc"));
   }, [firestore]);
-  const { data: services } = useCollection(servicesQuery);
+  const { data: liveServices } = useCollection<Service>(servicesQuery);
 
   const locationsQuery = useMemoFirebase(() => {
     if (!firestore) return null;
     return query(collection(firestore, "locations"), orderBy("createdAt", "asc"));
   }, [firestore]);
   const { data: liveLocations } = useCollection<OfficeLocation>(locationsQuery);
-
+  
+  const services = liveServices && liveServices.length > 0 ? liveServices : staticServices;
   const locationsToDisplay = liveLocations && liveLocations.length > 0 ? liveLocations : staticLocations;
+
 
   return (
     <footer className="bg-secondary text-secondary-foreground border-t">
@@ -85,7 +87,7 @@ export function Footer() {
           <div className="md:col-span-1">
             <h3 className="font-semibold font-headline tracking-wider uppercase mb-4">Study Abroad</h3>
             <ul className="space-y-2">
-              {services && services.map((service) => (
+              {services && services.map((service: any) => (
                 <li key={service.id}>
                   <Link href={`/services/${service.id}`} className="text-sm text-muted-foreground hover:text-primary transition-colors">
                     {service.title}
