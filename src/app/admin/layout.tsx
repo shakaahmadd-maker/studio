@@ -1,3 +1,4 @@
+
 import {
   SidebarProvider,
   Sidebar,
@@ -8,7 +9,7 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
 } from "@/components/ui/sidebar";
-import { Home, BookOpen, Star, FileText, Briefcase, Handshake, HelpCircle, PanelLeft, MessageSquareQuote, Users, Building2, Mail } from "lucide-react";
+import { Home, BookOpen, Star, FileText, Briefcase, Handshake, HelpCircle, PanelLeft, MessageSquareQuote, Users, Building2, Mail, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const AdminSidebar = () => {
@@ -85,6 +86,12 @@ const AdminSidebar = () => {
                         <SidebarMenuButton href="/admin/universities" tooltip="Universities">
                             <Building2 />
                             <span>Universities</span>
+                        </SidebarMenuButton>
+                    </SidebarMenuItem>
+                     <SidebarMenuItem>
+                        <SidebarMenuButton href="/admin/locations" tooltip="Locations">
+                            <MapPin />
+                            <span>Locations</span>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
                 </SidebarMenu>

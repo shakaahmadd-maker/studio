@@ -325,6 +325,41 @@
         "createdAt": { "type": "string", "format": "date-time" }
       },
       "required": ["id", "fullName", "email", "lookingFor", "cvUrl", "englishCertificate", "createdAt"]
+    },
+    "OfficeLocation": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "OfficeLocation",
+      "type": "object",
+      "description": "Represents a physical office location or contact point for the business.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the location."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the office (e.g., Lahore Office, Head Office)."
+        },
+        "address": {
+          "type": "string",
+          "description": "The full street address."
+        },
+        "email": {
+          "type": "string",
+          "description": "Contact email for this location.",
+          "format": "email"
+        },
+        "phone": {
+          "type": "string",
+          "description": "Contact phone number for this location."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the location was added."
+        }
+      },
+      "required": ["id", "name", "address", "email", "phone", "createdAt"]
     }
   },
   "auth": {
@@ -478,10 +513,24 @@
             }
           ]
         }
+      },
+      {
+        "path": "/locations/{locationId}",
+        "definition": {
+          "entityName": "OfficeLocation",
+          "schema": {
+            "$ref": "#/backend/entities/OfficeLocation"
+          },
+          "description": "Stores office location and contact details.",
+          "params": [
+            {
+              "name": "locationId",
+              "description": "Unique identifier for the office location."
+            }
+          ]
+        }
       }
     ],
-    "reasoning": "The Firestore structure is designed to support EduVision Consulting's content management system, focusing on services, success stories, blog posts, job applications, and referrals. To ensure authorization independence, no `get()` calls are needed in the security rules. This is achieved through structural segregation and denormalization, especially for collaborative data (none in this case) by avoiding dependencies on parent documents for child document access.\n\nThe database uses separate collections for each entity type (Services, FAQs, SuccessStories, BlogPosts, JobApplications, Referrals, Contacts, Consultations). This structural segregation ensures a homogeneous security posture, simplifying rules by aligning documents with similar access needs. The absence of user-owned data eliminates the necessity of path-based ownership structures (e.g., `/users/{userId}/...`).\n\nEach collection is designed to support secure `list` operations (QAPs) by ensuring that all documents within a collection share the same security requirements. For example, all `Services` have the same access control needs, which is also true for `SuccessStories`, `BlogPosts`, `JobApplications`, and `Referrals`. This ensures predictability and avoids the need for complex filtering logic in the rules.\n\nSince no collaborative data or user specific data is available in the specification, a membership map is not required.\n\nInvariants such as timestamps and ownership are not specified in the data entities. Should they be required they could be added without breaking the authorization model. Data clarity is enhanced through explicit state modeling using a `status` field (if needed), predictable schemas, and consistent naming conventions (e.g., always use `id` for document IDs)."
+    "reasoning": "The Firestore structure is designed to support EduVision Consulting's content management system, focusing on services, success stories, blog posts, job applications, and referrals. To ensure authorization independence, no `get()` calls are needed in the security rules. This is achieved through structural segregation and denormalization, especially for collaborative data (none in this case) by avoiding dependencies on parent documents for child document access.\n\nThe database uses separate collections for each entity type (Services, FAQs, SuccessStories, BlogPosts, JobApplications, Referrals, Contacts, Consultations, OfficeLocations). This structural segregation ensures a homogeneous security posture, simplifying rules by aligning documents with similar access needs. The absence of user-owned data eliminates the necessity of path-based ownership structures (e.g., `/users/{userId}/...`).\n\nEach collection is designed to support secure `list` operations (QAPs) by ensuring that all documents within a collection share the same security requirements. For example, all `Services` have the same access control needs, which is also true for `SuccessStories`, `BlogPosts`, `JobApplications`, and `Referrals`. This ensures predictability and avoids the need for complex filtering logic in the rules.\n\nSince no collaborative data or user specific data is available in the specification, a membership map is not required.\n\nInvariants such as timestamps and ownership are not specified in the data entities. Should they be required they could be added without breaking the authorization model. Data clarity is enhanced through explicit state modeling using a `status` field (if needed), predictable schemas, and consistent naming conventions (e.g., always use `id` for document IDs)."
   }
 }
-
-    

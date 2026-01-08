@@ -5,7 +5,8 @@ import Link from "next/link";
 import { GraduationCap, Linkedin, Twitter, Facebook, Instagram } from "lucide-react";
 import { serviceCategories } from "@/lib/data.tsx";
 import { useCollection, useFirestore, useMemoFirebase } from "@/firebase";
-import { collection, query, limit } from "firebase/firestore";
+import { collection, query, limit, orderBy } from "firebase/firestore";
+import type { OfficeLocation } from "@/lib/types";
 
 const socialLinks = [
   { name: "Facebook", icon: Facebook, href: "https://www.facebook.com/unihelp.consultant" },
@@ -29,6 +30,12 @@ export function Footer() {
     return query(collection(firestore, "services"), limit(5));
   }, [firestore]);
   const { data: services } = useCollection(servicesQuery);
+
+  const locationsQuery = useMemoFirebase(() => {
+    if (!firestore) return null;
+    return query(collection(firestore, "locations"), orderBy("createdAt", "asc"));
+  }, [firestore]);
+  const { data: locations } = useCollection<OfficeLocation>(locationsQuery);
 
   return (
     <footer className="bg-secondary text-secondary-foreground border-t">
@@ -101,10 +108,15 @@ export function Footer() {
 
           <div className="md:col-span-1">
             <h3 className="font-semibold font-headline tracking-wider uppercase mb-4">Contact Us</h3>
-            <div className="space-y-2 text-sm text-muted-foreground">
-              <p>Zam Zam Heights, Opp. Sabzazar Cricket Stadium. Lahore.</p>
-              <p>Email: <a href="mailto:contact@unihelpconsultants.com" className="hover:text-primary">contact@unihelpconsultants.com</a></p>
-              <p>Phone: <a href="tel:+923417548178" className="hover:text-primary">+92 341 7548178</a></p>
+            <div className="space-y-4 text-sm text-muted-foreground">
+              {locations && locations.map(location => (
+                <div key={location.id}>
+                    <p className='font-semibold'>{location.name}</p>
+                    <p>{location.address}</p>
+                    <p>Email: <a href={`mailto:${location.email}`} className="hover:text-primary">{location.email}</a></p>
+                    <p>Phone: <a href={`tel:${location.phone.replace(/\s/g, '')}`} className="hover:text-primary">{location.phone}</a></p>
+                </div>
+              ))}
             </div>
           </div>
         </div>

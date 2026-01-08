@@ -139,4 +139,11 @@ export interface Consultation {
     createdAt: Timestamp;
 }
 
-    
+export interface OfficeLocation {
+  id: string;
+  name: string;
+  address: string;
+  email: string;
+  phone: string;
+  createdAt: Timestamp;
+}

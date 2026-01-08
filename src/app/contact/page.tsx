@@ -1,8 +1,22 @@
+
+'use client';
+
 import { ContactForm } from "@/components/forms/contact-form";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Mail, Phone, MapPin } from "lucide-react";
+import { useCollection, useFirestore, useMemoFirebase } from "@/firebase";
+import { collection, query, orderBy } from "firebase/firestore";
+import type { OfficeLocation } from "@/lib/types";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function ContactPage() {
+  const firestore = useFirestore();
+  const locationsQuery = useMemoFirebase(() => {
+    if (!firestore) return null;
+    return query(collection(firestore, "locations"), orderBy("createdAt", "asc"));
+  }, [firestore]);
+  const { data: locations, isLoading } = useCollection<OfficeLocation>(locationsQuery);
+
   return (
     <div className="bg-background">
       <div className="container mx-auto px-4 py-16 md:py-24">
@@ -17,47 +31,49 @@ export default function ContactPage() {
 
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           <div className="space-y-8">
-            <Card>
-              <CardHeader className="flex-row items-center gap-4">
-                <Mail className="w-8 h-8 text-primary" />
-                <CardTitle className="font-headline">Email Us</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">For general inquiries, please email us at:</p>
-                <a href="mailto:contact@unihelpconsultants.com" className="text-primary font-semibold hover:underline">
-                  contact@unihelpconsultants.com
-                </a>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="flex-row items-center gap-4">
-                <Phone className="w-8 h-8 text-primary" />
-                <CardTitle className="font-headline">Call Us</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">Speak to one of our counselors directly:</p>
-                <a href="tel:+923417548178" className="text-primary font-semibold hover:underline">
-                  +92 341 7548178
-                </a>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="flex-row items-center gap-4">
-                <MapPin className="w-8 h-8 text-primary" />
-                <CardTitle className="font-headline">Visit Us</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                    Zam Zam Heights, Opp. Sabzazar Cricket Stadium. <br/>
-                    Lahore.
-                </p>
-              </CardContent>
-            </Card>
+            {isLoading && Array.from({ length: 2 }).map((_, i) => (
+                <Card key={i}>
+                    <CardHeader className="flex-row items-center gap-4">
+                        <Skeleton className="w-8 h-8 rounded-full" />
+                        <Skeleton className="h-6 w-32" />
+                    </CardHeader>
+                    <CardContent>
+                       <Skeleton className="h-4 w-full mb-2" />
+                       <Skeleton className="h-5 w-48" />
+                    </CardContent>
+                </Card>
+            ))}
+            {locations && locations.map(location => (
+                <Card key={location.id}>
+                    <CardHeader className="flex-row items-start gap-4">
+                        <MapPin className="w-8 h-8 text-primary flex-shrink-0 mt-1" />
+                        <div>
+                            <CardTitle className="font-headline">{location.name}</CardTitle>
+                             <p className="text-muted-foreground pt-1">{location.address}</p>
+                        </div>
+                    </CardHeader>
+                    <CardContent className="space-y-2">
+                        <div className="flex items-center gap-4">
+                             <Mail className="w-5 h-5 text-primary flex-shrink-0" />
+                             <a href={`mailto:${location.email}`} className="text-primary font-semibold hover:underline">
+                                {location.email}
+                            </a>
+                        </div>
+                         <div className="flex items-center gap-4">
+                             <Phone className="w-5 h-5 text-primary flex-shrink-0" />
+                            <a href={`tel:${location.phone.replace(/\s/g, '')}`} className="text-primary font-semibold hover:underline">
+                                {location.phone}
+                            </a>
+                        </div>
+                    </CardContent>
+                </Card>
+            ))}
           </div>
           <div>
             <Card>
               <CardHeader>
                 <CardTitle className="font-headline text-2xl">Send a Message</CardTitle>
+                <CardDescription>Have a question? Fill out the form and we'll get back to you.</CardDescription>
               </CardHeader>
               <CardContent>
                 <ContactForm />
