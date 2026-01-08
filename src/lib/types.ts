@@ -11,7 +11,7 @@ export interface Service {
   offerings: string[];
   process: string[];
   benefits: string[];
-  createdAt: Timestamp;
+  createdAt?: Timestamp;
 }
 
 export interface ServiceCategory {
@@ -44,7 +44,7 @@ export interface BlogPost {
   excerpt: string;
   content: string;
   imageUrl: string;
-  publicationDate: Timestamp;
+  publicationDate: Timestamp | Date;
 }
 
 export interface TeamMember {
@@ -62,12 +62,12 @@ export interface FAQ {
 }
 
 export interface JobOpening {
-    id: string;
+    id?: string;
     title: string;
     location: string;
     type: "Full-time" | "Part-time" | "Internship" | "Contract";
     description: string;
-    createdAt: Timestamp;
+    createdAt?: Timestamp;
 }
 
 export interface University {
@@ -145,5 +145,5 @@ export interface OfficeLocation {
   address: string;
   email: string;
   phone: string;
-  createdAt: Timestamp;
+  createdAt?: Timestamp;
 }

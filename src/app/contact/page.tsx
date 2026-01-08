@@ -8,6 +8,7 @@ import { useCollection, useFirestore, useMemoFirebase } from "@/firebase";
 import { collection, query, orderBy } from "firebase/firestore";
 import type { OfficeLocation } from "@/lib/types";
 import { Skeleton } from "@/components/ui/skeleton";
+import { locations as staticLocations } from "@/lib/data.tsx";
 
 export default function ContactPage() {
   const firestore = useFirestore();
@@ -15,7 +16,9 @@ export default function ContactPage() {
     if (!firestore) return null;
     return query(collection(firestore, "locations"), orderBy("createdAt", "asc"));
   }, [firestore]);
-  const { data: locations, isLoading } = useCollection<OfficeLocation>(locationsQuery);
+  const { data: liveLocations, isLoading } = useCollection<OfficeLocation>(locationsQuery);
+
+  const locationsToDisplay = liveLocations && liveLocations.length > 0 ? liveLocations : staticLocations;
 
   return (
     <div className="bg-background">
@@ -43,7 +46,7 @@ export default function ContactPage() {
                     </CardContent>
                 </Card>
             ))}
-            {locations && locations.map(location => (
+            {locationsToDisplay && locationsToDisplay.map((location: any) => (
                 <Card key={location.id}>
                     <CardHeader className="flex-row items-start gap-4">
                         <MapPin className="w-8 h-8 text-primary flex-shrink-0 mt-1" />

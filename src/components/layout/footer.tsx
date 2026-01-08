@@ -3,7 +3,7 @@
 
 import Link from "next/link";
 import { GraduationCap, Linkedin, Twitter, Facebook, Instagram } from "lucide-react";
-import { serviceCategories } from "@/lib/data.tsx";
+import { serviceCategories, locations as staticLocations } from "@/lib/data.tsx";
 import { useCollection, useFirestore, useMemoFirebase } from "@/firebase";
 import { collection, query, limit, orderBy } from "firebase/firestore";
 import type { OfficeLocation } from "@/lib/types";
@@ -35,7 +35,9 @@ export function Footer() {
     if (!firestore) return null;
     return query(collection(firestore, "locations"), orderBy("createdAt", "asc"));
   }, [firestore]);
-  const { data: locations } = useCollection<OfficeLocation>(locationsQuery);
+  const { data: liveLocations } = useCollection<OfficeLocation>(locationsQuery);
+
+  const locationsToDisplay = liveLocations && liveLocations.length > 0 ? liveLocations : staticLocations;
 
   return (
     <footer className="bg-secondary text-secondary-foreground border-t">
@@ -109,7 +111,7 @@ export function Footer() {
           <div className="md:col-span-1">
             <h3 className="font-semibold font-headline tracking-wider uppercase mb-4">Contact Us</h3>
             <div className="space-y-4 text-sm text-muted-foreground">
-              {locations && locations.map(location => (
+              {locationsToDisplay && locationsToDisplay.map((location: any) => (
                 <div key={location.id}>
                     <p className='font-semibold'>{location.name}</p>
                     <p>{location.address}</p>

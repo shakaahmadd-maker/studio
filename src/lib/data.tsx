@@ -1,5 +1,5 @@
 
-import type { Service, SuccessStory, TeamMember, FAQ, ServiceCategory, JobOpening, University, UKScholarship, OtherEuropeScholarship, GlobalScholarship, WhyChooseUsItem } from './types';
+import type { Service, SuccessStory, TeamMember, FAQ, ServiceCategory, JobOpening, University, UKScholarship, OtherEuropeScholarship, GlobalScholarship, WhyChooseUsItem, OfficeLocation } from './types';
 import { Award, Briefcase, Landmark, Lightbulb, FileSignature, Trophy, Gem, LifeBuoy, Route, SendHorizontal } from 'lucide-react';
 import React from 'react';
 
@@ -297,6 +297,23 @@ export const universities: University[] = [
   { name: 'University of Hamburg', logoUrl: 'https://logo.clearbit.com/uni-hamburg.de' },
   { name: 'University of Cologne', logoUrl: 'https://logo.clearbit.com/uni-koeln.de' },
   { name: 'University of Göttingen', logoUrl: 'https://logo.clearbit.com/uni-goettingen.de' },
+];
+
+export const locations: OfficeLocation[] = [
+    {
+        id: '1',
+        name: 'Lahore Office',
+        address: '123 Main Street, Gulberg, Lahore, Pakistan',
+        email: 'lahore@unihelp.com',
+        phone: '+92 300 1234567',
+    },
+    {
+        id: '2',
+        name: 'Islamabad Office',
+        address: '456 Blue Area, F-6, Islamabad, Pakistan',
+        email: 'islamabad@unihelp.com',
+        phone: '+92 300 7654321',
+    }
 ];
 
 export const whyChooseUsData: WhyChooseUsItem[] = [
