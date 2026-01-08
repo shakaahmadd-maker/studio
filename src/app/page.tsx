@@ -32,6 +32,7 @@ export default function Home() {
   const { data: blogPosts } = useCollection<BlogPost>(postsQuery);
 
   const services = liveServices && liveServices.length > 0 ? liveServices : staticServices.slice(0, 4);
+  const postsToDisplay = blogPosts && blogPosts.length > 0 ? blogPosts : staticBlogPosts;
 
   return (
     <div className="flex flex-col min-h-dvh">
@@ -255,7 +256,7 @@ export default function Home() {
               <p className="mt-2 text-lg text-muted-foreground">Latest news, tips, and insights on studying abroad.</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {(blogPosts || staticBlogPosts).slice(0, 3).map(post => {
+              {postsToDisplay.slice(0, 3).map((post: any) => {
                 const publicationDate = post.publicationDate instanceof Date ? post.publicationDate : post.publicationDate.toDate();
                 return (
                   <Card key={post.id} className="overflow-hidden flex flex-col">
