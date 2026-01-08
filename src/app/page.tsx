@@ -1,15 +1,27 @@
+
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowRight, BookOpen, GraduationCap, Briefcase, Users, Quote, CheckCircle2, Rocket, Eye, Award } from 'lucide-react';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { services, successStories, blogPosts, serviceCategories } from '@/lib/data.tsx';
+import { successStories, blogPosts, serviceCategories } from '@/lib/data.tsx';
 import { UniversitySlider } from '@/components/layout/university-slider';
+import { useCollection, useFirestore, useMemoFirebase } from '@/firebase';
+import { collection, query, limit } from 'firebase/firestore';
 
 export default function Home() {
   const heroImage = PlaceHolderImages.find(p => p.id === 'hero-students');
   const whyUsImage = PlaceHolderImages.find(p => p.id === 'why-us-feature');
+  
+  const firestore = useFirestore();
+  const servicesQuery = useMemoFirebase(() => {
+    if (!firestore) return null;
+    return query(collection(firestore, "services"), limit(4))
+  }, [firestore]);
+  const { data: services } = useCollection(servicesQuery);
 
   return (
     <div className="flex flex-col min-h-dvh">
@@ -53,24 +65,23 @@ export default function Home() {
               <p className="mt-2 text-lg text-muted-foreground">Tailored guidance for every step of your academic journey.</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {services.slice(0, 4).map((service) => {
-                const serviceImage = PlaceHolderImages.find(p => p.id === service.imageId);
+              {services && services.map((service) => {
                 return (
                   <Card key={service.id} className="flex flex-col items-center text-center hover:shadow-lg transition-shadow duration-300">
-                     {serviceImage && (
+                     {service.imageUrl && (
                         <div className="relative h-40 w-full">
-                            <Image src={serviceImage.imageUrl} alt={service.title} layout="fill" objectFit="cover" className='rounded-t-lg' data-ai-hint={serviceImage.imageHint} />
+                            <Image src={service.imageUrl} alt={service.title} layout="fill" objectFit="cover" className='rounded-t-lg' />
                         </div>
                      )}
                     <CardHeader>
                       <CardTitle className="font-headline mt-4">{service.title}</CardTitle>
                     </CardHeader>
                     <CardContent className='flex-grow'>
-                      <p className="text-muted-foreground">{service.description}</p>
+                      <p className="text-muted-foreground">{service.shortDescription}</p>
                     </CardContent>
                     <CardFooter>
                        <Button asChild variant="link">
-                        <Link href={`/services/${service.id}`}>Learn More <ArrowRight className="ml-2 h-4 w-4" /></Link>
+                        <Link href={`/services/${service.slug}`}>Learn More <ArrowRight className="ml-2 h-4 w-4" /></Link>
                       </Button>
                     </CardFooter>
                   </Card>
@@ -269,3 +280,5 @@ export default function Home() {
     </div>
   );
 }
+
+    

@@ -1,14 +1,16 @@
+import type { Timestamp } from "firebase/firestore";
+
 export interface Service {
   id: string;
   title: string;
-  description: string;
-  imageId: string;
-  details: {
-    longDescription: string;
-    offerings: string[];
-    steps: string[];
-    benefits: string[];
-  };
+  slug: string;
+  shortDescription: string;
+  imageUrl: string;
+  longDescription: string;
+  offerings: string[];
+  process: string[];
+  benefits: string[];
+  createdAt: Timestamp;
 }
 
 export interface ServiceCategory {
@@ -43,7 +45,7 @@ export interface BlogPost {
 }
 
 export interface TeamMember {
-  id: string;
+  id:string;
   name: string;
   title: string;
   imageId: string;
@@ -79,11 +81,7 @@ export interface UKScholarship {
 
 export interface OtherEuropeScholarship {
     country: string;
-    description: string;
-    funding: string;
-    bgColor: string;
-    borderColor: string;
-    textColor: string;
+    icon: React.ReactNode;
 }
 
 export interface GlobalScholarship {

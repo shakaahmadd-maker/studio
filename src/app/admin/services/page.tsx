@@ -1,19 +1,46 @@
 'use client';
 
 import { useCollection, useFirestore, useMemoFirebase } from "@/firebase";
-import { collection, query } from "firebase/firestore";
+import { collection, query, orderBy, deleteDoc, doc } from "firebase/firestore";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { PlusCircle, MoreHorizontal } from "lucide-react";
+import { PlusCircle, MoreHorizontal, Trash2, Pencil, ExternalLink } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
+import Image from "next/image";
+import { useToast } from "@/hooks/use-toast";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 export default function AdminServicesPage() {
     const firestore = useFirestore();
-    const servicesQuery = useMemoFirebase(() => query(collection(firestore, "services")), [firestore]);
+    const { toast } = useToast();
+    const servicesQuery = useMemoFirebase(() => query(collection(firestore, "services"), orderBy("createdAt", "desc")), [firestore]);
     const { data: services, isLoading } = useCollection(servicesQuery);
+
+    const handleDelete = async (serviceId: string) => {
+        if (!firestore) return;
+        const docRef = doc(firestore, "services", serviceId);
+        try {
+            await deleteDoc(docRef);
+            toast({ title: "Success", description: "Service deleted successfully." });
+        } catch (error) {
+            console.error("Error deleting document: ", error);
+            toast({ variant: "destructive", title: "Error", description: "Could not delete service." });
+        }
+    };
+
 
     return (
         <Card>
@@ -35,23 +62,38 @@ export default function AdminServicesPage() {
                 <Table>
                     <TableHeader>
                         <TableRow>
+                            <TableHead className="hidden w-[100px] sm:table-cell">
+                                <span className="sr-only">Image</span>
+                            </TableHead>
                             <TableHead>Title</TableHead>
                             <TableHead>Description</TableHead>
-                            <TableHead><span className="sr-only">Actions</span></TableHead>
+                            <TableHead>
+                                <span className="sr-only">Actions</span>
+                            </TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
                         {isLoading && Array.from({ length: 3 }).map((_, i) => (
                             <TableRow key={i}>
-                                <TableCell><Skeleton className="h-4 w-32" /></TableCell>
-                                <TableCell><Skeleton className="h-4 w-64" /></TableCell>
+                                <TableCell className="hidden sm:table-cell"><Skeleton className="aspect-square w-full rounded-md" /></TableCell>
+                                <TableCell><Skeleton className="h-5 w-32" /></TableCell>
+                                <TableCell><Skeleton className="h-5 w-64" /></TableCell>
                                 <TableCell><Skeleton className="h-8 w-8" /></TableCell>
                             </TableRow>
                         ))}
                         {!isLoading && services && services.map(service => (
                             <TableRow key={service.id}>
+                                <TableCell className="hidden sm:table-cell">
+                                    <Image
+                                        alt={service.title}
+                                        className="aspect-square rounded-md object-cover"
+                                        height="64"
+                                        src={service.imageUrl || "/placeholder.svg"}
+                                        width="64"
+                                    />
+                                </TableCell>
                                 <TableCell className="font-medium">{service.title}</TableCell>
-                                <TableCell>{service.description}</TableCell>
+                                <TableCell className="hidden md:table-cell">{service.shortDescription}</TableCell>
                                 <TableCell>
                                     <DropdownMenu>
                                         <DropdownMenuTrigger asChild>
@@ -62,16 +104,42 @@ export default function AdminServicesPage() {
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent align="end">
                                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                            <DropdownMenuItem>Edit</DropdownMenuItem>
-                                            <DropdownMenuItem>Delete</DropdownMenuItem>
+                                             <DropdownMenuItem asChild>
+                                                <Link href={`/admin/services/edit/${service.id}`}><Pencil className="mr-2"/>Edit</Link>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem asChild>
+                                                <Link href={`/services/${service.slug}`} target="_blank"><ExternalLink className="mr-2"/>View</Link>
+                                            </DropdownMenuItem>
+                                            <AlertDialogTrigger asChild>
+                                                <DropdownMenuItem className="text-red-500 focus:bg-red-50 focus:text-red-600" onSelect={(e) => e.preventDefault()}>
+                                                    <Trash2 className="mr-2"/>Delete
+                                                </DropdownMenuItem>
+                                            </AlertDialogTrigger>
                                         </DropdownMenuContent>
                                     </DropdownMenu>
+                                    <AlertDialog>
+                                        <AlertDialogContent>
+                                            <AlertDialogHeader>
+                                            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                            <AlertDialogDescription>
+                                                This action cannot be undone. This will permanently delete the service
+                                                and remove its data from our servers.
+                                            </AlertDialogDescription>
+                                            </AlertDialogHeader>
+                                            <AlertDialogFooter>
+                                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                            <AlertDialogAction onClick={() => handleDelete(service.id)} className="bg-destructive hover:bg-destructive/90">Delete</AlertDialogAction>
+                                            </AlertDialogFooter>
+                                        </AlertDialogContent>
+                                    </AlertDialog>
                                 </TableCell>
                             </TableRow>
                         ))}
                          {!isLoading && (!services || services.length === 0) && (
                             <TableRow>
-                                <TableCell colSpan={3} className="text-center">No services found. Add one to get started.</TableCell>
+                                <TableCell colSpan={4} className="h-24 text-center">
+                                    No services found. <Link href="/admin/services/new" className="text-primary underline">Add one</Link> to get started.
+                                </TableCell>
                             </TableRow>
                         )}
                     </TableBody>

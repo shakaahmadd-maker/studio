@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import Link from "next/link";
@@ -15,9 +16,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
-import { services, serviceCategories } from "@/lib/data.tsx";
+import { serviceCategories } from "@/lib/data.tsx";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { ConsultationForm } from "../forms/consultation-form";
+import { useCollection, useFirestore, useMemoFirebase } from "@/firebase";
+import { collection, query, limit } from "firebase/firestore";
 
 
 const navLinks = [
@@ -87,18 +90,25 @@ const ServiceCategoryDropdown = ({ isMobile = false, onLinkClick }: { isMobile?:
 
 const StudyAbroadDropdown = ({ isMobile = false, onLinkClick }: { isMobile?: boolean, onLinkClick?: () => void }) => {
   const pathname = usePathname();
+  const firestore = useFirestore();
+  const servicesQuery = useMemoFirebase(() => {
+    if (!firestore) return null;
+    return query(collection(firestore, "services"), limit(10));
+  }, [firestore]);
+  const { data: services } = useCollection(servicesQuery);
+
 
   if (isMobile) {
     return (
       <div className="flex flex-col space-y-4">
         <span className="text-lg font-semibold text-primary">Study Abroad</span>
-        {services.map((service) => (
+        {services && services.map((service) => (
           <Link
             key={service.id}
-            href={`/services/${service.id}`}
+            href={`/services/${service.slug}`}
             className={cn(
               "text-lg transition-colors hover:text-primary pl-4",
-              pathname === `/services/${service.id}` ? "text-primary font-semibold" : "text-muted-foreground"
+              pathname === `/services/${service.slug}` ? "text-primary font-semibold" : "text-muted-foreground"
             )}
             onClick={onLinkClick}
           >
@@ -128,9 +138,9 @@ const StudyAbroadDropdown = ({ isMobile = false, onLinkClick }: { isMobile?: boo
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start">
-        {services.map((service) => (
+        {services && services.map((service) => (
           <DropdownMenuItem key={service.id} asChild>
-            <Link href={`/services/${service.id}`}>{service.title}</Link>
+            <Link href={`/services/${service.slug}`}>{service.title}</Link>
           </DropdownMenuItem>
         ))}
          <DropdownMenuItem asChild>
@@ -305,3 +315,5 @@ export function Header() {
     </header>
   );
 }
+
+    

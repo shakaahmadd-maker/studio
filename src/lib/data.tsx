@@ -1,244 +1,6 @@
-import type { Service, SuccessStory, BlogPost, TeamMember, FAQ, ServiceCategory, JobOpening, University, UKScholarship, OtherEuropeScholarship, GlobalScholarship, WhyChooseUsItem } from './types';
-import { Award, Briefcase, Landmark, Lightbulb, FileSignature, Trophy, Gem, LifeBuoy, Route } from 'lucide-react';
+import type { SuccessStory, BlogPost, TeamMember, FAQ, ServiceCategory, JobOpening, University, UKScholarship, OtherEuropeScholarship, GlobalScholarship, WhyChooseUsItem } from './types';
+import { Award, Briefcase, Landmark, Lightbulb, FileSignature, Trophy, Gem, LifeBuoy, Route, SendHorizontal } from 'lucide-react';
 import React from 'react';
-
-export const services: Service[] = [
-  {
-    id: 'germany',
-    title: 'Study in Germany',
-    description: 'World-class education with low or no tuition fees.',
-    imageId: 'service-germany',
-    details: {
-      longDescription: `<h3>🇩🇪 Your Gateway to German Excellence: Study in Germany with Uni Help Consultants</h3>
-<p>Planning your future starts with choosing the right study destination, and Germany, a land of innovation and academic distinction, offers unparalleled opportunities. At Uni Help Consultants, we are dedicated to making your dream of studying in Germany a smooth, successful, and enriching reality.</p>
-<h3>Why Choose Uni Help Consultants?</h3>
-<p><strong>A Decade of Expertise:</strong> We have been in the market since 2014, providing expert guidance and a proven track record of successful student placements in Germany. Our experience translates directly into your success.</p>
-<p><strong>Dedicated & Excellent Team:</strong> Our team consists of highly-trained specialists committed to assisting you in all aspects of your study in Germany journey. From initial counseling to post-arrival support, we offer personalized, end-to-end service.</p>
-<p><strong>Specialized German Language Training:</strong> We help you prepare for the language requirements! Our team includes experts who specialize in teaching German from A1 to B2 level, ensuring you have the necessary language skills for university applications and integration into German life.</p>
-<p><strong>Personalized University Selection:</strong> We understand that every profile is unique. We provide in-depth counseling to help you choose the right university and program that perfectly aligns with your academic background, career goals, and personal aspirations.</p>
-<p><strong>Comprehensive Visa & Pre-Departure Facilitation:</strong> We take the stress out of the complex visa process, assisting you with:</p>
-<ul>
-    <li>Visa appointment booking.</li>
-    <li>Thorough document preparation and verification.</li>
-    <li>Interview coaching for the German Embassy/Consulate.</li>
-    <li>Blocked Account and Health Insurance support (essential for the visa).</li>
-    <li>Full pre-departure briefing and support to ensure a smooth journey and arrival.</li>
-</ul>
-<h3>📚 Our A-to-Z Services for Studying in Germany</h3>
-<p>Our full suite of services is designed to guide you from your first thought of studying abroad to settling into your new life in Germany:</p>
-<table>
-<thead>
-<tr>
-<th>Stage</th>
-<th>Service Detail</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Admission</strong></td>
-<td>Profile evaluation, shortlisting universities, application submission, SOP/motivation letter guidance, and follow-up with universities.</td>
-</tr>
-<tr>
-<td><strong>Blocked Account & Insurance</strong></td>
-<td>Assistance in setting up the mandatory German Blocked Account and securing approved health insurance coverage.</td>
-</tr>
-<tr>
-<td><strong>Counseling</strong></td>
-<td>Personalized one-on-one sessions for course and university selection based on your field of study, test scores, and career vision.</td>
-</tr>
-<tr>
-<td><strong>Documentation</strong></td>
-<td>Thorough review, compilation, and preparation of all necessary academic and personal documents for university and visa applications.</td>
-</tr>
-<tr>
-<td><strong>Embassy & Visa</strong></td>
-<td>Expert support with visa application form filling, appointment scheduling, and comprehensive mock interview preparation.</td>
-</tr>
-<tr>
-<td><strong>Flight & Pre-Departure</strong></td>
-<td>Guidance on travel arrangements, required documentation for travel, and a detailed pre-departure orientation.</td>
-</tr>
-<tr>
-<td><strong>German Language Training</strong></td>
-<td>Specialized teaching for A1, A2, B1, and B2 German levels to meet university entry and visa requirements.</td>
-</tr>
-<tr>
-<td><strong>Housing/Accommodation</strong></td>
-<td>Assistance in finding suitable and safe accommodation (student dormitories, shared flats, etc.) near your university.</td>
-</tr>
-<tr>
-<td><strong>Internship & Job Guidance</strong></td>
-<td>Advice and resources for finding part-time student jobs and professional internships (including post-study job search).</td>
-</tr>
-<tr>
-<td><strong>Zealous Support</strong></td>
-<td>Continuous support and connection with our team until you are successfully settled and studying in Germany!</td>
-</tr>
-</tbody>
-</table>
-<h3>🌟 The Benefits and Outcomes of Studying in Germany</h3>
-<p>Germany consistently ranks as a top study destination for international students due to its unique combination of academic excellence and career prospects.</p>
-<h4>Top Benefits of a German Degree</h4>
-<ul>
-    <li><strong>World-Class, Often Tuition-Free Education:</strong> Many public universities offer programs with little to no tuition fees for both domestic and international students. You generally only pay a small semester contribution (€100-€350 per semester).</li>
-    <li><strong>Globally Recognized Qualifications:</strong> German universities are renowned for their high-quality, research-intensive, and practical-oriented education, especially in Engineering, IT, and Business. A German degree is a powerful asset in the global job market.</li>
-    <li><strong>Strong, Stable Economy:</strong> As Europe's largest economy, Germany offers a booming job market with high demand for skilled, international graduates.</li>
-    <li><strong>Multicultural Environment and High Quality of Life:</strong> Live in a safe, modern, and diverse country with excellent infrastructure, transport, and a rich cultural scene.</li>
-</ul>
-<h3>Key Outcomes and Career Pathways</h3>
-<h4>1. Working While Studying</h4>
-<ul>
-    <li><strong>Working Hours:</strong> Non-EU/EEA international students are generally allowed to work 140 full days or 280 half days per year. A 'half day' is a working day of up to 4 hours.</li>
-    <li><strong>Earning Potential:</strong> The national minimum wage in Germany is €12.82 per hour (as of Jan 2025). Depending on your job type (e.g., student assistant/Werkstudent in your field vs. a 'Mini-Job'), you can earn more, often up to €15+ per hour.</li>
-    <li><strong>Note:</strong> For a Minijob (earning up to €538/month), you are generally tax-exempt. Earning more may require paying taxes and social security contributions.</li>
-</ul>
-<h4>2. Post-Study Work (PSW) Opportunities</h4>
-<ul>
-    <li><strong>Job-Seeking Residence Permit (PSW Visa):</strong> Upon successful graduation from a German university, you can apply for an 18-month residence permit to search for a qualified job that is related to your degree.</li>
-    <li><strong>Work Rights:</strong> During this 18-month period, you are permitted to take up any form of employment to support yourself while you search for a professional position.</li>
-</ul>
-<h4>3. Pathway to Permanent Residency (PR) and Citizenship</h4>
-<p>Securing a qualified job after your studies opens up clear avenues for long-term settlement:</p>
-<ul>
-    <li><strong>Switch to a Work Permit or EU Blue Card:</strong> Once you secure a qualified job, your residence permit can be converted into a standard work permit or the highly sought-after EU Blue Card (for highly-skilled workers meeting a certain salary threshold).</li>
-    <li><strong>Permanent Residency (Settlement Permit):</strong> As an EU Blue Card holder, you can apply for PR after just 21 months (with B1 German language skills) or 33 months (with A1 German language skills). As a general Work Permit holder, you can typically apply for PR after 4 years of qualified employment.</li>
-    <li><strong>German Citizenship/Passport:</strong> Under the new naturalization laws (as of June 2024), you can apply for German citizenship after legally residing in Germany for a minimum of five years (down from eight). This period can be shortened to three years for those with outstanding integration achievements (e.g., exceptional German language skills and professional performance).</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>Requirement</th>
-<th>Time Frame</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Post-Study Work Search</strong></td>
-<td>18 Months</td>
-</tr>
-<tr>
-<td><strong>Permanent Residency (PR)</strong></td>
-<td>21-48 Months after securing qualified employment (depending on visa type and language skills).</td>
-</tr>
-<tr>
-<td><strong>German Citizenship</strong></td>
-<td>Minimum 3 to 5 years of legal residence in Germany (excluding study period) after securing a long-term residency permit.</td>
-</tr>
-</tbody>
-</table>
-<p>This clear pathway to PR and citizenship underscores the exceptional long-term career and life prospects Germany offers to international graduates.</p>`,
-      offerings: [
-        'Profile evaluation and university shortlisting',
-        'SOP/motivation letter guidance',
-        'Assistance with German Blocked Account and health insurance',
-        'Expert support for visa application and mock interviews',
-        'Guidance on travel and pre-departure orientation',
-        'Specialized German language training (A1-B2)',
-        'Assistance in finding suitable accommodation',
-        'Advice for finding part-time jobs and internships'
-      ],
-      steps: [
-        'Profile evaluation & university shortlisting',
-        'Application submission & follow-up',
-        'Blocked Account & Insurance setup',
-        'Visa documentation & interview prep',
-        'Pre-departure briefing & travel arrangements'
-      ],
-      benefits: [
-        'Access to world-class, often tuition-free education',
-        'Globally recognized qualifications enhancing job prospects',
-        '18-month post-study work visa to find a qualified job',
-        'Clear pathway to Permanent Residency (PR) and citizenship',
-        'Right to work part-time while studying (140 full days/year)',
-        'Live in a safe, multicultural country with a high quality of life'
-      ]
-    },
-  },
-  {
-    id: 'france',
-    title: 'Study in France',
-    description: 'Experience rich culture and prestigious universities.',
-    imageId: 'service-france',
-    details: {
-      longDescription: 'France is renowned for its rich history, art, and intellectual tradition. Studying in France offers a chance to immerse yourself in a new culture while receiving a top-tier education from globally recognized institutions, especially in fields like luxury brand management, fashion, and culinary arts.',
-      offerings: ['Grandes Écoles & University Applications', 'Campus France Procedure', 'Accommodation Support', 'French Language Integration'],
-      steps: ['Initial Counseling', 'Program Selection', 'Application Process', 'Pre-departure Briefing'],
-      benefits: ['Affordable tuition fees', 'Rich cultural experience', 'Strong industry connections', 'Learn the language of diplomacy'],
-    },
-  },
-  {
-    id: 'italy',
-    title: 'Study in Italy',
-    description: 'Combine historic landmarks with modern education.',
-    imageId: 'service-italy',
-    details: {
-      longDescription: 'From ancient Rome to the Renaissance, Italy is a country steeped in history and art. Its universities are among the oldest in the world, offering a wide range of programs in English, particularly in design, architecture, and humanities. Enjoy the beautiful landscapes, delicious food, and passionate culture.',
-      offerings: ['University Pre-enrollment', 'Declaration of Value (DOV)', 'Scholarship Guidance (DSU)', 'Visa & Residence Permit Help'],
-      steps: ['Evaluation & Shortlisting', 'Document Preparation', 'Application Submission', 'Post-arrival Support'],
-      benefits: ['Affordable living costs', 'Access to historical and artistic treasures', 'Globally recognized degrees', 'Vibrant student life'],
-    },
-  },
-  {
-    id: 'malta',
-    title: 'Study in Malta',
-    description: 'English-speaking Mediterranean destination for studies.',
-    imageId: 'service-malta',
-    details: {
-      longDescription: 'Malta is a sunny Mediterranean archipelago offering a safe and welcoming environment for international students. With English as an official language, it\'s an easy place to adapt to. The country is a growing hub for iGaming, finance, and tourism, providing unique career opportunities.',
-      offerings: ['Course & University Selection', 'Application Processing', 'Student Visa Guidance', 'Part-time Work Permit Info'],
-      steps: ['Consultation', 'Application', 'Offer Letter & Fee Payment', 'Visa Application'],
-      benefits: ['English-speaking country', 'Safe and stable environment', 'Schengen Area member', 'Growing job market'],
-    },
-  },
-  {
-    id: 'ireland',
-    title: 'Study in Ireland',
-    description: 'The "Silicon Valley of Europe" with top tech universities.',
-    imageId: 'service-ireland',
-    details: {
-      longDescription: 'Known as the Emerald Isle, Ireland is a friendly and innovative country. It is home to the European headquarters of many tech giants, making it a prime location for students in IT, computer science, and business. Irish universities are known for their research excellence and close ties to industry.',
-      offerings: ['University & College Applications', 'Irish Visa Application Support', 'Guidance on IRP Card', 'Career & Internship Advice'],
-      steps: ['Profile Analysis', 'University Selection', 'Application & SOP', 'Visa & Pre-departure'],
-      benefits: ['1-2 year post-study work visa', 'Hub for major tech companies', 'High-quality education system', 'Welcoming and friendly culture'],
-    },
-  },
-  {
-    id: 'uk',
-    title: 'Study in the UK',
-    description: 'Home to some of the world\'s most prestigious universities.',
-    imageId: 'service-uk',
-    details: {
-      longDescription: 'The United Kingdom has a long and storied tradition of academic excellence. With institutions like Oxford, Cambridge, and many others, the UK offers a diverse range of high-quality courses. Experience a multicultural society and a gateway to Europe.',
-      offerings: ['UCAS Application for Undergraduates', 'Postgraduate Application Support', 'Student Route Visa Guidance', 'Credibility Interview Preparation'],
-      steps: ['Initial Assessment', 'Course & University Selection', 'Application Crafting', 'Visa & CAS Support'],
-      benefits: ['World-renowned universities', 'Graduate Route post-study work visa', 'Diverse and multicultural environment', 'Shorter course durations'],
-    },
-  },
-  {
-    id: 'usa',
-    title: 'Study in the USA',
-    description: 'Diverse opportunities in the land of innovation.',
-    imageId: 'service-usa',
-    details: {
-      longDescription: 'The United States offers a vast and diverse higher education system, from liberal arts colleges to large research universities. It is a leader in technology, research, and innovation, providing students with cutting-edge resources and opportunities for practical training (OPT/CPT).',
-      offerings: ['University Shortlisting (incl. Ivy League)', 'SOP/Essay Editing', 'F-1 Visa Interview Training', 'Scholarship & Assistantship Help'],
-      steps: ['Strategy Session', 'Test Preparation Guidance', 'Application Management', 'Visa Mock Interviews'],
-      benefits: ['Flexible education system', 'Optional Practical Training (OPT)', 'Global leadership in research', 'Cultural diversity'],
-    },
-  },
-  {
-    id: 'australia',
-    title: 'Study in Australia',
-    description: 'Enjoy a high standard of living and excellent education.',
-    imageId: 'service-australia',
-    details: {
-      longDescription: 'Australia is known for its stunning landscapes, vibrant cities, and laid-back lifestyle. Its universities are internationally respected, with a strong focus on research and student welfare. The country offers generous post-study work rights, making it an attractive destination.',
-      offerings: ['University & TAFE Applications', 'Genuine Temporary Entrant (GTE) Guidance', 'Student Visa (Subclass 500) Support', 'Post-Study Work Visa (Subclass 485) Info'],
-      steps: ['Initial Consultation', 'Application Lodgement', 'Offer Acceptance', 'Visa Filing'],
-      benefits: ['Excellent quality of life', 'Generous post-study work rights', 'Focus on student support services', 'Multicultural and welcoming society'],
-    },
-  },
-];
 
 export const serviceCategories: ServiceCategory[] = [
     {
@@ -414,32 +176,32 @@ export const universities: University[] = [
 
 export const whyChooseUsData: WhyChooseUsItem[] = [
     {
-        icon: <Lightbulb className="text-4xl text-amber-500" />,
+        icon: <Lightbulb />,
         title: "Expert Scholarship Guidance",
         description: "We offer personalized guidance based on your unique academic background, career aspirations, and financial needs, identifying the right merit-based, need-based, or research opportunities for you."
     },
     {
-        icon: <FileSignature className="text-4xl text-amber-500" />,
+        icon: <FileSignature />,
         title: "Comprehensive Application Support",
         description: "Receive step-by-step support for writing compelling personal statements, crafting standout essays, and ensuring all necessary documentation is perfectly in order to highlight your strengths."
     },
     {
-        icon: <Trophy className="text-4xl text-amber-500" />,
+        icon: <Trophy />,
         title: "Maximize Your Chances of Winning",
         description: "Our deep understanding of scholarship panels gives you a competitive edge. We ensure your application reflects the leadership, academic excellence, and passion they look for in highly competitive programs."
     },
     {
-        icon: <Gem className="text-4xl text-amber-500" />,
+        icon: <Gem />,
         title: "Access to Exclusive Scholarships",
         description: "Benefit from our wide network of universities and private organizations, granting you awareness of hidden gems and fully funded opportunities not available through conventional channels."
     },
     {
-        icon: <LifeBuoy className="text-4xl text-amber-500" />,
+        icon: <LifeBuoy />,
         title: "Ongoing Support and Mentorship",
         description: "Our support doesn't end with the award. We assist with visa applications, accommodation, and transition to ensure a smooth and successful start to your academic life abroad."
     },
     {
-        icon: <Route className="text-4xl text-amber-500" />,
+        icon: <Route />,
         title: "Tailored Scholarship Strategy for Every Student",
         description: "At Uni Help Consultants, we craft a personalized scholarship strategy based on your goals and background, ensuring your applications align with your strengths and aspirations."
     }
@@ -522,66 +284,17 @@ export const europeScholarships = {
     },
   ],
   national: [
-    {
-      country: '🇧🇪 Belgium',
-      description: 'Focuses on developing human resources (Master’s/PhD) in social sciences, engineering, and public health.',
-      funding: 'Full/Partial Tuition & Stipend.',
-      bgColor: 'bg-indigo-50',
-      borderColor: 'border-indigo-500',
-      textColor: 'text-indigo-700',
-    },
-    {
-      country: '🇸🇪 Sweden (SI Scholarships)',
-      description: 'Promotes global sustainability and leadership for selected countries (Master\'s programs).',
-      funding: 'Full Tuition, Monthly Stipend & Travel.',
-      bgColor: 'bg-yellow-50',
-      borderColor: 'border-yellow-500',
-      textColor: 'text-yellow-700',
-    },
-    {
-      country: '🇮🇪 Ireland',
-      description: "Open to non-EU/EEA Master's/PhD students in all disciplines (Arts, Humanities, STEM).",
-      funding: 'Full Tuition, Monthly Stipend & Travel.',
-      bgColor: 'bg-green-50',
-      borderColor: 'border-green-500',
-      textColor: 'text-green-700',
-    },
-    {
-      country: '🇳🇱 Netherlands',
-      description: "Holland Scholarship & Orange Tulip Scholarship (Master's) promoting innovation and engineering.",
-      funding: 'Full/Partial Tuition & Stipend.',
-      bgColor: 'bg-orange-50',
-      borderColor: 'border-orange-500',
-      textColor: 'text-orange-700',
-    },
-    {
-      country: '🇫🇮 Finland',
-      description: 'Government Scholarship Pool targeting highly talented non-EU/EEA research students.',
-      funding: 'Full Tuition or Partial Funding & Stipends.',
-      bgColor: 'bg-sky-50',
-      borderColor: 'border-sky-500',
-      textColor: 'text-sky-700',
-    },
-    {
-      country: '🇩🇰 Denmark',
-      description: 'Strengthening cooperation, funding for Master’s/PhD in engineering, business, and health sciences.',
-      funding: 'Full/Partial Tuition & Living Stipend.',
-      bgColor: 'bg-red-50',
-      borderColor: 'border-red-500',
-      textColor: 'text-red-700',
-    },
-    {
-      country: '🇳🇴 Norway',
-      description: 'Tuition is generally free; government provides a living allowance for students from developing countries.',
-      funding: 'Monthly Living Stipend (Tuition usually Free).',
-      bgColor: 'bg-teal-50',
-      borderColor: 'border-teal-500',
-      textColor: 'text-teal-700',
-    },
-  ],
+    { country: 'Belgium', icon: '🇧🇪'},
+    { country: 'Sweden', icon: '🇸🇪'},
+    { country: 'Ireland', icon: '🇮🇪'},
+    { country: 'Netherlands', icon: '🇳🇱'},
+    { country: 'Finland', icon: '🇫🇮'},
+    { country: 'Denmark', icon: '🇩🇰'},
+    { country: 'Norway', icon: '🇳🇴'},
+  ] as OtherEuropeScholarship[],
 };
 
-export const ukScholarshipsData = [
+export const ukScholarshipsData: UKScholarship[] = [
   {
     icon: 'star',
     title: 'Fully Funded Scholarships',

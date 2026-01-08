@@ -1,7 +1,11 @@
 
+'use client';
+
 import Link from "next/link";
 import { GraduationCap, Linkedin, Twitter, Facebook, Instagram } from "lucide-react";
-import { services, serviceCategories } from "@/lib/data.tsx";
+import { serviceCategories } from "@/lib/data.tsx";
+import { useCollection, useFirestore, useMemoFirebase } from "@/firebase";
+import { collection, query, limit } from "firebase/firestore";
 
 const socialLinks = [
   { name: "Facebook", icon: Facebook, href: "https://www.facebook.com/unihelp.consultant" },
@@ -19,6 +23,13 @@ const quickLinks = [
 ]
 
 export function Footer() {
+  const firestore = useFirestore();
+  const servicesQuery = useMemoFirebase(() => {
+    if (!firestore) return null;
+    return query(collection(firestore, "services"), limit(5));
+  }, [firestore]);
+  const { data: services } = useCollection(servicesQuery);
+
   return (
     <footer className="bg-secondary text-secondary-foreground border-t">
       <div className="container py-12 px-4">
@@ -65,9 +76,9 @@ export function Footer() {
           <div className="md:col-span-1">
             <h3 className="font-semibold font-headline tracking-wider uppercase mb-4">Study Abroad</h3>
             <ul className="space-y-2">
-              {services.map((service) => (
+              {services && services.map((service) => (
                 <li key={service.id}>
-                  <Link href={`/services/${service.id}`} className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                  <Link href={`/services/${service.slug}`} className="text-sm text-muted-foreground hover:text-primary transition-colors">
                     {service.title}
                   </Link>
                 </li>
@@ -105,3 +116,5 @@ export function Footer() {
     </footer>
   );
 }
+
+    

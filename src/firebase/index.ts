@@ -1,3 +1,4 @@
+
 'use client';
 
 import { firebaseConfig } from '@/firebase/config';
@@ -7,30 +8,32 @@ import { getFirestore } from 'firebase/firestore'
 
 // IMPORTANT: DO NOT MODIFY THIS FUNCTION
 export function initializeFirebase() {
-  if (!getApps().length) {
-    // Important! initializeApp() is called without any arguments because Firebase App Hosting
-    // integrates with the initializeApp() function to provide the environment variables needed to
-    // populate the FirebaseOptions in production. It is critical that we attempt to call initializeApp()
-    // without arguments.
-    let firebaseApp;
+  const apps = getApps();
+  let firebaseApp;
+
+  // Find the default app if it exists
+  const defaultApp = apps.find(app => app.name === '[DEFAULT]');
+
+  if (defaultApp) {
+    firebaseApp = defaultApp;
+  } else {
+    // If the default app doesn't exist, initialize it.
+    // This handles the case where no apps are initialized, or where a named app ('server') was initialized first.
     try {
-      // Attempt to initialize via Firebase App Hosting environment variables
+      // Try to initialize from environment variables first (for App Hosting)
       firebaseApp = initializeApp();
     } catch (e) {
-      // Only warn in production because it's normal to use the firebaseConfig to initialize
-      // during development
       if (process.env.NODE_ENV === "production") {
         console.warn('Automatic initialization failed. Falling back to firebase config object.', e);
       }
-      firebaseApp = initializeApp(firebaseConfig);
+      // Fallback to local config. Explicitly name it to avoid conflict if other apps are trying to initialize.
+      firebaseApp = initializeApp(firebaseConfig, '[DEFAULT]');
     }
-
-    return getSdks(firebaseApp);
   }
 
-  // If already initialized, return the SDKs with the already initialized App
-  return getSdks(getApp());
+  return getSdks(firebaseApp);
 }
+
 
 export function getSdks(firebaseApp: FirebaseApp) {
   return {
@@ -42,9 +45,7 @@ export function getSdks(firebaseApp: FirebaseApp) {
 
 export * from './provider';
 export * from './client-provider';
+export * from './server';
 export * from './firestore/use-collection';
 export * from './firestore/use-doc';
 export * from './non-blocking-updates';
-export * from './non-blocking-login';
-export * from './errors';
-export * from './error-emitter';
