@@ -20,7 +20,7 @@ import { serviceCategories } from "@/lib/data.tsx";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { ConsultationForm } from "../forms/consultation-form";
 import { useCollection, useFirestore, useMemoFirebase } from "@/firebase";
-import { collection, query, limit } from "firebase/firestore";
+import { collection, query, orderBy } from "firebase/firestore";
 
 
 const navLinks = [
@@ -93,7 +93,7 @@ const StudyAbroadDropdown = ({ isMobile = false, onLinkClick }: { isMobile?: boo
   const firestore = useFirestore();
   const servicesQuery = useMemoFirebase(() => {
     if (!firestore) return null;
-    return query(collection(firestore, "services"), limit(10));
+    return query(collection(firestore, "services"), orderBy("createdAt", "asc"));
   }, [firestore]);
   const { data: services } = useCollection(servicesQuery);
 
