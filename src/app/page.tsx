@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowRight, BookOpen, GraduationCap, Briefcase, Users, Quote, CheckCircle2, Rocket, Eye, Award } from 'lucide-react';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { successStories, serviceCategories, blogPosts as staticBlogPosts } from '@/lib/data.tsx';
+import { successStories, serviceCategories, blogPosts as staticBlogPosts, services as staticServices } from '@/lib/data.tsx';
 import { UniversitySlider } from '@/components/layout/university-slider';
 import { useCollection, useFirestore, useMemoFirebase } from '@/firebase';
 import { collection, query, limit, orderBy } from 'firebase/firestore';
@@ -23,13 +23,15 @@ export default function Home() {
     if (!firestore) return null;
     return query(collection(firestore, "services"), limit(4))
   }, [firestore]);
-  const { data: services } = useCollection<Service>(servicesQuery);
+  const { data: liveServices } = useCollection<Service>(servicesQuery);
 
   const postsQuery = useMemoFirebase(() => {
     if (!firestore) return null;
     return query(collection(firestore, "blog_posts"), orderBy("publicationDate", "desc"), limit(3))
   }, [firestore]);
   const { data: blogPosts } = useCollection<BlogPost>(postsQuery);
+
+  const services = liveServices && liveServices.length > 0 ? liveServices : staticServices.slice(0, 4);
 
   return (
     <div className="flex flex-col min-h-dvh">
@@ -73,7 +75,7 @@ export default function Home() {
               <p className="mt-2 text-lg text-muted-foreground">Tailored guidance for every step of your academic journey.</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {services && services.map((service) => {
+              {services && services.map((service: any) => {
                 return (
                   <Card key={service.id} className="flex flex-col items-center text-center hover:shadow-lg transition-shadow duration-300">
                      {service.imageUrl && (

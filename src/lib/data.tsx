@@ -1,7 +1,128 @@
 
-import type { SuccessStory, TeamMember, FAQ, ServiceCategory, JobOpening, University, UKScholarship, OtherEuropeScholarship, GlobalScholarship, WhyChooseUsItem } from './types';
+import type { Service, SuccessStory, TeamMember, FAQ, ServiceCategory, JobOpening, University, UKScholarship, OtherEuropeScholarship, GlobalScholarship, WhyChooseUsItem } from './types';
 import { Award, Briefcase, Landmark, Lightbulb, FileSignature, Trophy, Gem, LifeBuoy, Route, SendHorizontal } from 'lucide-react';
 import React from 'react';
+
+export const services: any[] = [
+  {
+    id: 'germany',
+    slug: 'germany',
+    title: 'Study in Germany',
+    shortDescription: 'World-class education with low or no tuition fees.',
+    imageUrl: "https://images.unsplash.com/photo-1679254205082-ba0b1d469ac4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxnZXJtYW55JTIwbGFuZG1hcmt8ZW58MHx8fHwxNzY3Nzg1ODY3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    longDescription: `<h3>🇩🇪 Your Gateway to German Excellence: Study in Germany with Uni Help Consultants</h3>
+<p>Planning your future starts with choosing the right study destination, and Germany, a land of innovation and academic distinction, offers unparalleled opportunities. At Uni Help Consultants, we are dedicated to making your dream of studying in Germany a smooth, successful, and enriching reality.</p>
+<h3>Why Choose Uni Help Consultants?</h3>
+<p><strong>A Decade of Expertise:</strong> We have been in the market since 2014, providing expert guidance and a proven track record of successful student placements in Germany. Our experience translates directly into your success.</p>
+<p><strong>Dedicated & Excellent Team:</strong> Our team consists of highly-trained specialists committed to assisting you in all aspects of your study in Germany journey. From initial counseling to post-arrival support, we offer personalized, end-to-end service.</p>
+<p><strong>Specialized German Language Training:</strong> We help you prepare for the language requirements! Our team includes experts who specialize in teaching German from A1 to B2 level, ensuring you have the necessary language skills for university applications and integration into German life.</p>
+<p><strong>Personalized University Selection:</strong> We understand that every profile is unique. We provide in-depth counseling to help you choose the right university and program that perfectly aligns with your academic background, career goals, and personal aspirations.</p>
+<p><strong>Comprehensive Visa & Pre-Departure Facilitation:</strong> We take the stress out of the complex visa process, assisting you with:</p>
+<ul>
+    <li>Visa appointment booking.</li>
+    <li>Thorough document preparation and verification.</li>
+    <li>Interview coaching for the German Embassy/Consulate.</li>
+    <li>Blocked Account and Health Insurance support (essential for the visa).</li>
+    <li>Full pre-departure briefing and support to ensure a smooth journey and arrival.</li>
+</ul>`,
+      offerings: [
+        'Profile evaluation and university shortlisting',
+        'SOP/motivation letter guidance',
+        'Assistance with German Blocked Account and health insurance',
+        'Expert support for visa application and mock interviews',
+      ],
+      process: [
+        'Profile evaluation & university shortlisting',
+        'Application submission & follow-up',
+        'Blocked Account & Insurance setup',
+        'Visa documentation & interview prep',
+      ],
+      benefits: [
+        'Access to world-class, often tuition-free education',
+        'Globally recognized qualifications enhancing job prospects',
+        '18-month post-study work visa to find a qualified job',
+        'Clear pathway to Permanent Residency (PR) and citizenship',
+      ]
+  },
+  {
+    id: 'france',
+    slug: 'france',
+    title: 'Study in France',
+    shortDescription: 'Experience rich culture and prestigious universities.',
+    imageUrl: "https://images.unsplash.com/photo-1627654065786-bd0375235c13?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8ZnJhbmNlJTIwbGFuZG1hcmt8ZW58MHx8fHwxNzY3Nzg1ODY3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    longDescription: 'France is renowned for its rich history, art, and intellectual tradition. Studying in France offers a chance to immerse yourself in a new culture while receiving a top-tier education from globally recognized institutions, especially in fields like luxury brand management, fashion, and culinary arts.',
+      offerings: ['Grandes Écoles & University Applications', 'Campus France Procedure', 'Accommodation Support', 'French Language Integration'],
+      process: ['Initial Counseling', 'Program Selection', 'Application Process', 'Pre-departure Briefing'],
+      benefits: ['Affordable tuition fees', 'Rich cultural experience', 'Strong industry connections', 'Learn the language of diplomacy'],
+  },
+  {
+    id: 'italy',
+    slug: 'italy',
+    title: 'Study in Italy',
+    shortDescription: 'Combine historic landmarks with modern education.',
+    imageUrl: "https://images.unsplash.com/photo-1540757496893-b9e77b0ec802?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxpdGFseSUyMGxhbmRtYXJrfGVufDB8fHx8MTc2Nzc4NTg2N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+    longDescription: 'From ancient Rome to the Renaissance, Italy is a country steeped in history and art. Its universities are among the oldest in the world, offering a wide range of programs in English, particularly in design, architecture, and humanities. Enjoy the beautiful landscapes, delicious food, and passionate culture.',
+      offerings: ['University Pre-enrollment', 'Declaration of Value (DOV)', 'Scholarship Guidance (DSU)', 'Visa & Residence Permit Help'],
+      process: ['Evaluation & Shortlisting', 'Document Preparation', 'Application Submission', 'Post-arrival Support'],
+      benefits: ['Affordable living costs', 'Access to historical and artistic treasures', 'Globally recognized degrees', 'Vibrant student life'],
+  },
+  {
+    id: 'malta',
+    slug: 'malta',
+    title: 'Study in Malta',
+    shortDescription: 'English-speaking Mediterranean destination for studies.',
+    imageUrl: "https://images.unsplash.com/photo-1687033722810-08b7072236c2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxtYWx0YSUyMGNpdHl8ZW58MHx8fHwxNzY3Nzg1ODY3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    longDescription: 'Malta is a sunny Mediterranean archipelago offering a safe and welcoming environment for international students. With English as an official language, it\'s an easy place to adapt to. The country is a growing hub for iGaming, finance, and tourism, providing unique career opportunities.',
+      offerings: ['Course & University Selection', 'Application Processing', 'Student Visa Guidance', 'Part-time Work Permit Info'],
+      process: ['Consultation', 'Application', 'Offer Letter & Fee Payment', 'Visa Application'],
+      benefits: ['English-speaking country', 'Safe and stable environment', 'Schengen Area member', 'Growing job market'],
+  },
+  {
+    id: 'ireland',
+    slug: 'ireland',
+    title: 'Study in Ireland',
+    shortDescription: 'The "Silicon Valley of Europe" with top tech universities.',
+    imageUrl: "https://images.unsplash.com/photo-1693342563508-75ff43f43198?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxpcmVsYW5kJTIwbGFuZHNjYXBlfGVufDB8fHx8MTc2Nzc4NTg2N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+    longDescription: 'Known as the Emerald Isle, Ireland is a friendly and innovative country. It is home to the European headquarters of many tech giants, making it a prime location for students in IT, computer science, and business. Irish universities are known for their research excellence and close ties to industry.',
+      offerings: ['University & College Applications', 'Irish Visa Application Support', 'Guidance on IRP Card', 'Career & Internship Advice'],
+      process: ['Profile Analysis', 'University Selection', 'Application & SOP', 'Visa & Pre-departure'],
+      benefits: ['1-2 year post-study work visa', 'Hub for major tech companies', 'High-quality education system', 'Welcoming and friendly culture'],
+  },
+  {
+    id: 'uk',
+    slug: 'uk',
+    title: 'Study in the UK',
+    shortDescription: 'Home to some of the world\'s most prestigious universities.',
+    imageUrl: "https://images.unsplash.com/photo-1723126906313-bcbbe80947cc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHx1ayUyMGxhbmRtYXJrfGVufDB8fHx8MTc2Nzc4NTg2N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+    longDescription: 'The United Kingdom has a long and storied tradition of academic excellence. With institutions like Oxford, Cambridge, and many others, the UK offers a diverse range of high-quality courses. Experience a multicultural society and a gateway to Europe.',
+      offerings: ['UCAS Application for Undergraduates', 'Postgraduate Application Support', 'Student Route Visa Guidance', 'Credibility Interview Preparation'],
+      process: ['Initial Assessment', 'Course & University Selection', 'Application Crafting', 'Visa & CAS Support'],
+      benefits: ['World-renowned universities', 'Graduate Route post-study work visa', 'Diverse and multicultural environment', 'Shorter course durations'],
+  },
+  {
+    id: 'usa',
+    slug: 'usa',
+    title: 'Study in the USA',
+    shortDescription: 'Diverse opportunities in the land of innovation.',
+    imageUrl: "https://images.unsplash.com/photo-1719585891737-99eae89beee6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHx1c2ElMjBsYW5kbWFya3xlbnwwfHx8fDE3Njc3ODU4Njd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    longDescription: 'The United States offers a vast and diverse higher education system, from liberal arts colleges to large research universities. It is a leader in technology, research, and innovation, providing students with cutting-edge resources and opportunities for practical training (OPT/CPT).',
+      offerings: ['University Shortlisting (incl. Ivy League)', 'SOP/Essay Editing', 'F-1 Visa Interview Training', 'Scholarship & Assistantship Help'],
+      process: ['Strategy Session', 'Test Preparation Guidance', 'Application Management', 'Visa Mock Interviews'],
+      benefits: ['Flexible education system', 'Optional Practical Training (OPT)', 'Global leadership in research', 'Cultural diversity'],
+  },
+  {
+    id: 'australia',
+    slug: 'australia',
+    title: 'Study in Australia',
+    shortDescription: 'Enjoy a high standard of living and excellent education.',
+    imageUrl: "https://images.unsplash.com/photo-1767259120555-268a31275b8d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxhdXN0cmFsaWElMjBsYW5kbWFya3xlbnwwfHx8fDE3Njc3ODU4Njd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    longDescription: 'Australia is known for its stunning landscapes, vibrant cities, and laid-back lifestyle. Its universities are internationally respected, with a strong focus on research and student welfare. The country offers generous post-study work rights, making it an attractive destination.',
+      offerings: ['University & TAFE Applications', 'Genuine Temporary Entrant (GTE) Guidance', 'Student Visa (Subclass 500) Support', 'Post-Study Work Visa (Subclass 485) Info'],
+      process: ['Initial Consultation', 'Application Lodgement', 'Offer Acceptance', 'Visa Filing'],
+      benefits: ['Excellent quality of life', 'Generous post-study work rights', 'Focus on student support services', 'Multicultural and welcoming society'],
+  },
+];
+
 
 export const serviceCategories: ServiceCategory[] = [
     {

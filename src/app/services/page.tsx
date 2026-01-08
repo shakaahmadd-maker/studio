@@ -9,11 +9,15 @@ import Image from "next/image";
 import { useCollection, useFirestore, useMemoFirebase } from "@/firebase";
 import { collection, query, orderBy } from "firebase/firestore";
 import { Skeleton } from "@/components/ui/skeleton";
+import type { Service } from "@/lib/types";
+import { services as staticServices } from "@/lib/data.tsx";
 
 export default function ServicesPage() {
   const firestore = useFirestore();
   const servicesQuery = useMemoFirebase(() => query(collection(firestore, "services"), orderBy("createdAt", "asc")), [firestore]);
-  const { data: services, isLoading } = useCollection(servicesQuery);
+  const { data: liveServices, isLoading } = useCollection<Service>(servicesQuery);
+
+  const services = liveServices && liveServices.length > 0 ? liveServices : staticServices;
 
   return (
     <div className="bg-background">
@@ -45,7 +49,8 @@ export default function ServicesPage() {
                     </CardFooter>
                 </Card>
             ))}
-            {services && services.map((service) => {
+            {services && services.map((service: any) => {
+                const offerings = service.offerings || [];
                 return (
                     <Card key={service.id} className="flex flex-col">
                         {service.imageUrl && (
@@ -64,7 +69,7 @@ export default function ServicesPage() {
                         </CardHeader>
                         <CardContent className="flex-grow">
                              <ul className="space-y-2 text-sm text-muted-foreground">
-                                {service.offerings.slice(0,3).map((item, index) => (
+                                {offerings.slice(0,3).map((item: string, index: number) => (
                                     <li key={index} className="flex items-center">
                                     <CheckCircle2 className="h-4 w-4 text-green-500 mr-2 flex-shrink-0" />
                                     <span>{item}</span>

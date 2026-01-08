@@ -4,7 +4,7 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { faqs, successStories } from "@/lib/data.tsx";
+import { faqs as staticFaqs, successStories as staticStories, services as staticServices } from "@/lib/data.tsx";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, CheckCircle2, Quote } from "lucide-react";
@@ -22,7 +22,7 @@ type ServicePageProps = {
   };
 };
 
-const SuccessStoryCard = ({ story }: { story: (typeof successStories)[0] }) => {
+const SuccessStoryCard = ({ story }: { story: (typeof staticStories)[0] }) => {
     const storyImage = PlaceHolderImages.find(p => p.id === story.clientImageId);
     return (
         <Card className="overflow-hidden">
@@ -45,21 +45,20 @@ const SuccessStoryCard = ({ story }: { story: (typeof successStories)[0] }) => {
 
 export default function ServicePage({ params }: ServicePageProps) {
   const firestore = useFirestore();
-  // The user will link to this page using the service's slug, but Firestore needs the document ID.
-  // The correct, scalable way to handle this is to perform a query server-side to fetch the ID from the slug.
-  // However, for this client-side implementation, we assume the `id` param from the URL is the document ID.
-  // Note: For this to work, links pointing here (e.g., from the services page or homepage) must use `service.id`, not `service.slug`.
   const serviceDocRef = useMemoFirebase(() => {
     if (!firestore || !params.id) return null;
     return doc(firestore, 'services', params.id);
   }, [firestore, params.id]);
 
-  const { data: service, isLoading } = useDoc<Service>(serviceDocRef);
+  const { data: liveService, isLoading } = useDoc<Service>(serviceDocRef);
+  
+  let service = liveService;
+  if (!liveService && !isLoading) {
+    service = staticServices.find(s => s.id === params.id) || null;
+  }
 
-  // NOTE: The `faqs` and `successStories` are still using static data.
-  // A future step would be to fetch these dynamically based on the service category or other criteria.
-  const relevantFaqs = faqs.filter(f => f.category === 'general');
-  const relevantStories = successStories.slice(0,2);
+  const relevantFaqs = staticFaqs.filter(f => f.category === 'general' || f.category === service?.id);
+  const relevantStories = staticStories.slice(0,2);
 
   if (isLoading) {
       return (
@@ -80,6 +79,11 @@ export default function ServicePage({ params }: ServicePageProps) {
   if (!service) {
     notFound();
   }
+
+  const offerings = service.offerings || [];
+  const process = service.process || [];
+  const benefits = service.benefits || [];
+  const longDescription = service.longDescription || "";
 
   return (
     <div className="bg-background py-16 md:py-24">
@@ -112,14 +116,14 @@ export default function ServicePage({ params }: ServicePageProps) {
           )}
 
         <div className="prose prose-lg dark:prose-invert max-w-none mx-auto mb-16 text-foreground/80"
-             dangerouslySetInnerHTML={{ __html: service.longDescription }}
+             dangerouslySetInnerHTML={{ __html: longDescription }}
         />
 
         <div className="grid md:grid-cols-3 gap-12 mb-20 p-8 bg-muted/30 rounded-lg">
             <div>
                 <h3 className="font-semibold text-xl font-headline text-primary mb-4">What We Offer</h3>
                 <ul className="space-y-2">
-                {service.offerings.map((item, index) => (
+                {offerings.map((item, index) => (
                     <li key={index} className="flex items-start">
                     <CheckCircle2 className="h-5 w-5 text-green-500 mr-3 mt-1 flex-shrink-0" />
                     <span className="text-muted-foreground">{item}</span>
@@ -130,7 +134,7 @@ export default function ServicePage({ params }: ServicePageProps) {
             <div>
                 <h3 className="font-semibold text-xl font-headline text-primary mb-4">Our Process</h3>
                 <ul className="space-y-2">
-                {service.process.map((item, index) => (
+                {process.map((item, index) => (
                     <li key={index} className="flex items-start">
                     <span className="font-bold text-primary mr-3 text-lg">{index + 1}.</span>
                     <span className="text-muted-foreground">{item}</span>
@@ -141,7 +145,7 @@ export default function ServicePage({ params }: ServicePageProps) {
             <div>
                 <h3 className="font-semibold text-xl font-headline text-primary mb-4">Benefits</h3>
                 <ul className="space-y-2">
-                {service.benefits.map((item, index) => (
+                {benefits.map((item, index) => (
                     <li key={index} className="flex items-start">
                     <CheckCircle2 className="h-5 w-5 text-green-500 mr-3 mt-1 flex-shrink-0" />
                     <span className="text-muted-foreground">{item}</span>
