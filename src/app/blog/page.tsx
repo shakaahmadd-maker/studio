@@ -10,12 +10,15 @@ import { useCollection, useFirestore, useMemoFirebase } from "@/firebase";
 import { collection, query, orderBy, limit } from "firebase/firestore";
 import { Skeleton } from "@/components/ui/skeleton";
 import { type BlogPost } from "@/lib/types";
+import { blogPosts as staticBlogPosts } from "@/lib/data.tsx";
 
 
 export default function BlogPage() {
   const firestore = useFirestore();
   const postsQuery = useMemoFirebase(() => query(collection(firestore, "blog_posts"), orderBy("publicationDate", "desc")), [firestore]);
   const { data: blogPosts, isLoading } = useCollection<BlogPost>(postsQuery);
+
+  const postsToDisplay = blogPosts && blogPosts.length > 0 ? blogPosts : staticBlogPosts;
 
   return (
     <div className="bg-background">
@@ -49,7 +52,8 @@ export default function BlogPage() {
                     </CardFooter>
                 </Card>
             ))}
-            {blogPosts && blogPosts.map((post) => {
+            {postsToDisplay.map((post: any) => {
+              const publicationDate = post.publicationDate instanceof Date ? post.publicationDate : post.publicationDate.toDate();
               return (
                 <Card key={post.id} className="overflow-hidden flex flex-col hover:shadow-xl transition-shadow duration-300">
                   {post.imageUrl && (
@@ -67,7 +71,7 @@ export default function BlogPage() {
                        <Link href={`/blog/${post.slug}`} className="hover:text-primary transition-colors">{post.title}</Link>
                     </CardTitle>
                     <CardDescription>
-                      {new Date(post.publicationDate.toDate()).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })} by {post.author}
+                      {publicationDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })} by {post.author}
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="flex-grow">

@@ -10,6 +10,7 @@ import { useCollection, useFirestore, useMemoFirebase } from "@/firebase";
 import { collection, query, where, limit } from "firebase/firestore";
 import { type BlogPost } from "@/lib/types";
 import { Skeleton } from "@/components/ui/skeleton";
+import { blogPosts as staticBlogPosts } from "@/lib/data.tsx";
 
 
 type BlogPostPageProps = {
@@ -26,7 +27,13 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
   }, [firestore, params.slug]);
 
   const { data: posts, isLoading } = useCollection<BlogPost>(postQuery);
-  const post = posts?.[0];
+  
+  let post = posts?.[0];
+  if (!post && !isLoading) {
+    post = staticBlogPosts.find(p => p.slug === params.slug);
+  }
+  
+  const publicationDate = post?.publicationDate ? (post.publicationDate instanceof Date ? post.publicationDate : post.publicationDate.toDate()) : new Date();
 
   if (isLoading) {
     return (
@@ -72,8 +79,8 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
             <div className="flex items-center space-x-4 text-muted-foreground text-sm">
                 <div className="flex items-center gap-2">
                     <Calendar className="h-4 w-4" />
-                    <time dateTime={post.publicationDate.toDate().toISOString()}>
-                        {new Date(post.publicationDate.toDate()).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                    <time dateTime={publicationDate.toISOString()}>
+                        {publicationDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
                     </time>
                 </div>
                 <div className="flex items-center gap-2">

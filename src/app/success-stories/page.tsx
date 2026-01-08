@@ -10,6 +10,8 @@ import { useCollection, useFirestore, useMemoFirebase } from "@/firebase";
 import { collection, query, orderBy } from "firebase/firestore";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { SuccessStory } from "@/lib/types";
+import { successStories as staticSuccessStories } from "@/lib/data.tsx";
+import { PlaceHolderImages } from "@/lib/placeholder-images";
 
 
 const SocialShare = ({ storyUrl, text }: { storyUrl: string, text: string }) => {
@@ -35,19 +37,23 @@ const SocialShare = ({ storyUrl, text }: { storyUrl: string, text: string }) => 
     )
 }
 
-const SuccessStoryCard = ({ story }: { story: SuccessStory }) => {
+const SuccessStoryCard = ({ story }: { story: SuccessStory | any }) => {
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://unihelpconsultants.com";
     const storyUrl = `${siteUrl}/success-stories#${story.id}`;
     const shareText = `Check out this success story from Uni Help Consultants: ${story.name} at ${story.university}!`;
+
+    const clientImageUrl = story.clientImageUrl || PlaceHolderImages.find(p => p.id === story.clientImageId)?.imageUrl;
+    const visaImageUrl = story.visaImageUrl || PlaceHolderImages.find(p => p.id === story.visaImageId)?.imageUrl;
+
 
     return (
         <Card id={story.id} className="overflow-hidden bg-card hover:shadow-xl transition-shadow duration-300 scroll-mt-20">
             <CardContent className="p-6">
                 <div className="flex flex-col md:flex-row items-center gap-6 text-center md:text-left">
-                    {story.clientImageUrl && (
+                    {clientImageUrl && (
                         <div className="relative mx-auto md:mx-0 w-32 h-32 flex-shrink-0">
                             <Image
-                                src={story.clientImageUrl}
+                                src={clientImageUrl}
                                 alt={`Portrait of ${story.name}`}
                                 width={128}
                                 height={128}
@@ -68,7 +74,7 @@ const SuccessStoryCard = ({ story }: { story: SuccessStory }) => {
                 </div>
 
                 <div className="flex items-center justify-between mt-4 border-t pt-4">
-                    {story.visaImageUrl && (
+                    {visaImageUrl && (
                         <Dialog>
                             <DialogTrigger asChild>
                                 <Button variant="outline" size="sm">View Visa</Button>
@@ -79,7 +85,7 @@ const SuccessStoryCard = ({ story }: { story: SuccessStory }) => {
                                 </DialogHeader>
                                 <div className="relative mt-4 w-full aspect-[4/2.5]">
                                     <Image
-                                        src={story.visaImageUrl}
+                                        src={visaImageUrl}
                                         alt={`Visa copy for ${story.name}`}
                                         fill
                                         className="rounded-md object-contain"
@@ -100,6 +106,8 @@ export default function SuccessStoriesPage() {
   const firestore = useFirestore();
   const storiesQuery = useMemoFirebase(() => query(collection(firestore, "success_stories"), orderBy("createdAt", "desc")), [firestore]);
   const { data: successStories, isLoading } = useCollection<SuccessStory>(storiesQuery);
+
+  const storiesToDisplay = successStories && successStories.length > 0 ? successStories : staticSuccessStories;
 
   return (
     <div className="bg-secondary">
@@ -130,7 +138,7 @@ export default function SuccessStoriesPage() {
                     </CardContent>
                 </Card>
             ))}
-            {successStories && successStories.map((story) => (
+            {storiesToDisplay.map((story) => (
               <SuccessStoryCard key={story.id} story={story} />
             ))}
           </div>

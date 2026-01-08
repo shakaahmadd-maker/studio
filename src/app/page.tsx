@@ -7,11 +7,11 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowRight, BookOpen, GraduationCap, Briefcase, Users, Quote, CheckCircle2, Rocket, Eye, Award } from 'lucide-react';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { successStories, serviceCategories } from '@/lib/data.tsx';
+import { successStories, serviceCategories, blogPosts as staticBlogPosts } from '@/lib/data.tsx';
 import { UniversitySlider } from '@/components/layout/university-slider';
 import { useCollection, useFirestore, useMemoFirebase } from '@/firebase';
 import { collection, query, limit, orderBy } from 'firebase/firestore';
-import { type BlogPost } from '@/lib/types';
+import { type BlogPost, type Service } from '@/lib/types';
 
 
 export default function Home() {
@@ -23,7 +23,7 @@ export default function Home() {
     if (!firestore) return null;
     return query(collection(firestore, "services"), limit(4))
   }, [firestore]);
-  const { data: services } = useCollection(servicesQuery);
+  const { data: services } = useCollection<Service>(servicesQuery);
 
   const postsQuery = useMemoFirebase(() => {
     if (!firestore) return null;
@@ -253,13 +253,14 @@ export default function Home() {
               <p className="mt-2 text-lg text-muted-foreground">Latest news, tips, and insights on studying abroad.</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {blogPosts && blogPosts.slice(0, 3).map(post => {
+              {(blogPosts || staticBlogPosts).slice(0, 3).map(post => {
+                const publicationDate = post.publicationDate instanceof Date ? post.publicationDate : post.publicationDate.toDate();
                 return (
                   <Card key={post.id} className="overflow-hidden flex flex-col">
                     {post.imageUrl && <div className="relative w-full h-48"><Image src={post.imageUrl} alt={post.title} fill className="object-cover" /></div>}
                     <CardHeader>
                       <CardTitle className="font-headline text-xl">{post.title}</CardTitle>
-                      <CardDescription>{new Date(post.publicationDate.toDate()).toLocaleDateString()}</CardDescription>
+                      <CardDescription>{publicationDate.toLocaleDateString()}</CardDescription>
                     </CardHeader>
                     <CardContent className="flex-grow">
                       <p className="text-muted-foreground">{post.excerpt}</p>
