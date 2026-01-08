@@ -1,5 +1,4 @@
 
-
 'use client';
 
 import Link from "next/link";
@@ -16,7 +15,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
-import { serviceCategories } from "@/lib/data.tsx";
+import { serviceCategories, services as staticServices } from "@/lib/data.tsx";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { ConsultationForm } from "../forms/consultation-form";
 import { useCollection, useFirestore, useMemoFirebase } from "@/firebase";
@@ -92,18 +91,21 @@ const ServiceCategoryDropdown = ({ isMobile = false, onLinkClick }: { isMobile?:
 const StudyAbroadDropdown = ({ isMobile = false, onLinkClick }: { isMobile?: boolean, onLinkClick?: () => void }) => {
   const pathname = usePathname();
   const firestore = useFirestore();
+
   const servicesQuery = useMemoFirebase(() => {
     if (!firestore) return null;
     return query(collection(firestore, "services"), orderBy("createdAt", "asc"));
   }, [firestore]);
-  const { data: services } = useCollection<Service>(servicesQuery);
 
+  const { data: liveServices } = useCollection<Service>(servicesQuery);
+
+  const services = liveServices && liveServices.length > 0 ? liveServices : staticServices;
 
   if (isMobile) {
     return (
       <div className="flex flex-col space-y-4">
         <span className="text-lg font-semibold text-primary">Study Abroad</span>
-        {services && services.map((service) => (
+        {services && services.map((service: any) => (
           <Link
             key={service.id}
             href={`/services/${service.id}`}
@@ -139,7 +141,7 @@ const StudyAbroadDropdown = ({ isMobile = false, onLinkClick }: { isMobile?: boo
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start">
-        {services && services.map((service) => (
+        {services && services.map((service: any) => (
           <DropdownMenuItem key={service.id} asChild>
             <Link href={`/services/${service.id}`}>{service.title}</Link>
           </DropdownMenuItem>
