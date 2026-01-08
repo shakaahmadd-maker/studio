@@ -14,7 +14,7 @@
  * - Public Read-Only Content: Collections like `services`, `faqs`, `success_stories`, and `blog_posts` are publicly
  *   readable by any user, including unauthenticated ones.
  * - Locked-Down Writes: All write operations on public content are denied (`if false;`) as a secure default.
- *   This prevents unauthorized modification. A placeholder function `isContentAdmin()` is included to show where
+ *   A placeholder function `isContentAdmin()` is included to show where
  *   admin-only logic should be implemented once an admin system is in place.
  * - "Write-Once" Collections for Submissions: Collections like `job_applications` and `referrals` contain sensitive
  *   information. They are configured to allow anyone to create (submit) a document but prevent anyone from reading,
@@ -122,15 +122,17 @@ service cloud.firestore {
     }
 
     /**
-     * @description Controls access to the 'referrals' collection. This is a "write-once" collection.
+     * @description Controls access to the 'referrals' collection. This is a "write-once" collection for the public.
      * @path /referrals/{referralId}
      * @allow (create) any user can submit a referral.
-     * @deny (get, list, update, delete) all users are blocked from reading or modifying submitted referrals to protect private information.
-     * @principle Secures sensitive user-submitted data by allowing creation but preventing any client-side read or modification access.
+     * @allow (list, update) only content admins can view and update the status of referrals.
+     * @deny (get, delete) all users are blocked from reading a single referral directly or deleting them.
+     * @principle Secures sensitive user-submitted data by allowing creation but restricting read/modification to admins.
      */
     match /referrals/{referralId} {
       allow create: if true;
-      allow get, list, update, delete: if false;
+      allow list, update: if isContentAdmin();
+      allow get, delete: if false;
     }
   }
 }

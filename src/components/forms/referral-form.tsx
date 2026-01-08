@@ -1,8 +1,10 @@
+
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -16,6 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { Separator } from "@/components/ui/separator";
+import { useFirestore } from "@/firebase";
 
 const formSchema = z.object({
   referrerName: z.string().min(2, { message: "Your name must be at least 2 characters." }),
@@ -27,6 +30,8 @@ const formSchema = z.object({
 
 export function ReferralForm() {
   const { toast } = useToast();
+  const firestore = useFirestore();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -38,13 +43,28 @@ export function ReferralForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    toast({
-      title: "Referral Submitted!",
-      description: "Thank you for the referral. We will get in touch with them shortly.",
-    });
-    form.reset();
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    if (!firestore) return;
+
+    try {
+        await addDoc(collection(firestore, "referrals"), {
+            ...values,
+            createdAt: serverTimestamp(),
+            status: "Pending", // Add a default status
+        });
+        toast({
+            title: "Referral Submitted!",
+            description: "Thank you for the referral. We will get in touch with them shortly.",
+        });
+        form.reset();
+    } catch (error) {
+        console.error("Error submitting referral:", error);
+        toast({
+            variant: "destructive",
+            title: "Uh oh! Something went wrong.",
+            description: "There was a problem submitting your referral. Please try again later.",
+        });
+    }
   }
 
   return (
@@ -120,7 +140,9 @@ export function ReferralForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">Submit Referral</Button>
+        <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+            {form.formState.isSubmitting ? "Submitting..." : "Submit Referral"}
+        </Button>
       </form>
     </Form>
   );

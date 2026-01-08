@@ -106,3 +106,14 @@ export interface WhyChooseUsItem {
     title: string;
     description: string;
 }
+
+export interface Referral {
+    id: string;
+    referrerName: string;
+    referrerEmail: string;
+    refereeName: string;
+    refereeEmail: string;
+    refereePhone: string;
+    status: 'Pending' | 'Contacted' | 'Enrolled';
+    createdAt: Timestamp;
+}
