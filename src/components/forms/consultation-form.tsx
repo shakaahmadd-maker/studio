@@ -1,8 +1,13 @@
+
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useRouter } from "next/navigation";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { v4 as uuidv4 } from "uuid";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -16,9 +21,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { useFirestore } from "@/firebase";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
-const ACCEPTED_CV_TYPES = ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"];
+const ACCEPTED_FILE_TYPES = ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"];
 
 const formSchema = z.object({
   fullName: z.string().min(2, { message: "Full name must be at least 2 characters." }),
@@ -28,18 +34,31 @@ const formSchema = z.object({
     .refine((files) => files?.length === 1, "CV is required.")
     .refine((files) => files?.[0]?.size <= MAX_FILE_SIZE, `Max file size is 5MB.`)
     .refine(
-      (files) => ACCEPTED_CV_TYPES.includes(files?.[0]?.type),
+      (files) => ACCEPTED_FILE_TYPES.includes(files?.[0]?.type),
       ".pdf, .doc, and .docx files are accepted."
     ),
-  transcripts: z.any().optional(),
+  transcripts: z.any()
+    .refine((files) => files?.length > 0, "Transcripts are required.")
+    .refine((files) => files?.[0]?.size <= MAX_FILE_SIZE, `Max file size is 5MB.`)
+    .refine(
+      (files) => files?.[0]?.type === "application/pdf" || files?.[0]?.type === "application/zip",
+      "Only .pdf and .zip files are accepted for transcripts."
+    )
+    .optional(),
   englishCertificate: z.enum(["ielts", "toefl", "pte", "duolingo", "proficiency_certificate"]),
   budget: z.string().optional(),
   referral: z.string().optional(),
 });
 
+type ConsultationFormValues = z.infer<typeof formSchema>;
+
 export function ConsultationForm() {
   const { toast } = useToast();
-  const form = useForm<z.infer<typeof formSchema>>({
+  const firestore = useFirestore();
+  const storage = getStorage();
+  const router = useRouter();
+
+  const form = useForm<ConsultationFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       fullName: "",
@@ -48,15 +67,67 @@ export function ConsultationForm() {
       referral: "",
     },
   });
+  
+  const uploadFile = async (file: File, path: string): Promise<string> => {
+    const storageRef = ref(storage, `${path}/${uuidv4()}-${file.name}`);
+    await uploadBytes(storageRef, file);
+    const downloadURL = await getDownloadURL(storageRef);
+    return downloadURL;
+  };
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // In a real application, you would send this data to your backend.
-    console.log(values);
-    toast({
-      title: "Consultation Request Sent!",
-      description: "Thank you for your request. Our team will review it and get back to you soon.",
-    });
-    form.reset();
+  async function onSubmit(values: ConsultationFormValues) {
+     if (!firestore) {
+        toast({
+            variant: "destructive",
+            title: "Error",
+            description: "Database service is not available. Please try again later.",
+        });
+        return;
+    }
+
+    try {
+      let cvUrl = "";
+      if (values.cv && values.cv.length > 0) {
+        cvUrl = await uploadFile(values.cv[0], "consultations/cvs");
+      }
+
+      let transcriptsUrl = "";
+      if (values.transcripts && values.transcripts.length > 0) {
+        transcriptsUrl = await uploadFile(values.transcripts[0], "consultations/transcripts");
+      }
+
+      const consultationData = {
+        fullName: values.fullName,
+        email: values.email,
+        lookingFor: values.lookingFor,
+        englishCertificate: values.englishCertificate,
+        budget: values.budget,
+        referral: values.referral,
+        cvUrl,
+        transcriptsUrl,
+        createdAt: serverTimestamp(),
+      };
+
+      await addDoc(collection(firestore, "consultations"), consultationData);
+
+      toast({
+        title: "Consultation Request Sent!",
+        description: "Thank you for your request. Our team will review it and get back to you soon.",
+      });
+      form.reset();
+      // Optionally close the dialog if this form is in one
+      const closeButton = document.querySelector('[data-radix-dialog-close]');
+      if (closeButton instanceof HTMLElement) {
+        closeButton.click();
+      }
+    } catch (error) {
+        console.error("Error submitting consultation:", error);
+        toast({
+            variant: "destructive",
+            title: "Uh oh! Something went wrong.",
+            description: "There was a problem submitting your request. Please try again.",
+        });
+    }
   }
 
   return (
@@ -144,7 +215,7 @@ export function ConsultationForm() {
                     <Input
                     {...fieldProps}
                     type="file"
-                    accept=".pdf,.zip,.rar"
+                    accept=".pdf,.zip"
                     onChange={(event) => onChange(event.target.files)}
                     />
                 </FormControl>
@@ -198,9 +269,9 @@ export function ConsultationForm() {
             name="referral"
             render={({ field }) => (
                 <FormItem>
-                <FormLabel>Referral (if any)</FormLabel>
+                <FormLabel>Referred By (if any)</FormLabel>
                 <FormControl>
-                    <Input placeholder="Referred by..." {...field} />
+                    <Input placeholder="e.g., Jane Doe" {...field} />
                 </FormControl>
                 <FormMessage />
                 </FormItem>
@@ -208,8 +279,12 @@ export function ConsultationForm() {
             />
         </div>
         
-        <Button type="submit" className="w-full">Submit</Button>
+        <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+            {form.formState.isSubmitting ? "Submitting..." : "Submit Request"}
+        </Button>
       </form>
     </Form>
   );
 }
+
+    

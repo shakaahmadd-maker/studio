@@ -1,16 +1,23 @@
+
+'use client';
+
+import { useCollection, useFirestore, useMemoFirebase } from "@/firebase";
+import { collection, query, orderBy } from "firebase/firestore";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { MoreHorizontal, FileDown } from "lucide-react";
+import { MoreHorizontal, FileDown, Trash2 } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
-
-const consultations = [
-    { name: "John Doe", email: "john.doe@example.com", lookingFor: "master", date: "2024-07-22", budget: "$20,000" },
-    { name: "Jane Smith", email: "jane.smith@example.com", lookingFor: "phd", date: "2024-07-21", budget: "$50,000" },
-];
+import { Skeleton } from "@/components/ui/skeleton";
+import Link from "next/link";
+import type { Consultation } from "@/lib/types";
 
 export default function AdminConsultationsPage() {
+    const firestore = useFirestore();
+    const consultationsQuery = useMemoFirebase(() => query(collection(firestore, "consultations"), orderBy("createdAt", "desc")), [firestore]);
+    const { data: consultations, isLoading } = useCollection<Consultation>(consultationsQuery);
+
     return (
         <Card>
             <CardHeader>
@@ -25,18 +32,30 @@ export default function AdminConsultationsPage() {
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead>Name</TableHead>
                             <TableHead>Date</TableHead>
+                            <TableHead>Name</TableHead>
+                            <TableHead>Email</TableHead>
                             <TableHead>Program</TableHead>
                             <TableHead>Budget</TableHead>
                             <TableHead><span className="sr-only">Actions</span></TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {consultations.map(app => (
-                            <TableRow key={app.email}>
-                                <TableCell className="font-medium">{app.name}</TableCell>
-                                <TableCell>{app.date}</TableCell>
+                        {isLoading && Array.from({ length: 5 }).map((_, i) => (
+                             <TableRow key={i}>
+                                <TableCell><Skeleton className="h-5 w-24" /></TableCell>
+                                <TableCell><Skeleton className="h-5 w-32" /></TableCell>
+                                <TableCell><Skeleton className="h-5 w-48" /></TableCell>
+                                <TableCell><Skeleton className="h-6 w-20" /></TableCell>
+                                <TableCell><Skeleton className="h-5 w-24" /></TableCell>
+                                <TableCell><Skeleton className="h-8 w-8" /></TableCell>
+                            </TableRow>
+                        ))}
+                        {consultations && consultations.map(app => (
+                            <TableRow key={app.id}>
+                                <TableCell>{app.createdAt?.toDate().toLocaleDateString()}</TableCell>
+                                <TableCell className="font-medium">{app.fullName}</TableCell>
+                                <TableCell>{app.email}</TableCell>
                                 <TableCell><Badge variant="outline" className="capitalize">{app.lookingFor}</Badge></TableCell>
                                 <TableCell>{app.budget}</TableCell>
                                 <TableCell>
@@ -49,17 +68,29 @@ export default function AdminConsultationsPage() {
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent align="end">
                                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                            <DropdownMenuItem><FileDown className="mr-2 h-4 w-4" />Download CV</DropdownMenuItem>
-                                            <DropdownMenuItem><FileDown className="mr-2 h-4 w-4" />Download Transcripts</DropdownMenuItem>
-                                            <DropdownMenuItem>Delete</DropdownMenuItem>
+                                            {app.cvUrl && <DropdownMenuItem asChild><Link href={app.cvUrl} target="_blank" rel="noopener noreferrer"><FileDown className="mr-2 h-4 w-4" />Download CV</Link></DropdownMenuItem>}
+                                            {app.transcriptsUrl && <DropdownMenuItem asChild><Link href={app.transcriptsUrl} target="_blank" rel="noopener noreferrer"><FileDown className="mr-2 h-4 w-4" />Download Transcripts</Link></DropdownMenuItem>}
+                                            <DropdownMenuItem className="text-red-500" onSelect={() => alert("Delete not implemented")}>
+                                                <Trash2 className="mr-2 h-4 w-4" />
+                                                Delete
+                                            </DropdownMenuItem>
                                         </DropdownMenuContent>
                                     </DropdownMenu>
                                 </TableCell>
                             </TableRow>
                         ))}
+                        {!isLoading && (!consultations || consultations.length === 0) && (
+                            <TableRow>
+                                <TableCell colSpan={6} className="h-24 text-center">
+                                    No consultation requests found.
+                                </TableCell>
+                            </TableRow>
+                        )}
                     </TableBody>
                 </Table>
             </CardContent>
         </Card>
     )
 }
+
+    

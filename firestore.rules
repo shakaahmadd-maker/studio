@@ -16,7 +16,7 @@
  * - Locked-Down Writes: All write operations on public content are denied (`if false;`) as a secure default.
  *   A placeholder function `isContentAdmin()` is included to show where
  *   admin-only logic should be implemented once an admin system is in place.
- * - "Write-Once" Collections for Submissions: Collections like `job_applications` and `referrals` contain sensitive
+ * - "Write-Once" Collections for Submissions: Collections like `job_applications`, `referrals`, and `consultations` contain sensitive
  *   information. They are configured to allow anyone to create (submit) a document but prevent anyone from reading,
  *   updating, or deleting them via the client. This allows data to be collected securely for backend processing.
  *
@@ -148,5 +148,21 @@ service cloud.firestore {
       allow list: if isContentAdmin();
       allow get, update, delete: if false;
     }
+
+    /**
+     * @description Controls access to the 'consultations' collection. This is a "write-once" collection.
+     * @path /consultations/{consultationId}
+     * @allow (create) any user can submit a consultation request.
+     * @allow (list) only content admins can view submitted requests.
+     * @deny (get, update, delete) all users are blocked from reading or modifying submitted requests to protect PII.
+     * @principle Secures sensitive user-submitted data by allowing creation but restricting read access to admins.
+     */
+    match /consultations/{consultationId} {
+        allow create: if true;
+        allow list: if isContentAdmin();
+        allow get, update, delete: if false;
+    }
   }
 }
+
+    

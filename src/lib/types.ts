@@ -125,3 +125,18 @@ export interface Contact {
     message: string;
     createdAt: Timestamp;
 }
+
+export interface Consultation {
+    id: string;
+    fullName: string;
+    email: string;
+    lookingFor: "bachelor" | "master" | "phd" | "diploma";
+    cvUrl: string;
+    transcriptsUrl?: string;
+    englishCertificate: "ielts" | "toefl" | "pte" | "duolingo" | "proficiency_certificate";
+    budget?: string;
+    referral?: string;
+    createdAt: Timestamp;
+}
+
+    
