@@ -21,6 +21,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { ConsultationForm } from "../forms/consultation-form";
 import { useCollection, useFirestore, useMemoFirebase } from "@/firebase";
 import { collection, query, orderBy } from "firebase/firestore";
+import type { Service } from "@/lib/types";
 
 
 const navLinks = [
@@ -95,7 +96,7 @@ const StudyAbroadDropdown = ({ isMobile = false, onLinkClick }: { isMobile?: boo
     if (!firestore) return null;
     return query(collection(firestore, "services"), orderBy("createdAt", "asc"));
   }, [firestore]);
-  const { data: services } = useCollection(servicesQuery);
+  const { data: services } = useCollection<Service>(servicesQuery);
 
 
   if (isMobile) {
