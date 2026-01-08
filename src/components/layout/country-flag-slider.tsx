@@ -11,27 +11,27 @@ import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
 
 const countries = [
-    { name: "Germany", flag: "/flags/de.svg" },
-    { name: "France", flag: "/flags/fr.svg" },
-    { name: "Italy", flag: "/flags/it.svg" },
-    { name: "Malta", flag: "/flags/mt.svg" },
-    { name: "Ireland", flag: "/flags/ie.svg" },
-    { name: "UK", flag: "/flags/gb.svg" },
-    { name: "USA", flag: "/flags/us.svg" },
-    { name: "Australia", flag: "/flags/au.svg" },
-    { name: "Canada", flag: "/flags/ca.svg" },
-    { name: "New Zealand", flag: "/flags/nz.svg" },
-    { name: "China", flag: "/flags/cn.svg" },
-    { name: "Belgium", flag: "/flags/be.svg" },
-    { name: "Sweden", flag: "/flags/se.svg" },
-    { name: "Netherlands", flag: "/flags/nl.svg" },
-    { name: "Finland", flag: "/flags/fi.svg" },
-    { name: "Denmark", flag: "/flags/dk.svg" },
-    { name: "Norway", flag: "/flags/no.svg" },
-    { name: "Switzerland", flag: "/flags/ch.svg" },
-    { name: "Spain", flag: "/flags/es.svg" },
-    { name: "Portugal", flag: "/flags/pt.svg" },
-    { name: "Austria", flag: "/flags/at.svg" },
+    { name: "Germany", code: "de" },
+    { name: "France", code: "fr" },
+    { name: "Italy", code: "it" },
+    { name: "Malta", code: "mt" },
+    { name: "Ireland", code: "ie" },
+    { name: "UK", code: "gb" },
+    { name: "USA", code: "us" },
+    { name: "Australia", code: "au" },
+    { name: "Canada", code: "ca" },
+    { name: "New Zealand", code: "nz" },
+    { name: "China", code: "cn" },
+    { name: "Belgium", code: "be" },
+    { name: "Sweden", code: "se" },
+    { name: "Netherlands", code: "nl" },
+    { name: "Finland", code: "fi" },
+    { name: "Denmark", code: "dk" },
+    { name: "Norway", code: "no" },
+    { name: "Switzerland", code: "ch" },
+    { name: "Spain", code: "es" },
+    { name: "Portugal", code: "pt" },
+    { name: "Austria", code: "at" },
 ];
 
 export function CountryFlagSlider() {
@@ -54,7 +54,12 @@ export function CountryFlagSlider() {
             <div className="p-1">
                 <div className="flex flex-col items-center justify-center p-2 bg-muted/50 rounded-lg text-center gap-2 h-24">
                     <div className="relative w-12 h-8">
-                       <Image src={country.flag} alt={`${country.name} flag`} layout="fill" objectFit="contain" />
+                       <Image 
+                         src={`https://flagicons.lipis.dev/flags/4x3/${country.code}.svg`} 
+                         alt={`${country.name} flag`} 
+                         layout="fill" 
+                         objectFit="contain" 
+                        />
                     </div>
                     <p className="font-semibold mt-1 text-xs text-muted-foreground">{country.name}</p>
                 </div>
