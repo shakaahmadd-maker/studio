@@ -8,7 +8,7 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
 } from "@/components/ui/sidebar";
-import { Home, BookOpen, Star, FileText, Briefcase, Handshake, HelpCircle, PanelLeft, MessageSquareQuote, Users, Building2 } from "lucide-react";
+import { Home, BookOpen, Star, FileText, Briefcase, Handshake, HelpCircle, PanelLeft, MessageSquareQuote, Users, Building2, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const AdminSidebar = () => {
@@ -31,6 +31,12 @@ const AdminSidebar = () => {
                         <SidebarMenuButton href="/admin/consultations" tooltip="Consultations">
                             <MessageSquareQuote />
                             <span>Consultations</span>
+                        </SidebarMenuButton>
+                    </SidebarMenuItem>
+                    <SidebarMenuItem>
+                        <SidebarMenuButton href="/admin/contacts" tooltip="Contact Messages">
+                            <Mail />
+                            <span>Contact Messages</span>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
                     <SidebarMenuItem>

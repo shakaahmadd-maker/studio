@@ -134,5 +134,19 @@ service cloud.firestore {
       allow list, update: if isContentAdmin();
       allow get, delete: if false;
     }
+
+    /**
+     * @description Controls access to the 'contacts' collection. This is a "write-once" collection.
+     * @path /contacts/{contactId}
+     * @allow (create) any user can submit a contact message.
+     * @allow (list) only content admins can view submitted messages.
+     * @deny (get, update, delete) all users are blocked from reading or modifying submitted messages.
+     * @principle Secures user-submitted data by allowing creation but restricting read access to admins.
+     */
+    match /contacts/{contactId} {
+      allow create: if true;
+      allow list: if isContentAdmin();
+      allow get, update, delete: if false;
+    }
   }
 }

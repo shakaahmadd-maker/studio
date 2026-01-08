@@ -117,3 +117,11 @@ export interface Referral {
     status: 'Pending' | 'Contacted' | 'Enrolled';
     createdAt: Timestamp;
 }
+
+export interface Contact {
+    id: string;
+    name: string;
+    email: string;
+    message: string;
+    createdAt: Timestamp;
+}

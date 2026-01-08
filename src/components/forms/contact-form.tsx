@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -16,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { useFirestore } from "@/firebase";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -25,6 +27,8 @@ const formSchema = z.object({
 
 export function ContactForm() {
   const { toast } = useToast();
+  const firestore = useFirestore();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -34,13 +38,34 @@ export function ContactForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    toast({
-      title: "Message Sent!",
-      description: "Thank you for contacting us. We'll get back to you shortly.",
-    });
-    form.reset();
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    if (!firestore) {
+        toast({
+            variant: "destructive",
+            title: "Error",
+            description: "Database service is not available. Please try again later.",
+        });
+        return;
+    }
+    
+    try {
+        await addDoc(collection(firestore, "contacts"), {
+            ...values,
+            createdAt: serverTimestamp(),
+        });
+        toast({
+            title: "Message Sent!",
+            description: "Thank you for contacting us. We'll get back to you shortly.",
+        });
+        form.reset();
+    } catch (error) {
+        console.error("Error sending message: ", error);
+        toast({
+            variant: "destructive",
+            title: "Uh oh! Something went wrong.",
+            description: "There was a problem sending your message. Please try again later.",
+        });
+    }
   }
 
   return (
@@ -85,7 +110,9 @@ export function ContactForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">Send Message</Button>
+        <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+            {form.formState.isSubmitting ? "Sending..." : "Send Message"}
+        </Button>
       </form>
     </Form>
   );
