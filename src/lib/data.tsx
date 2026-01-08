@@ -426,13 +426,13 @@ export const europeScholarships = {
     },
   ],
   national: [
-    { country: 'Belgium', icon: '🇧🇪'},
-    { country: 'Sweden', icon: '🇸🇪'},
-    { country: 'Ireland', icon: '🇮🇪'},
-    { country: 'Netherlands', icon: '🇳🇱'},
-    { country: 'Finland', icon: '🇫🇮'},
-    { country: 'Denmark', icon: '🇩🇰'},
-    { country: 'Norway', icon: '🇳🇴'},
+    { country: 'Belgium', icon: 'be'},
+    { country: 'Sweden', icon: 'se'},
+    { country: 'Ireland', icon: 'ie'},
+    { country: 'Netherlands', icon: 'nl'},
+    { country: 'Finland', icon: 'fi'},
+    { country: 'Denmark', icon: 'dk'},
+    { country: 'Norway', icon: 'no'},
   ] as OtherEuropeScholarship[],
 };
 

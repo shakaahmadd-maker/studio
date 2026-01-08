@@ -88,7 +88,7 @@ export interface UKScholarship {
 
 export interface OtherEuropeScholarship {
     country: string;
-    icon: React.ReactNode;
+    icon: string;
 }
 
 export interface GlobalScholarship {
