@@ -62,10 +62,12 @@ export interface FAQ {
 }
 
 export interface JobOpening {
+    id: string;
     title: string;
     location: string;
     type: "Full-time" | "Part-time" | "Internship" | "Contract";
     description: string;
+    createdAt: Timestamp;
 }
 
 export interface University {

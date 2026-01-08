@@ -1,3 +1,4 @@
+
 {
   "entities": {
     "Service": {
@@ -148,6 +149,47 @@
         "content",
         "author",
         "publicationDate"
+      ]
+    },
+    "JobOpening": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "JobOpening",
+      "type": "object",
+      "description": "Represents a job opening posted on the career page.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the job opening."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the job opening."
+        },
+        "location": {
+          "type": "string",
+          "description": "Location of the job (e.g., On-site, Remote)."
+        },
+        "type": {
+          "type": "string",
+          "enum": ["Full-time", "Part-time", "Internship", "Contract"],
+          "description": "Type of employment."
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed description of the job opening."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the job opening was created."
+        }
+      },
+      "required": [
+        "title",
+        "location",
+        "type",
+        "description",
+        "createdAt"
       ]
     },
     "JobApplication": {
@@ -307,6 +349,22 @@
           ]
         }
       },
+       {
+        "path": "/job_openings/{jobOpeningId}",
+        "definition": {
+          "entityName": "JobOpening",
+          "schema": {
+            "$ref": "#/backend/entities/JobOpening"
+          },
+          "description": "Stores job openings to be displayed on the career page.",
+          "params": [
+            {
+              "name": "jobOpeningId",
+              "description": "Unique identifier for the job opening."
+            }
+          ]
+        }
+      },
       {
         "path": "/job_applications/{jobApplicationId}",
         "definition": {
@@ -343,4 +401,3 @@
     "reasoning": "The Firestore structure is designed to support EduVision Consulting's content management system, focusing on services, success stories, blog posts, job applications, and referrals. To ensure authorization independence, no `get()` calls are needed in the security rules. This is achieved through structural segregation and denormalization, especially for collaborative data (none in this case) by avoiding dependencies on parent documents for child document access.\n\nThe database uses separate collections for each entity type (Services, FAQs, SuccessStories, BlogPosts, JobApplications, and Referrals). This structural segregation ensures a homogeneous security posture, simplifying rules by aligning documents with similar access needs. The absence of user-owned data eliminates the necessity of path-based ownership structures (e.g., `/users/{userId}/...`).\n\nEach collection is designed to support secure `list` operations (QAPs) by ensuring that all documents within a collection share the same security requirements. For example, all `Services` have the same access control needs, which is also true for `SuccessStories`, `BlogPosts`, `JobApplications`, and `Referrals`. This ensures predictability and avoids the need for complex filtering logic in the rules.\n\nSince no collaborative data or user specific data is available in the specification, a membership map is not required.\n\nInvariants such as timestamps and ownership are not specified in the data entities. Should they be required they could be added without breaking the authorization model. Data clarity is enhanced through explicit state modeling using a `status` field (if needed), predictable schemas, and consistent naming conventions (e.g., always use `id` for document IDs)."
   }
 }
-    

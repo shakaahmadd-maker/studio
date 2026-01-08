@@ -1,13 +1,17 @@
+
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useRouter } from "next/navigation";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -17,6 +21,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { useFirestore } from "@/firebase";
 
 const formSchema = z.object({
   title: z.string().min(5, { message: "Title must be at least 5 characters." }),
@@ -25,25 +30,45 @@ const formSchema = z.object({
   description: z.string().min(100, { message: "Description must be at least 100 characters." }),
 });
 
+type JobOpeningFormValues = z.infer<typeof formSchema>;
+
 export function JobOpeningForm() {
   const { toast } = useToast();
-  const form = useForm<z.infer<typeof formSchema>>({
+  const firestore = useFirestore();
+  const router = useRouter();
+
+  const form = useForm<JobOpeningFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
       location: "Remote",
       description: "",
+      type: "Full-time",
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // In a real application, you would send this data to your backend.
-    console.log(values);
-    toast({
-      title: "Job Opening Created!",
-      description: "The new vacancy has been added successfully.",
-    });
-    form.reset();
+  async function onSubmit(values: JobOpeningFormValues) {
+    if (!firestore) return;
+
+    try {
+      await addDoc(collection(firestore, 'job_openings'), {
+        ...values,
+        createdAt: serverTimestamp(),
+      });
+      toast({
+        title: "Job Opening Created!",
+        description: "The new vacancy has been added successfully.",
+      });
+      router.push("/admin/careers");
+      router.refresh();
+    } catch (error) {
+      console.error("Error creating job opening:", error);
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request. Please try again.",
+      });
+    }
   }
 
   return (
@@ -105,15 +130,18 @@ export function JobOpeningForm() {
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Job Description</FormLabel>
+              <FormLabel>Job Description (HTML supported)</FormLabel>
               <FormControl>
                 <Textarea placeholder="Provide a detailed job description..." {...field} rows={10} />
               </FormControl>
+              <FormDescription>Use HTML tags like &lt;h3&gt; and &lt;ul&gt; for formatting.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">Create Job Opening</Button>
+        <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+          {form.formState.isSubmitting ? "Creating..." : "Create Job Opening"}
+        </Button>
       </form>
     </Form>
   );

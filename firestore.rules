@@ -1,3 +1,4 @@
+
 /**
  * Core Philosophy: This ruleset implements a security model for a public-facing content management system (CMS).
  * The primary goal is to make content like services, FAQs, blog posts, and success stories publicly readable by anyone,
@@ -56,9 +57,7 @@ service cloud.firestore {
      */
     match /services/{serviceId} {
       allow get, list: if true;
-      allow create: if isContentAdmin(); // TODO: Implement admin logic in isContentAdmin()
-      allow update: if isContentAdmin(); // TODO: Implement admin logic in isContentAdmin()
-      allow delete: if isContentAdmin(); // TODO: Implement admin logic in isContentAdmin()
+      allow create, update, delete: if isContentAdmin();
     }
 
     /**
@@ -70,9 +69,7 @@ service cloud.firestore {
      */
     match /faqs/{faqId} {
       allow get, list: if true;
-      allow create: if isContentAdmin(); // TODO: Implement admin logic in isContentAdmin()
-      allow update: if isContentAdmin(); // TODO: Implement admin logic in isContentAdmin()
-      allow delete: if isContentAdmin(); // TODO: Implement admin logic in isContentAdmin()
+      allow create, update, delete: if isContentAdmin();
     }
 
     /**
@@ -84,9 +81,7 @@ service cloud.firestore {
      */
     match /success_stories/{successStoryId} {
       allow get, list: if true;
-      allow create: if isContentAdmin(); // TODO: Implement admin logic in isContentAdmin()
-      allow update: if isContentAdmin(); // TODO: Implement admin logic in isContentAdmin()
-      allow delete: if isContentAdmin(); // TODO: Implement admin logic in isContentAdmin()
+      allow create, update, delete: if isContentAdmin();
     }
 
     /**
@@ -99,9 +94,19 @@ service cloud.firestore {
     match /blog_posts/{blogPostId} {
       // CRITICAL: Cannot implement owner-only writes. The 'BlogPost' entity is missing a UID-based 'authorId' field.
       allow get, list: if true;
-      allow create: if isContentAdmin(); // TODO: Add owner validation once the schema is updated with an 'authorId' (UID) field.
-      allow update: if isContentAdmin(); // TODO: Add owner validation once the schema is updated with an 'authorId' (UID) field.
-      allow delete: if isContentAdmin(); // TODO: Add owner validation once the schema is updated with an 'authorId' (UID) field.
+      allow create, update, delete: if isContentAdmin();
+    }
+
+    /**
+     * @description Controls access to the 'job_openings' collection.
+     * @path /job_openings/{jobOpeningId}
+     * @allow (get, list) any user, authenticated or not, can read job openings.
+     * @deny (create, update, delete) all users are blocked from modifying job openings.
+     * @principle Public read-only access for content. Writes are locked pending an admin or author ownership implementation.
+     */
+    match /job_openings/{jobOpeningId} {
+      allow get, list: if true;
+      allow create, update, delete: if isContentAdmin();
     }
 
     /**
@@ -113,10 +118,7 @@ service cloud.firestore {
      */
     match /job_applications/{jobApplicationId} {
       allow create: if true;
-      allow get: if false;
-      allow list: if false;
-      allow update: if false;
-      allow delete: if false;
+      allow get, list, update, delete: if false;
     }
 
     /**
@@ -128,12 +130,7 @@ service cloud.firestore {
      */
     match /referrals/{referralId} {
       allow create: if true;
-      allow get: if false;
-      allow list: if false;
-      allow update: if false;
-      allow delete: if false;
+      allow get, list, update, delete: if false;
     }
   }
 }
-
-    

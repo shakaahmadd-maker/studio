@@ -1,10 +1,23 @@
+
+'use client';
+
 import { CareerForm } from "@/components/forms/career-form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { jobOpenings } from "@/lib/data.tsx";
 import { MapPin, Briefcase } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { useCollection, useFirestore, useMemoFirebase } from "@/firebase";
+import { collection, query, orderBy } from "firebase/firestore";
+import { type JobOpening } from "@/lib/types";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function CareerPage() {
+  const firestore = useFirestore();
+  const jobsQuery = useMemoFirebase(() => {
+    if (!firestore) return null;
+    return query(collection(firestore, "job_openings"), orderBy("createdAt", "desc"));
+  }, [firestore]);
+  const { data: jobOpenings, isLoading } = useCollection<JobOpening>(jobsQuery);
+
   return (
     <div className="bg-background">
       <div className="container mx-auto px-4 py-16 md:py-24">
@@ -21,8 +34,17 @@ export default function CareerPage() {
             <main className="lg:col-span-3">
                 <h2 className="text-3xl font-bold font-headline mb-8">Current Openings</h2>
                 <Accordion type="single" collapsible className="w-full space-y-4">
-                    {jobOpenings.map(job => (
-                       <AccordionItem value={job.title} key={job.title} className="border rounded-lg">
+                    {isLoading && Array.from({ length: 3 }).map((_, i) => (
+                        <Card key={i} className="p-6">
+                            <Skeleton className="h-6 w-3/4 mb-4" />
+                            <div className="flex gap-4">
+                                <Skeleton className="h-5 w-24" />
+                                <Skeleton className="h-5 w-24" />
+                            </div>
+                        </Card>
+                    ))}
+                    {jobOpenings && jobOpenings.map(job => (
+                       <AccordionItem value={job.id} key={job.id} id={job.id} className="border rounded-lg scroll-mt-20">
                             <AccordionTrigger className="p-6 hover:no-underline">
                                 <div className="text-left">
                                     <h3 className="font-headline text-xl">{job.title}</h3>
@@ -37,6 +59,11 @@ export default function CareerPage() {
                             </AccordionContent>
                         </AccordionItem>
                     ))}
+                    {!isLoading && (!jobOpenings || jobOpenings.length === 0) && (
+                        <div className="text-center text-muted-foreground py-12">
+                            <p>There are no current openings. Please check back later or submit a general application.</p>
+                        </div>
+                    )}
                 </Accordion>
             </main>
             <aside className="lg:col-span-2">
