@@ -8,6 +8,7 @@ import { z } from 'zod';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { signInAnonymously, signInWithPopup, GoogleAuthProvider, Auth } from 'firebase/auth';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -25,6 +26,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { GraduationCap, AlertTriangle, ExternalLink, Loader2 } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Separator } from '@/components/ui/separator';
+import { Skeleton } from '@/components/ui/skeleton';
+
 
 const formSchema = z.object({
   email: z.string().optional(),
@@ -206,11 +209,33 @@ function LoginForm() {
   );
 }
 
+const DynamicLoginForm = dynamic(() => Promise.resolve(LoginForm), {
+  ssr: false,
+  loading: () => (
+    <Card className="w-full max-w-sm">
+        <CardHeader className="text-center">
+            <div className="mx-auto mb-4 flex items-center justify-center">
+                 <Skeleton className="h-10 w-10 rounded-full" />
+            </div>
+          <Skeleton className="h-7 w-40 mx-auto" />
+          <Skeleton className="h-5 w-60 mx-auto mt-2" />
+        </CardHeader>
+        <CardContent className="space-y-4">
+            <Skeleton className="h-10 w-full" />
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-10 w-full" />
+            <Skeleton className="h-10 w-full" />
+            <Skeleton className="h-10 w-full" />
+        </CardContent>
+    </Card>
+  )
+});
+
 
 export default function LoginPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-muted/30 p-4">
-      <LoginForm />
+      <DynamicLoginForm />
     </div>
   );
 }
