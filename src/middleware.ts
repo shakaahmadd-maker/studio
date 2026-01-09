@@ -25,19 +25,19 @@ interface ServiceAccount {
 function getServiceAccount(): ServiceAccount | null {
   const serviceAccountJson = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
   if (!serviceAccountJson) {
-    console.error("FIREBASE_SERVICE_ACCOUNT_KEY environment variable is not set.");
+    console.warn("FIREBASE_SERVICE_ACCOUNT_KEY environment variable is not set in middleware.");
     return null;
   }
   try {
     const parsed = JSON.parse(serviceAccountJson);
     // Basic validation
     if (!parsed.project_id || !parsed.client_email || !parsed.private_key) {
-        console.error("FIREBASE_SERVICE_ACCOUNT_KEY is missing required fields.");
+        console.warn("FIREBASE_SERVICE_ACCOUNT_KEY in middleware is missing required fields.");
         return null;
     }
     return parsed;
   } catch (error) {
-    console.error("Error parsing FIREBASE_SERVICE_ACCOUNT_KEY:", error);
+    console.error("Error parsing FIREBASE_SERVICE_ACCOUNT_KEY in middleware:", error);
     return null;
   }
 }
@@ -58,7 +58,7 @@ function initializeFirebaseAdmin(): App | null {
       credential: cert(serviceAccount)
     });
   } catch (error) {
-    console.error("Error initializing Firebase Admin SDK:", error);
+    console.error("Error initializing Firebase Admin SDK in middleware:", error);
     return null;
   }
 }
@@ -68,11 +68,13 @@ export async function middleware(request: NextRequest) {
   const sessionCookie = request.cookies.get('__session')?.value;
 
   const adminApp = initializeFirebaseAdmin();
+  
+  // If admin SDK is not available, we cannot perform auth checks.
+  // We'll show an error for admin pages, but let others pass.
   if (!adminApp) {
-    // If Firebase Admin SDK fails to initialize, block access to admin routes
     if (pathname.startsWith('/admin')) {
       const loginUrl = new URL('/login', request.url);
-      loginUrl.searchParams.set('error', 'server_config');
+      loginUrl.searchParams.set('error', 'server_config_missing');
       return NextResponse.redirect(loginUrl);
     }
     return NextResponse.next();
@@ -84,14 +86,14 @@ export async function middleware(request: NextRequest) {
   if (process.env.NODE_ENV === 'development' && pathname === '/login') {
     try {
       const googleProviderConfig = await auth.getProviderConfig('google.com');
-      // In dev, the origin might not be in the authorized domains list for pop-up sign in.
-      // This logic checks and provides a direct link to fix it.
       if (googleProviderConfig.signIn.allowlist.indexOf(origin) === -1) {
-          const projectId = (adminApp.options.credential as any).projectId;
-          const authDomainUrl = `https://console.firebase.google.com/u/0/project/${projectId}/authentication/settings`;
-          const loginUrl = new URL('/login', request.url);
-          loginUrl.searchParams.set('authDomainUrl', authDomainUrl);
-          return NextResponse.redirect(loginUrl);
+          const projectId = (adminApp.options.credential as any)?.projectId;
+          if (projectId) {
+            const authDomainUrl = `https://console.firebase.google.com/u/0/project/${projectId}/authentication/settings`;
+            const loginUrl = new URL('/login', request.url);
+            loginUrl.searchParams.set('authDomainUrl', authDomainUrl);
+            return NextResponse.redirect(loginUrl);
+          }
       }
     } catch (e) {
       // This can happen if the provider is disabled. Silently ignore.
@@ -104,33 +106,26 @@ export async function middleware(request: NextRequest) {
     if (sessionCookie) {
       try {
         await auth.verifySessionCookie(sessionCookie, true);
-        // If cookie is valid, redirect to admin dashboard
         return NextResponse.redirect(new URL('/admin', request.url));
       } catch (error) {
-        // Invalid cookie, let them stay on the login page
         return NextResponse.next();
       }
     }
-    // No cookie, let them stay on the login page
     return NextResponse.next();
   }
 
   // Protect all /admin routes
   if (pathname.startsWith('/admin')) {
     if (!sessionCookie) {
-      // No cookie, redirect to login
       const loginUrl = new URL('/login', request.url)
       loginUrl.searchParams.set('next', pathname)
       return NextResponse.redirect(loginUrl);
     }
 
     try {
-      // Verify the session cookie
       await auth.verifySessionCookie(sessionCookie, true);
-      // Cookie is valid, allow the request to proceed
       return NextResponse.next();
     } catch (error) {
-      // Invalid cookie, redirect to login
       const loginUrl = new URL('/login', request.url)
       loginUrl.searchParams.set('next', pathname)
       return NextResponse.redirect(loginUrl);

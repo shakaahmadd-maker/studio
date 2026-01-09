@@ -23,14 +23,14 @@ interface ServiceAccount {
 function getServiceAccount(): ServiceAccount | null {
   const serviceAccountJson = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
   if (!serviceAccountJson) {
-    console.error("FIREBASE_SERVICE_ACCOUNT_KEY environment variable is not set.");
+    console.warn("FIREBASE_SERVICE_ACCOUNT_KEY environment variable is not set. Server-side Firebase functionality will be disabled.");
     return null;
   }
   try {
     const parsed = JSON.parse(serviceAccountJson);
     // Basic validation
     if (!parsed.project_id || !parsed.client_email || !parsed.private_key) {
-        console.error("FIREBASE_SERVICE_ACCOUNT_KEY is missing required fields.");
+        console.warn("FIREBASE_SERVICE_ACCOUNT_KEY is missing required fields. Server-side Firebase functionality will be disabled.");
         return null;
     }
     return parsed;
@@ -41,49 +41,49 @@ function getServiceAccount(): ServiceAccount | null {
 }
 
 
-function initializeFirebaseAdmin(): App {
-    const apps = getApps();
-    if (apps.length) {
-        return apps[0];
+function initializeFirebaseAdmin(): App | null {
+    if (getApps().length) {
+        return getApps()[0];
     }
     
     const serviceAccount = getServiceAccount();
 
     if (!serviceAccount) {
-        // This will now throw an error that should be caught by Next.js error handling
-        // and prevent the app from starting if the key is missing or invalid.
-        throw new Error("Firebase Admin SDK service account key is missing or invalid. Please check your environment variables.");
+        console.warn("Firebase Admin SDK service account key is missing or invalid. Initialization skipped.");
+        return null;
     }
     
-    return initializeApp({
-        credential: cert(serviceAccount),
-    });
+    try {
+        return initializeApp({
+            credential: cert(serviceAccount),
+        });
+    } catch (error) {
+        console.error("Failed to initialize Firebase Admin SDK:", error);
+        return null;
+    }
 }
 
 
-let adminApp: App;
-let auth: ReturnType<typeof getAuth>;
-let firestore: ReturnType<typeof getFirestore>;
+let adminApp: App | null;
+let auth: ReturnType<typeof getAuth> | null;
+let firestore: ReturnType<typeof getFirestore> | null;
 
-try {
-    adminApp = initializeFirebaseAdmin();
+adminApp = initializeFirebaseAdmin();
+
+if (adminApp) {
     auth = getAuth(adminApp);
     firestore = getFirestore(adminApp);
-} catch (error) {
-    console.error("Failed to initialize Firebase Admin SDK. Some server-side functionality may not work.", error);
-    // Set to null or a mock implementation if needed to prevent further errors
-    // @ts-ignore
-    adminApp = null;
-    // @ts-ignore
+} else {
     auth = null;
-    // @ts-ignore
     firestore = null;
 }
 
 
 export const getSdks = () => {
-    if (!adminApp) {
-        throw new Error("Firebase Admin SDK is not initialized. Cannot get SDKs.");
+    if (!adminApp || !auth || !firestore) {
+        // This makes it clear to the caller that the SDKs are not available.
+        // It's better than throwing, as it allows for graceful degradation.
+        throw new Error("Firebase Admin SDK is not initialized. This can happen if the FIREBASE_SERVICE_ACCOUNT_KEY is not set. Some server-side functionality may not work.");
     }
     return { auth, firestore };
 };
