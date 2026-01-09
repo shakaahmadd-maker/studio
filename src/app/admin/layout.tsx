@@ -133,31 +133,10 @@ const AdminSidebar = () => {
     )
 }
 
-function AuthWrapper({ children }: { children: React.ReactNode }) {
-    const { user, isUserLoading } = useUser();
-    const router = useRouter();
-
-    useEffect(() => {
-        if (!isUserLoading && !user) {
-            router.push('/login');
-        }
-    }, [user, isUserLoading, router]);
-
-    if (isUserLoading || !user) {
-        return (
-            <div className="flex items-center justify-center h-screen">
-                <Loader2 className="h-8 w-8 animate-spin text-primary" />
-            </div>
-        );
-    }
-
-    return <>{children}</>;
-}
-
-
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
+  // The route protection is now handled by middleware.ts.
+  // The AuthWrapper is no longer needed here.
   return (
-    <AuthWrapper>
       <SidebarProvider>
         <div className="flex min-h-screen bg-background">
           <AdminSidebar />
@@ -166,6 +145,5 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </SidebarInset>
         </div>
       </SidebarProvider>
-    </AuthWrapper>
   );
 }

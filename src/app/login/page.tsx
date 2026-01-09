@@ -22,7 +22,7 @@ import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth, useUser } from '@/firebase';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { GraduationCap, AlertTriangle, ExternalLink } from 'lucide-react';
+import { GraduationCap, AlertTriangle, ExternalLink, Loader2 } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Separator } from '@/components/ui/separator';
 
@@ -43,6 +43,26 @@ const GoogleIcon = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 
+function AuthRedirector() {
+  const { user, isUserLoading } = useUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isUserLoading && user) {
+      router.push('/admin');
+    }
+  }, [user, isUserLoading, router]);
+
+  if (isUserLoading || user) {
+      return (
+          <div className="flex h-screen items-center justify-center">
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          </div>
+      )
+  }
+  return null;
+}
+
 export default function LoginPage() {
   const { toast } = useToast();
   const auth = useAuth();
@@ -51,12 +71,6 @@ export default function LoginPage() {
   const searchParams = useSearchParams();
   const [error, setError] = useState<string | null>(searchParams.get('error'));
   const authDomainUrl = searchParams.get('authDomainUrl');
-
-  useEffect(() => {
-    if (!isUserLoading && user) {
-        router.push('/admin');
-    }
-  }, [user, isUserLoading, router]);
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(formSchema),
@@ -74,7 +88,7 @@ export default function LoginPage() {
         title: 'Login Successful!',
         description: 'Redirecting you to the admin dashboard.',
       });
-      // Redirection is handled by the useEffect hook
+      // Redirection is handled by the AuthRedirector component
     } catch (error: any) {
       console.error('Anonymous Sign In Error:', error);
       let errorMessage = 'An unexpected error occurred. Please try again.';
@@ -91,7 +105,7 @@ export default function LoginPage() {
             title: 'Login Successful!',
             description: 'Redirecting you to the admin dashboard.',
         });
-        // Redirection is handled by the useEffect hook
+        // Redirection is handled by the AuthRedirector component
     } catch (error: any) {
         console.error('Google Sign In Error:', error);
         let errorMessage = 'Could not sign in with Google. Please try again.';
@@ -106,12 +120,9 @@ export default function LoginPage() {
   }
 
   if (isUserLoading || user) {
-      return (
-          <div className="flex h-screen items-center justify-center">
-              <p>Loading...</p>
-          </div>
-      )
+    return <AuthRedirector />;
   }
+
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-muted/30 p-4">
