@@ -1,4 +1,6 @@
 
+'use client';
+
 import {
   SidebarProvider,
   Sidebar,
@@ -8,11 +10,31 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
+  SidebarFooter,
 } from "@/components/ui/sidebar";
-import { Home, BookOpen, Star, FileText, Briefcase, Handshake, HelpCircle, PanelLeft, MessageSquareQuote, Users, Building2, Mail, MapPin } from "lucide-react";
+import { Home, BookOpen, Star, FileText, Briefcase, Handshake, HelpCircle, PanelLeft, MessageSquareQuote, Users, Building2, Mail, MapPin, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/firebase";
+import { signOut } from "firebase/auth";
+import { useToast } from "@/hooks/use-toast";
 
 const AdminSidebar = () => {
+    const auth = useAuth();
+    const router = useRouter();
+    const { toast } = useToast();
+
+    const handleSignOut = async () => {
+        try {
+            await signOut(auth);
+            toast({ title: 'Signed Out', description: 'You have been successfully signed out.' });
+            router.push('/login');
+        } catch (error) {
+            console.error("Sign out error", error);
+            toast({ variant: 'destructive', title: 'Error', description: 'Failed to sign out.' });
+        }
+    }
+
     return (
         <Sidebar>
             <SidebarHeader>
@@ -96,6 +118,16 @@ const AdminSidebar = () => {
                     </SidebarMenuItem>
                 </SidebarMenu>
             </SidebarContent>
+             <SidebarFooter>
+                <SidebarMenu>
+                    <SidebarMenuItem>
+                        <SidebarMenuButton onClick={handleSignOut} tooltip="Sign Out">
+                            <LogOut />
+                            <span>Sign Out</span>
+                        </SidebarMenuButton>
+                    </SidebarMenuItem>
+                </SidebarMenu>
+            </SidebarFooter>
         </Sidebar>
     )
 }
