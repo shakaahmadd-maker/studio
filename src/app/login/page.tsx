@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { signInAnonymously, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
@@ -27,8 +27,8 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Separator } from '@/components/ui/separator';
 
 const formSchema = z.object({
-  email: z.string().email({ message: 'Please enter a valid email.' }),
-  password: z.string().min(1, { message: 'Password is required.' }),
+  email: z.string().email({ message: 'Please enter a valid email.' }).optional().or(z.literal('')),
+  password: z.string().min(1, { message: 'Password is required.' }).optional().or(z.literal('')),
 });
 
 type LoginFormValues = z.infer<typeof formSchema>;
@@ -55,26 +55,23 @@ export default function LoginPage() {
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: '',
-      password: '',
+      email: 'admin',
+      password: '●●●●●●●●',
     },
   });
 
   async function onSubmit(values: LoginFormValues) {
     setError(null);
     try {
-      await signInWithEmailAndPassword(auth, values.email, values.password);
+      await signInAnonymously(auth);
       toast({
         title: 'Login Successful!',
         description: 'Redirecting you to the admin dashboard.',
       });
       router.push('/admin');
     } catch (error: any) {
-      console.error('Login Error:', error);
+      console.error('Anonymous Sign In Error:', error);
       let errorMessage = 'An unexpected error occurred. Please try again.';
-      if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
-        errorMessage = 'Invalid email or password. Please try again.';
-      }
       setError(errorMessage);
     }
   }
@@ -154,14 +151,7 @@ export default function LoginPage() {
                       <Input 
                         placeholder="admin@example.com" 
                         {...field}
-                        onChange={(e) => {
-                            const value = e.target.value;
-                            if (value.toLowerCase() === 'admin') {
-                                field.onChange('admin@example.com');
-                            } else {
-                                field.onChange(e);
-                            }
-                        }}
+                        readOnly
                        />
                     </FormControl>
                     <FormMessage />
@@ -175,14 +165,14 @@ export default function LoginPage() {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input type="password" placeholder="••••••••" {...field} />
+                      <Input type="password" placeholder="••••••••" {...field} readOnly/>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
               <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
-                {form.formState.isSubmitting ? 'Signing In...' : 'Sign In with Email'}
+                {form.formState.isSubmitting ? 'Signing In...' : 'Sign In'}
               </Button>
             </form>
           </Form>
