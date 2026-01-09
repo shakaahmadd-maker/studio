@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { signInAnonymously, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { signInAnonymously, signInWithPopup, GoogleAuthProvider, Auth } from 'firebase/auth';
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
@@ -43,7 +43,7 @@ const GoogleIcon = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 
-export default function LoginPage() {
+function LoginForm() {
   const { toast } = useToast();
   const auth = useAuth();
   const router = useRouter();
@@ -62,15 +62,11 @@ export default function LoginPage() {
   });
 
   useEffect(() => {
-    // If the user is already logged in, the middleware will redirect them.
-    // This effect handles the case where the user lands on the login page
-    // and is already authenticated on the client.
     if (!isUserLoading && user) {
         const nextUrl = searchParams.get('next') || '/admin';
         router.replace(nextUrl);
     }
 
-    // Check for auth domain error from query params
     const authDomainError = searchParams.get('authDomainUrl');
     if (authDomainError) {
       setAuthDomainUrl(decodeURIComponent(authDomainError));
@@ -86,7 +82,6 @@ export default function LoginPage() {
         title: 'Login Successful!',
         description: 'Redirecting you to the admin dashboard.',
       });
-      // The redirect is now handled by the middleware and useEffect hook
     } catch (error: any) {
       console.error('Anonymous Sign In Error:', error);
       setError('An unexpected error occurred during sign-in. Please try again.');
@@ -102,15 +97,21 @@ export default function LoginPage() {
             title: 'Login Successful!',
             description: 'Redirecting you to the admin dashboard.',
         });
-        // The redirect is now handled by the middleware and useEffect hook
     } catch (error: any) {
         console.error('Google Sign In Error:', error);
-        let errorMessage = 'Could not sign in with Google. Please try again.';
         if (error.code === 'auth/popup-closed-by-user') {
             return; 
         }
+        let errorMessage = 'Could not sign in with Google. Please try again.';
         if (error.code === 'auth/account-exists-with-different-credential') {
             errorMessage = 'An account with this email already exists using a different sign-in method.';
+        }
+        if (error.code === 'auth/auth-domain-config-required') {
+            const currentUrl = new URL(window.location.href);
+            const authDomainUrl = `https://console.firebase.google.com/project/${auth.app.options.projectId}/authentication/providers`;
+            currentUrl.searchParams.set('authDomainUrl', encodeURIComponent(authDomainUrl));
+            window.location.href = currentUrl.toString();
+            return;
         }
         setError(errorMessage);
     }
@@ -124,9 +125,7 @@ export default function LoginPage() {
     );
   }
 
-
   return (
-    <div className="flex min-h-screen items-center justify-center bg-muted/30 p-4">
       <Card className="w-full max-w-sm">
         <CardHeader className="text-center">
             <div className="mx-auto mb-4 flex items-center justify-center">
@@ -204,6 +203,14 @@ export default function LoginPage() {
           </Form>
         </CardContent>
       </Card>
+  );
+}
+
+
+export default function LoginPage() {
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-muted/30 p-4">
+      <LoginForm />
     </div>
   );
 }
