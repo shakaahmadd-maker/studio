@@ -64,7 +64,7 @@ function initializeFirebaseAdmin(): App | null {
 }
 
 export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+  const { pathname, origin } = request.nextUrl;
   const sessionCookie = request.cookies.get('__session')?.value;
 
   const adminApp = initializeFirebaseAdmin();
@@ -78,12 +78,32 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
+  const auth = getAuth(adminApp);
+
+  // Check if domain is authorized for Google Sign-In in dev environment
+  if (process.env.NODE_ENV === 'development' && pathname === '/login') {
+    try {
+      const googleProviderConfig = await auth.getProviderConfig('google.com');
+      // In dev, the origin might not be in the authorized domains list for pop-up sign in.
+      // This logic checks and provides a direct link to fix it.
+      if (googleProviderConfig.signIn.allowlist.indexOf(origin) === -1) {
+          const projectId = (adminApp.options.credential as any).projectId;
+          const authDomainUrl = `https://console.firebase.google.com/u/0/project/${projectId}/authentication/settings`;
+          const loginUrl = new URL('/login', request.url);
+          loginUrl.searchParams.set('authDomainUrl', authDomainUrl);
+          return NextResponse.redirect(loginUrl);
+      }
+    } catch (e) {
+      // This can happen if the provider is disabled. Silently ignore.
+    }
+  }
+
 
   // If accessing the login page
   if (pathname === '/login') {
     if (sessionCookie) {
       try {
-        await getAuth(adminApp).verifySessionCookie(sessionCookie, true);
+        await auth.verifySessionCookie(sessionCookie, true);
         // If cookie is valid, redirect to admin dashboard
         return NextResponse.redirect(new URL('/admin', request.url));
       } catch (error) {
@@ -106,7 +126,7 @@ export async function middleware(request: NextRequest) {
 
     try {
       // Verify the session cookie
-      await getAuth(adminApp).verifySessionCookie(sessionCookie, true);
+      await auth.verifySessionCookie(sessionCookie, true);
       // Cookie is valid, allow the request to proceed
       return NextResponse.next();
     } catch (error) {

@@ -5,8 +5,9 @@ import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -21,7 +22,7 @@ import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/firebase';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { GraduationCap } from 'lucide-react';
+import { GraduationCap, AlertTriangle, ExternalLink } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Separator } from '@/components/ui/separator';
 
@@ -46,7 +47,10 @@ export default function LoginPage() {
   const { toast } = useToast();
   const auth = useAuth();
   const router = useRouter();
-  const [error, setError] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  const [error, setError] = useState<string | null>(searchParams.get('error'));
+  const authDomainUrl = searchParams.get('authDomainUrl');
+
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(formSchema),
@@ -114,6 +118,20 @@ export default function LoginPage() {
                     <AlertTitle>Login Failed</AlertTitle>
                     <AlertDescription>{error}</AlertDescription>
                 </Alert>
+            )}
+             {authDomainUrl && (
+              <Alert variant="destructive" className="mb-4">
+                <AlertTriangle className="h-4 w-4" />
+                <AlertTitle>Action Required</AlertTitle>
+                <AlertDescription>
+                  To enable Google Sign-In, you must authorize your application's domain.
+                  <Button asChild variant="link" className="p-0 h-auto ml-1">
+                    <Link href={authDomainUrl} target="_blank">
+                      Click here to authorize <ExternalLink className="ml-1 h-3 w-3" />
+                    </Link>
+                  </Button>
+                </AlertDescription>
+              </Alert>
             )}
             <Button variant="outline" className="w-full" onClick={handleGoogleSignIn}>
                 <GoogleIcon className="mr-2 h-5 w-5" />
