@@ -87,10 +87,26 @@ function LoginForm() {
         description: 'Redirecting you to the admin dashboard.',
       });
     } catch (error: any) {
-      console.error('Email Sign In Error:', error);
-       let errorMessage = 'An unexpected error occurred during sign-in. Please try again.';
-      if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
-        errorMessage = 'Invalid email or password. Please try again.';
+      console.error('Firebase Login Error:', error);
+      let errorMessage = 'An unexpected error occurred. Please try again.';
+      switch (error.code) {
+        case 'auth/user-not-found':
+        case 'auth/wrong-password':
+        case 'auth/invalid-credential':
+          errorMessage = 'Invalid email or password. Please check your credentials and try again.';
+          break;
+        case 'auth/invalid-email':
+          errorMessage = 'The email address is not valid. Please enter a valid email.';
+          break;
+        case 'auth/user-disabled':
+          errorMessage = 'This user account has been disabled.';
+          break;
+        case 'auth/network-request-failed':
+          errorMessage = 'Network error. Please check your internet connection and try again.';
+          break;
+        default:
+          errorMessage = `Login Failed: ${error.message}`;
+          break;
       }
       setError(errorMessage);
     } finally {
@@ -110,7 +126,7 @@ function LoginForm() {
       });
     } catch (error: any) {
       console.error('Anonymous Sign In Error:', error);
-      setError('An unexpected error occurred during sign-in. Please try again.');
+      setError('An unexpected error occurred during guest sign-in. Please try again.');
     } finally {
         setIsSubmitting(false);
     }
