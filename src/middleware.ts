@@ -1,8 +1,10 @@
 
 import { NextResponse, type NextRequest } from 'next/server';
 import { getAuth } from 'firebase-admin/auth';
-import { initializeApp, getApps, App } from 'firebase-admin/app';
-import { firebaseConfig } from './firebase/config';
+import { initializeApp, getApps, App, cert } from 'firebase-admin/app';
+
+// This is the crucial change to switch the runtime
+export const runtime = 'nodejs';
 
 // Define the shape of the service account key
 interface ServiceAccount {
@@ -27,7 +29,13 @@ function getServiceAccount(): ServiceAccount | null {
     return null;
   }
   try {
-    return JSON.parse(serviceAccountJson);
+    const parsed = JSON.parse(serviceAccountJson);
+    // Basic validation
+    if (!parsed.project_id || !parsed.client_email || !parsed.private_key) {
+        console.error("FIREBASE_SERVICE_ACCOUNT_KEY is missing required fields.");
+        return null;
+    }
+    return parsed;
   } catch (error) {
     console.error("Error parsing FIREBASE_SERVICE_ACCOUNT_KEY:", error);
     return null;
@@ -47,12 +55,7 @@ function initializeFirebaseAdmin(): App | null {
 
   try {
     return initializeApp({
-      credential: {
-        projectId: serviceAccount.project_id,
-        clientEmail: serviceAccount.client_email,
-        privateKey: serviceAccount.private_key,
-      },
-      databaseURL: `https://${firebaseConfig.projectId}.firebaseio.com`,
+      credential: cert(serviceAccount)
     });
   } catch (error) {
     console.error("Error initializing Firebase Admin SDK:", error);
