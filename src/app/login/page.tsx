@@ -152,7 +152,7 @@ function LoginForm() {
         });
     } catch (error: any) {
         console.error('Google Sign In Error:', error);
-        let errorMessage = 'Could not sign in with Google. Please try again.';
+        let errorMessage = `Login Failed: ${error.message}`;
         if (error.code === 'auth/popup-closed-by-user') {
             setIsSubmitting(false);
             return; 
@@ -326,5 +326,7 @@ export default function LoginPage() {
     </div>
   );
 }
+
+    
 
     
