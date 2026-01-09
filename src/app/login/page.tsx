@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { signInAnonymously, signInWithPopup, GoogleAuthProvider, Auth } from 'firebase/auth';
+import { signInAnonymously, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword } from 'firebase/auth';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 
@@ -30,8 +30,8 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 
 const formSchema = z.object({
-  email: z.string().optional(),
-  password: z.string().optional(),
+  email: z.string().email({ message: "Please enter a valid email." }),
+  password: z.string().min(6, { message: "Password must be at least 6 characters." }),
 });
 
 type LoginFormValues = z.infer<typeof formSchema>;
@@ -54,13 +54,14 @@ function LoginForm() {
   const { user, isUserLoading } = useUser();
   
   const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [authDomainUrl, setAuthDomainUrl] = useState<string | null>(null);
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: 'admin',
-      password: '●●●●●●●●',
+      email: '',
+      password: '',
     },
   });
 
@@ -76,9 +77,31 @@ function LoginForm() {
     }
   }, [isUserLoading, user, router, searchParams]);
 
+  async function handleEmailSignIn(values: LoginFormValues) {
+    setError(null);
+    setIsSubmitting(true);
+    try {
+      await signInWithEmailAndPassword(auth, values.email, values.password);
+      toast({
+        title: 'Login Successful!',
+        description: 'Redirecting you to the admin dashboard.',
+      });
+    } catch (error: any) {
+      console.error('Email Sign In Error:', error);
+       let errorMessage = 'An unexpected error occurred during sign-in. Please try again.';
+      if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+        errorMessage = 'Invalid email or password. Please try again.';
+      }
+      setError(errorMessage);
+    } finally {
+        setIsSubmitting(false);
+    }
+  }
+
 
   async function handleAnonymousSignIn() {
     setError(null);
+    setIsSubmitting(true);
     try {
       await signInAnonymously(auth);
       toast({
@@ -88,11 +111,14 @@ function LoginForm() {
     } catch (error: any) {
       console.error('Anonymous Sign In Error:', error);
       setError('An unexpected error occurred during sign-in. Please try again.');
+    } finally {
+        setIsSubmitting(false);
     }
   }
 
   const handleGoogleSignIn = async () => {
     setError(null);
+    setIsSubmitting(true);
     const provider = new GoogleAuthProvider();
     try {
         await signInWithPopup(auth, provider);
@@ -102,10 +128,11 @@ function LoginForm() {
         });
     } catch (error: any) {
         console.error('Google Sign In Error:', error);
+        let errorMessage = 'Could not sign in with Google. Please try again.';
         if (error.code === 'auth/popup-closed-by-user') {
+            setIsSubmitting(false);
             return; 
         }
-        let errorMessage = 'Could not sign in with Google. Please try again.';
         if (error.code === 'auth/account-exists-with-different-credential') {
             errorMessage = 'An account with this email already exists using a different sign-in method.';
         }
@@ -117,6 +144,8 @@ function LoginForm() {
             return;
         }
         setError(errorMessage);
+    } finally {
+        setIsSubmitting(false);
     }
   }
 
@@ -158,17 +187,22 @@ function LoginForm() {
                 </AlertDescription>
               </Alert>
             )}
-            <Button variant="outline" className="w-full" onClick={handleGoogleSignIn} disabled={form.formState.isSubmitting}>
-                <GoogleIcon className="mr-2 h-5 w-5" />
-                Sign in with Google
-            </Button>
+            <div className="grid grid-cols-1 gap-2">
+                <Button variant="outline" className="w-full" onClick={handleGoogleSignIn} disabled={isSubmitting}>
+                    <GoogleIcon className="mr-2 h-5 w-5" />
+                    Sign in with Google
+                </Button>
+                 <Button variant="secondary" className="w-full" onClick={handleAnonymousSignIn} disabled={isSubmitting}>
+                    Sign in as Guest
+                </Button>
+            </div>
             <div className="my-4 flex items-center">
                 <Separator className="flex-1" />
                 <span className="mx-4 text-xs text-muted-foreground">OR</span>
                 <Separator className="flex-1" />
             </div>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(handleAnonymousSignIn)} className="space-y-4">
+            <form onSubmit={form.handleSubmit(handleEmailSignIn)} className="space-y-4">
               <FormField
                 control={form.control}
                 name="email"
@@ -198,8 +232,8 @@ function LoginForm() {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
-                {form.formState.isSubmitting ? 'Signing In...' : 'Sign In'}
+              <Button type="submit" className="w-full" disabled={isSubmitting}>
+                {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Sign In'}
               </Button>
             </form>
           </Form>
@@ -221,6 +255,7 @@ const DynamicLoginForm = dynamic(() => Promise.resolve(LoginForm), {
         </CardHeader>
         <CardContent className="space-y-4">
             <Skeleton className="h-10 w-full" />
+             <Skeleton className="h-10 w-full" />
             <div className="my-4 flex items-center">
                 <Skeleton className="h-px flex-1" />
                 <Skeleton className="h-3 w-8 mx-4" />
