@@ -4,8 +4,7 @@ import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { Toaster } from '@/components/ui/toaster';
 import { FirebaseClientProvider } from '@/firebase';
-import { AiChatbot } from '@/components/chatbot/ai-chatbot';
-import { WhatsAppButton } from '@/components/layout/whatsapp-button';
+import { ClientWrapper } from '@/components/layout/client-wrapper';
 
 export const metadata: Metadata = {
   title: 'Uni Help Consultants',
@@ -34,8 +33,7 @@ export default function RootLayout({
             <main className="flex-grow">{children}</main>
             <Footer />
           </div>
-          <AiChatbot />
-          <WhatsAppButton phoneNumber="+923417548178" />
+          <ClientWrapper />
           <Toaster />
         </FirebaseClientProvider>
       </body>
