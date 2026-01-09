@@ -56,6 +56,8 @@ function LoginForm() {
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [authDomainUrl, setAuthDomainUrl] = useState<string | null>(null);
+  const [oauthConsentUrl, setOauthConsentUrl] = useState<string | null>(null);
+
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(formSchema),
@@ -79,6 +81,8 @@ function LoginForm() {
 
   async function handleEmailSignIn(values: LoginFormValues) {
     setError(null);
+    setAuthDomainUrl(null);
+    setOauthConsentUrl(null);
     setIsSubmitting(true);
     try {
       await signInWithEmailAndPassword(auth, values.email, values.password);
@@ -117,6 +121,8 @@ function LoginForm() {
 
   async function handleAnonymousSignIn() {
     setError(null);
+    setAuthDomainUrl(null);
+    setOauthConsentUrl(null);
     setIsSubmitting(true);
     try {
       await signInAnonymously(auth);
@@ -134,6 +140,8 @@ function LoginForm() {
 
   const handleGoogleSignIn = async () => {
     setError(null);
+    setAuthDomainUrl(null);
+    setOauthConsentUrl(null);
     setIsSubmitting(true);
     const provider = new GoogleAuthProvider();
     try {
@@ -151,6 +159,11 @@ function LoginForm() {
         }
         if (error.code === 'auth/account-exists-with-different-credential') {
             errorMessage = 'An account with this email already exists using a different sign-in method.';
+        }
+        if (error.code === 'auth/operation-not-allowed') {
+            const consentUrl = `https://console.cloud.google.com/apis/credentials/consent?project=${auth.app.options.projectId}`;
+            setOauthConsentUrl(consentUrl);
+            errorMessage = 'Google Sign-In is not enabled. Please configure the OAuth consent screen in your Google Cloud project.';
         }
         if (error.code === 'auth/auth-domain-config-required') {
             const currentUrl = new URL(window.location.href);
@@ -188,6 +201,20 @@ function LoginForm() {
                     <AlertTitle>Login Failed</AlertTitle>
                     <AlertDescription>{error}</AlertDescription>
                 </Alert>
+            )}
+             {oauthConsentUrl && (
+              <Alert variant="destructive" className="mb-4">
+                <AlertTriangle className="h-4 w-4" />
+                <AlertTitle>Action Required</AlertTitle>
+                <AlertDescription>
+                  To enable Google Sign-In, you must configure your OAuth consent screen.
+                  <Button asChild variant="link" className="p-0 h-auto ml-1">
+                    <Link href={oauthConsentUrl} target="_blank">
+                      Click here to configure it <ExternalLink className="ml-1 h-3 w-3" />
+                    </Link>
+                  </Button>
+                </AlertDescription>
+              </Alert>
             )}
              {authDomainUrl && (
               <Alert variant="destructive" className="mb-4">
@@ -299,3 +326,5 @@ export default function LoginPage() {
     </div>
   );
 }
+
+    
