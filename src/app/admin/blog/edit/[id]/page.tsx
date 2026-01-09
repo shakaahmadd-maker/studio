@@ -15,13 +15,19 @@ async function getPost(id: string): Promise<BlogPost | null> {
   if (!postDoc.exists()) {
     return null;
   }
-  // Convert Firestore Timestamp to Date, then to ISO string for serialization
+
   const data = postDoc.data();
+  // Ensure publicationDate is serializable (string) for the client component
   const post: BlogPost = { 
     id: postDoc.id, 
-    ...data,
-    publicationDate: data.publicationDate.toDate() 
-  } as unknown as BlogPost; // a bit of a hack for types
+    title: data.title,
+    author: data.author,
+    content: data.content,
+    excerpt: data.excerpt,
+    imageUrl: data.imageUrl,
+    slug: data.slug,
+    publicationDate: data.publicationDate.toDate().toISOString(),
+  };
   
   return post;
 }

@@ -2,10 +2,9 @@
 'use client';
 
 import Link from "next/link";
-import Image from "next/image";
 import { useState } from "react";
 import { useCollection, useFirestore, useMemoFirebase } from "@/firebase";
-import { collection, query, orderBy, deleteDoc, doc } from "firebase/firestore";
+import { collection, query, orderBy, deleteDoc, doc, Timestamp } from "firebase/firestore";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -48,6 +47,16 @@ export default function AdminBlogPage() {
             setPostToDelete(null);
         }
     };
+    
+    const formatDate = (date: string | Date | Timestamp) => {
+        if (date instanceof Timestamp) {
+            return date.toDate().toLocaleDateString();
+        }
+        if (typeof date === 'string') {
+            return new Date(date).toLocaleDateString();
+        }
+        return date.toLocaleDateString();
+    }
 
     return (
       <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
@@ -89,7 +98,7 @@ export default function AdminBlogPage() {
                             <TableRow key={post.id}>
                                 <TableCell className="font-medium">{post.title}</TableCell>
                                 <TableCell>{post.author}</TableCell>
-                                <TableCell>{new Date(post.publicationDate.toDate()).toLocaleDateString()}</TableCell>
+                                <TableCell>{formatDate(post.publicationDate)}</TableCell>
                                 <TableCell>
                                     <DropdownMenu>
                                         <DropdownMenuTrigger asChild>

@@ -23,12 +23,13 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { SuccessStory } from "@/lib/types";
 
 export default function AdminStoriesPage() {
     const firestore = useFirestore();
     const { toast } = useToast();
     const storiesQuery = useMemoFirebase(() => query(collection(firestore, "success_stories"), orderBy("createdAt", "desc")), [firestore]);
-    const { data: successStories, isLoading } = useCollection(storiesQuery);
+    const { data: successStories, isLoading } = useCollection<SuccessStory>(storiesQuery);
 
     const [dialogOpen, setDialogOpen] = useState(false);
     const [storyToDelete, setStoryToDelete] = useState<string | null>(null);

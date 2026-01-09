@@ -28,26 +28,20 @@ import { type SuccessStory } from "@/lib/types";
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
 
+const imageSchema = z.any()
+    .refine((files) => (files?.[0] || typeof files === 'string'), "Image is required.")
+    .refine((files) => typeof files === 'string' || files?.[0]?.size <= MAX_FILE_SIZE, `Max file size is 5MB.`)
+    .refine(
+      (files) => typeof files === 'string' || ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
+      ".jpg, .jpeg, .png and .webp files are accepted."
+    );
+
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
   university: z.string().min(5, { message: "University name is required." }),
   story: z.string().min(50, { message: "The success story must be at least 50 characters." }),
-  clientImage: z.any()
-    .refine((files) => files?.length > 0, "Client image is required.")
-    .refine((files) => files?.[0]?.size <= MAX_FILE_SIZE, `Max file size is 5MB.`)
-    .refine(
-      (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
-      ".jpg, .jpeg, .png and .webp files are accepted."
-    )
-    .or(z.string()),
-  visaImage: z.any()
-    .refine((files) => files?.length > 0, "Visa image is required.")
-    .refine((files) => files?.[0]?.size <= MAX_FILE_SIZE, `Max file size is 5MB.`)
-    .refine(
-      (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
-      ".jpg, .jpeg, .png and .webp files are accepted."
-    )
-     .or(z.string()),
+  clientImage: imageSchema,
+  visaImage: imageSchema,
 });
 
 type SuccessStoryFormValues = z.infer<typeof formSchema>;
@@ -108,7 +102,6 @@ export function SuccessStoryForm({ story: existingStory }: SuccessStoryFormProps
         story: values.story,
         clientImageUrl,
         visaImageUrl,
-        createdAt: serverTimestamp(),
       };
       
       if (existingStory) {
@@ -119,7 +112,10 @@ export function SuccessStoryForm({ story: existingStory }: SuccessStoryFormProps
           description: "The story has been updated successfully.",
         });
       } else {
-        await addDoc(collection(firestore, 'success_stories'), storyData);
+        await addDoc(collection(firestore, 'success_stories'), {
+            ...storyData,
+            createdAt: serverTimestamp()
+        });
         toast({
           title: "Success Story Added!",
           description: `The story for ${values.name} has been added.`,

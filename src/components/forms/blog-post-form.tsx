@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
-import { collection, addDoc, serverTimestamp, doc, updateDoc } from "firebase/firestore";
+import { collection, addDoc, serverTimestamp, doc, updateDoc, Timestamp } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 as uuidv4 } from 'uuid';
 
@@ -34,13 +34,12 @@ const formSchema = z.object({
   excerpt: z.string().min(20, { message: "Excerpt must be at least 20 characters." }).max(200, { message: "Excerpt must be less than 200 characters." }),
   content: z.string().min(100, { message: "Content must be at least 100 characters." }),
   image: z.any()
-    .refine((files) => files?.length === 1, "Image is required.")
-    .refine((files) => files?.[0]?.size <= MAX_FILE_SIZE, `Max file size is 5MB.`)
+    .refine((files) => (files?.[0] || typeof files === 'string'), "Image is required.")
+    .refine((files) => typeof files === 'string' || files?.[0]?.size <= MAX_FILE_SIZE, `Max file size is 5MB.`)
     .refine(
-      (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
+      (files) => typeof files === 'string' || ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
       ".jpg, .jpeg, .png and .webp files are accepted."
     )
-    .or(z.string()),
 });
 
 type BlogPostFormValues = z.infer<typeof formSchema>;
@@ -66,6 +65,7 @@ export function BlogPostForm({ post }: BlogPostFormProps) {
       author: "",
       excerpt: "",
       content: "",
+      image: undefined,
   }
 
   const form = useForm<BlogPostFormValues>({
@@ -100,17 +100,14 @@ export function BlogPostForm({ post }: BlogPostFormProps) {
       
       const slug = createSlug(values.title);
 
-      const postData = {
-        ...values,
-        slug,
-        imageUrl,
-        publicationDate: serverTimestamp(),
-      };
-      
-      // @ts-ignore
-      delete postData.image;
-
       if (post) {
+        const postData = {
+            ...values,
+            slug,
+            imageUrl,
+        };
+        // @ts-ignore
+        delete postData.image;
         const postRef = doc(firestore, "blog_posts", post.id);
         await updateDoc(postRef, postData);
         toast({
@@ -118,6 +115,14 @@ export function BlogPostForm({ post }: BlogPostFormProps) {
           description: "The blog post has been updated successfully.",
         });
       } else {
+        const postData = {
+            ...values,
+            slug,
+            imageUrl,
+            publicationDate: serverTimestamp(),
+        };
+        // @ts-ignore
+        delete postData.image;
         await addDoc(collection(firestore, 'blog_posts'), postData);
         toast({
           title: "Post Created!",

@@ -45,7 +45,7 @@ export interface BlogPost {
   excerpt: string;
   content: string;
   imageUrl: string;
-  publicationDate: Timestamp | Date;
+  publicationDate: string | Date | Timestamp;
 }
 
 export interface TeamMember {
