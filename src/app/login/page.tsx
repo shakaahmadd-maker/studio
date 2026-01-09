@@ -179,7 +179,6 @@ function LoginForm() {
                       <Input 
                         placeholder="admin@example.com" 
                         {...field}
-                        readOnly
                        />
                     </FormControl>
                     <FormMessage />
@@ -193,7 +192,7 @@ function LoginForm() {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input type="password" placeholder="••••••••" {...field} readOnly/>
+                      <Input type="password" placeholder="••••••••" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -222,9 +221,19 @@ const DynamicLoginForm = dynamic(() => Promise.resolve(LoginForm), {
         </CardHeader>
         <CardContent className="space-y-4">
             <Skeleton className="h-10 w-full" />
-            <Skeleton className="h-4 w-full" />
-            <Skeleton className="h-10 w-full" />
-            <Skeleton className="h-10 w-full" />
+            <div className="my-4 flex items-center">
+                <Skeleton className="h-px flex-1" />
+                <Skeleton className="h-3 w-8 mx-4" />
+                <Skeleton className="h-px flex-1" />
+            </div>
+             <div className="space-y-2">
+                <Skeleton className="h-4 w-20" />
+                <Skeleton className="h-10 w-full" />
+             </div>
+             <div className="space-y-2">
+                <Skeleton className="h-4 w-20" />
+                <Skeleton className="h-10 w-full" />
+             </div>
             <Skeleton className="h-10 w-full" />
         </CardContent>
     </Card>
