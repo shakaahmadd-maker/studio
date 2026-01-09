@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -20,7 +20,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
-import { useAuth } from '@/firebase';
+import { useAuth, useUser } from '@/firebase';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { GraduationCap, AlertTriangle, ExternalLink } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -46,11 +46,17 @@ const GoogleIcon = (props: React.SVGProps<SVGSVGElement>) => (
 export default function LoginPage() {
   const { toast } = useToast();
   const auth = useAuth();
+  const { user, isUserLoading } = useUser();
   const router = useRouter();
   const searchParams = useSearchParams();
   const [error, setError] = useState<string | null>(searchParams.get('error'));
   const authDomainUrl = searchParams.get('authDomainUrl');
 
+  useEffect(() => {
+    if (!isUserLoading && user) {
+        router.push('/admin');
+    }
+  }, [user, isUserLoading, router]);
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(formSchema),
@@ -68,7 +74,7 @@ export default function LoginPage() {
         title: 'Login Successful!',
         description: 'Redirecting you to the admin dashboard.',
       });
-      router.push('/admin');
+      // Redirection is handled by the useEffect hook
     } catch (error: any) {
       console.error('Anonymous Sign In Error:', error);
       let errorMessage = 'An unexpected error occurred. Please try again.';
@@ -85,7 +91,7 @@ export default function LoginPage() {
             title: 'Login Successful!',
             description: 'Redirecting you to the admin dashboard.',
         });
-        router.push('/admin');
+        // Redirection is handled by the useEffect hook
     } catch (error: any) {
         console.error('Google Sign In Error:', error);
         let errorMessage = 'Could not sign in with Google. Please try again.';
@@ -97,6 +103,14 @@ export default function LoginPage() {
         }
         setError(errorMessage);
     }
+  }
+
+  if (isUserLoading || user) {
+      return (
+          <div className="flex h-screen items-center justify-center">
+              <p>Loading...</p>
+          </div>
+      )
   }
 
   return (

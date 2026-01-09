@@ -12,12 +12,13 @@ import {
   SidebarMenuButton,
   SidebarFooter,
 } from "@/components/ui/sidebar";
-import { Home, BookOpen, Star, FileText, Briefcase, Handshake, HelpCircle, PanelLeft, MessageSquareQuote, Users, Building2, Mail, MapPin, LogOut } from "lucide-react";
+import { Home, BookOpen, Star, FileText, Briefcase, Handshake, HelpCircle, PanelLeft, MessageSquareQuote, Users, Building2, Mail, MapPin, LogOut, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/firebase";
+import { useAuth, useUser } from "@/firebase";
 import { signOut } from "firebase/auth";
 import { useToast } from "@/hooks/use-toast";
+import { useEffect } from "react";
 
 const AdminSidebar = () => {
     const auth = useAuth();
@@ -132,15 +133,39 @@ const AdminSidebar = () => {
     )
 }
 
+function AuthWrapper({ children }: { children: React.ReactNode }) {
+    const { user, isUserLoading } = useUser();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (!isUserLoading && !user) {
+            router.push('/login');
+        }
+    }, [user, isUserLoading, router]);
+
+    if (isUserLoading || !user) {
+        return (
+            <div className="flex items-center justify-center h-screen">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
+        );
+    }
+
+    return <>{children}</>;
+}
+
+
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
-    <SidebarProvider>
-      <div className="flex min-h-screen bg-background">
-        <AdminSidebar />
-        <SidebarInset className="flex-1 p-4 md:p-8 bg-muted/30">
-          {children}
-        </SidebarInset>
-      </div>
-    </SidebarProvider>
+    <AuthWrapper>
+      <SidebarProvider>
+        <div className="flex min-h-screen bg-background">
+          <AdminSidebar />
+          <SidebarInset className="flex-1 p-4 md:p-8 bg-muted/30">
+            {children}
+          </SidebarInset>
+        </div>
+      </SidebarProvider>
+    </AuthWrapper>
   );
 }
