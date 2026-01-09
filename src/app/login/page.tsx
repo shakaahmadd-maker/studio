@@ -27,8 +27,8 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Separator } from '@/components/ui/separator';
 
 const formSchema = z.object({
-  email: z.string().email({ message: 'Please enter a valid email.' }).optional().or(z.literal('')),
-  password: z.string().min(1, { message: 'Password is required.' }).optional().or(z.literal('')),
+  email: z.string().optional(),
+  password: z.string().optional(),
 });
 
 type LoginFormValues = z.infer<typeof formSchema>;
@@ -48,8 +48,10 @@ export default function LoginPage() {
   const auth = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [error, setError] = useState<string | null>(searchParams.get('error'));
-  const authDomainUrl = searchParams.get('authDomainUrl');
+  const { user, isUserLoading } = useUser();
+  
+  const [error, setError] = useState<string | null>(null);
+  const [authDomainUrl, setAuthDomainUrl] = useState<string | null>(null);
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(formSchema),
@@ -59,7 +61,24 @@ export default function LoginPage() {
     },
   });
 
-  async function onSubmit(values: LoginFormValues) {
+  useEffect(() => {
+    // If the user is already logged in, the middleware will redirect them.
+    // This effect handles the case where the user lands on the login page
+    // and is already authenticated on the client.
+    if (!isUserLoading && user) {
+        const nextUrl = searchParams.get('next') || '/admin';
+        router.replace(nextUrl);
+    }
+
+    // Check for auth domain error from query params
+    const authDomainError = searchParams.get('authDomainUrl');
+    if (authDomainError) {
+      setAuthDomainUrl(decodeURIComponent(authDomainError));
+    }
+  }, [isUserLoading, user, router, searchParams]);
+
+
+  async function handleAnonymousSignIn() {
     setError(null);
     try {
       await signInAnonymously(auth);
@@ -67,12 +86,10 @@ export default function LoginPage() {
         title: 'Login Successful!',
         description: 'Redirecting you to the admin dashboard.',
       });
-      // The middleware will handle the redirection after auth state changes.
-      router.push('/admin');
+      // The redirect is now handled by the middleware and useEffect hook
     } catch (error: any) {
       console.error('Anonymous Sign In Error:', error);
-      let errorMessage = 'An unexpected error occurred. Please try again.';
-      setError(errorMessage);
+      setError('An unexpected error occurred during sign-in. Please try again.');
     }
   }
 
@@ -85,20 +102,28 @@ export default function LoginPage() {
             title: 'Login Successful!',
             description: 'Redirecting you to the admin dashboard.',
         });
-        // The middleware will handle the redirection after auth state changes.
-        router.push('/admin');
+        // The redirect is now handled by the middleware and useEffect hook
     } catch (error: any) {
         console.error('Google Sign In Error:', error);
         let errorMessage = 'Could not sign in with Google. Please try again.';
         if (error.code === 'auth/popup-closed-by-user') {
-            return; // Don't show an error if the user just closes the popup
+            return; 
         }
-         if (error.code === 'auth/account-exists-with-different-credential') {
+        if (error.code === 'auth/account-exists-with-different-credential') {
             errorMessage = 'An account with this email already exists using a different sign-in method.';
         }
         setError(errorMessage);
     }
   }
+
+  if (isUserLoading || user) {
+    return (
+        <div className="flex h-screen w-full items-center justify-center">
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        </div>
+    );
+  }
+
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-muted/30 p-4">
@@ -131,7 +156,7 @@ export default function LoginPage() {
                 </AlertDescription>
               </Alert>
             )}
-            <Button variant="outline" className="w-full" onClick={handleGoogleSignIn}>
+            <Button variant="outline" className="w-full" onClick={handleGoogleSignIn} disabled={form.formState.isSubmitting}>
                 <GoogleIcon className="mr-2 h-5 w-5" />
                 Sign in with Google
             </Button>
@@ -141,7 +166,7 @@ export default function LoginPage() {
                 <Separator className="flex-1" />
             </div>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <form onSubmit={form.handleSubmit(handleAnonymousSignIn)} className="space-y-4">
               <FormField
                 control={form.control}
                 name="email"

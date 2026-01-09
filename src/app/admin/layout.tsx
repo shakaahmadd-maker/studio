@@ -133,17 +133,47 @@ const AdminSidebar = () => {
     )
 }
 
+function AuthWrapper({ children }: { children: React.ReactNode }) {
+    const { user, isUserLoading } = useUser();
+    const router = useRouter();
+
+    useEffect(() => {
+        // If the user is not loading and is not authenticated, redirect to login.
+        if (!isUserLoading && !user) {
+            router.replace('/login');
+        }
+    }, [user, isUserLoading, router]);
+
+    // While loading, show a full-screen loader.
+    if (isUserLoading) {
+        return (
+            <div className="flex h-screen w-full items-center justify-center">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
+        );
+    }
+
+    // If the user is authenticated, render the children.
+    if (user) {
+        return <>{children}</>;
+    }
+
+    // If not authenticated and not loading, render nothing (will be redirected).
+    return null;
+}
+
+
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  // The route protection is now handled by middleware.ts.
-  // The AuthWrapper is no longer needed here.
   return (
       <SidebarProvider>
-        <div className="flex min-h-screen bg-background">
-          <AdminSidebar />
-          <SidebarInset className="flex-1 p-4 md:p-8 bg-muted/30">
-            {children}
-          </SidebarInset>
-        </div>
+        <AuthWrapper>
+            <div className="flex min-h-screen bg-background">
+            <AdminSidebar />
+            <SidebarInset className="flex-1 p-4 md:p-8 bg-muted/30">
+                {children}
+            </SidebarInset>
+            </div>
+        </AuthWrapper>
       </SidebarProvider>
   );
 }
