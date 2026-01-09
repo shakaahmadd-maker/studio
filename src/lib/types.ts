@@ -1,5 +1,6 @@
 
 import type { Timestamp } from "firebase/firestore";
+import type React from "react";
 
 export interface Service {
   id: string;
@@ -59,6 +60,7 @@ export interface FAQ {
     question: string;
     answer: string;
     category: string;
+    createdAt?: Timestamp;
 }
 
 export interface JobOpening {

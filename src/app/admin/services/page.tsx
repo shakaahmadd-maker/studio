@@ -23,12 +23,13 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { useState } from "react";
+import { type Service } from "@/lib/types";
 
 export default function AdminServicesPage() {
     const firestore = useFirestore();
     const { toast } = useToast();
     const servicesQuery = useMemoFirebase(() => query(collection(firestore, "services"), orderBy("createdAt", "desc")), [firestore]);
-    const { data: services, isLoading } = useCollection(servicesQuery);
+    const { data: services, isLoading } = useCollection<Service>(servicesQuery);
 
     const [dialogOpen, setDialogOpen] = useState(false);
     const [serviceToDelete, setServiceToDelete] = useState<string | null>(null);
@@ -89,7 +90,7 @@ export default function AdminServicesPage() {
                                 <TableCell><Skeleton className="h-8 w-8" /></TableCell>
                             </TableRow>
                         ))}
-                        {!isLoading && services && services.map(service => (
+                        {services && services.map(service => (
                             <TableRow key={service.id}>
                                 <TableCell className="hidden sm:table-cell">
                                     <Image
@@ -116,7 +117,7 @@ export default function AdminServicesPage() {
                                                 <Link href={`/admin/services/edit/${service.id}`}><Pencil className="mr-2"/>Edit</Link>
                                             </DropdownMenuItem>
                                             <DropdownMenuItem asChild>
-                                                <Link href={`/services/${service.id}`} target="_blank"><ExternalLink className="mr-2"/>View</Link>
+                                                <Link href={`/services/${service.slug}`} target="_blank"><ExternalLink className="mr-2"/>View</Link>
                                             </DropdownMenuItem>
                                            
                                             <DropdownMenuItem 
