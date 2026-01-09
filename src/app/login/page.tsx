@@ -43,30 +43,9 @@ const GoogleIcon = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 
-function AuthRedirector() {
-  const { user, isUserLoading } = useUser();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!isUserLoading && user) {
-      router.push('/admin');
-    }
-  }, [user, isUserLoading, router]);
-
-  if (isUserLoading || user) {
-      return (
-          <div className="flex h-screen items-center justify-center">
-              <Loader2 className="h-8 w-8 animate-spin text-primary" />
-          </div>
-      )
-  }
-  return null;
-}
-
 export default function LoginPage() {
   const { toast } = useToast();
   const auth = useAuth();
-  const { user, isUserLoading } = useUser();
   const router = useRouter();
   const searchParams = useSearchParams();
   const [error, setError] = useState<string | null>(searchParams.get('error'));
@@ -88,7 +67,8 @@ export default function LoginPage() {
         title: 'Login Successful!',
         description: 'Redirecting you to the admin dashboard.',
       });
-      // Redirection is handled by the AuthRedirector component
+      // The middleware will handle the redirection after auth state changes.
+      router.push('/admin');
     } catch (error: any) {
       console.error('Anonymous Sign In Error:', error);
       let errorMessage = 'An unexpected error occurred. Please try again.';
@@ -105,7 +85,8 @@ export default function LoginPage() {
             title: 'Login Successful!',
             description: 'Redirecting you to the admin dashboard.',
         });
-        // Redirection is handled by the AuthRedirector component
+        // The middleware will handle the redirection after auth state changes.
+        router.push('/admin');
     } catch (error: any) {
         console.error('Google Sign In Error:', error);
         let errorMessage = 'Could not sign in with Google. Please try again.';
@@ -118,11 +99,6 @@ export default function LoginPage() {
         setError(errorMessage);
     }
   }
-
-  if (isUserLoading || user) {
-    return <AuthRedirector />;
-  }
-
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-muted/30 p-4">
