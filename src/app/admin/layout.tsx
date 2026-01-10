@@ -138,13 +138,14 @@ function AuthWrapper({ children }: { children: React.ReactNode }) {
     const router = useRouter();
 
     useEffect(() => {
-        // If the user is not loading and is not authenticated, redirect to login.
+        // If the auth state is done loading and there is still no user,
+        // it means they are unauthenticated. Redirect them to the login page.
         if (!isUserLoading && !user) {
             router.replace('/login');
         }
     }, [user, isUserLoading, router]);
 
-    // While loading, show a full-screen loader.
+    // While the authentication state is loading, show a full-screen loader.
     if (isUserLoading) {
         return (
             <div className="flex h-screen w-full items-center justify-center">
@@ -153,12 +154,13 @@ function AuthWrapper({ children }: { children: React.ReactNode }) {
         );
     }
 
-    // If the user is authenticated, render the children.
+    // If the user is authenticated (user object exists), render the admin content.
     if (user) {
         return <>{children}</>;
     }
 
-    // If not authenticated and not loading, render nothing (will be redirected).
+    // If not authenticated and not loading, render nothing.
+    // The useEffect above will have already initiated the redirect.
     return null;
 }
 

@@ -68,16 +68,20 @@ function LoginForm() {
   });
 
   useEffect(() => {
+    // This effect handles redirection after a successful login.
     if (!isUserLoading && user) {
         const nextUrl = searchParams.get('next') || '/admin';
         router.replace(nextUrl);
     }
+  }, [isUserLoading, user, router, searchParams]);
 
+  useEffect(() => {
+    // This effect handles displaying configuration error messages from URL params.
     const authDomainError = searchParams.get('authDomainUrl');
     if (authDomainError) {
       setAuthDomainUrl(decodeURIComponent(authDomainError));
     }
-  }, [isUserLoading, user, router, searchParams]);
+  }, [searchParams]);
 
   async function handleEmailSignIn(values: LoginFormValues) {
     setError(null);
@@ -90,6 +94,7 @@ function LoginForm() {
         title: 'Login Successful!',
         description: 'Redirecting you to the admin dashboard.',
       });
+      // The useEffect above will handle the redirection.
     } catch (error: any) {
       console.error('Firebase Login Error:', error);
       let errorMessage = 'An unexpected error occurred. Please try again.';
@@ -130,9 +135,10 @@ function LoginForm() {
         title: 'Login Successful!',
         description: 'Redirecting you to the admin dashboard.',
       });
+      // The useEffect above will handle the redirection.
     } catch (error: any) {
       console.error('Anonymous Sign In Error:', error);
-      setError('An unexpected error occurred during guest sign-in. Please try again.');
+      setError(`Login Failed: ${error.message}`);
     } finally {
         setIsSubmitting(false);
     }
@@ -150,9 +156,11 @@ function LoginForm() {
             title: 'Login Successful!',
             description: 'Redirecting you to the admin dashboard.',
         });
+        // The useEffect above will handle the redirection.
     } catch (error: any) {
         console.error('Google Sign In Error:', error);
         let errorMessage = `Login Failed: ${error.message}`;
+
         if (error.code === 'auth/popup-closed-by-user') {
             setIsSubmitting(false);
             return; 
@@ -167,10 +175,11 @@ function LoginForm() {
         }
         if (error.code === 'auth/auth-domain-config-required') {
             const currentUrl = new URL(window.location.href);
-            const authDomainUrl = `https://console.firebase.google.com/project/${auth.app.options.projectId}/authentication/providers`;
-            currentUrl.searchParams.set('authDomainUrl', encodeURIComponent(authDomainUrl));
-            window.location.href = currentUrl.toString();
-            return;
+            const authDomainUrlParam = `https://console.firebase.google.com/project/${auth.app.options.projectId}/authentication/providers`;
+            currentUrl.searchParams.set('authDomainUrl', encodeURIComponent(authDomainUrlParam));
+            // Instead of reloading, we set state to show the error immediately
+            setAuthDomainUrl(authDomainUrlParam);
+            errorMessage = "This application's domain is not authorized for Google Sign-In. Please add it to the authorized domains in your Firebase project settings.";
         }
         setError(errorMessage);
     } finally {
@@ -178,6 +187,8 @@ function LoginForm() {
     }
   }
 
+  // While checking auth state or if user is already logged in, show loader.
+  // The redirect will happen in the useEffect.
   if (isUserLoading || user) {
     return (
         <div className="flex h-screen w-full items-center justify-center">
@@ -232,11 +243,11 @@ function LoginForm() {
             )}
             <div className="grid grid-cols-1 gap-2">
                 <Button variant="outline" className="w-full" onClick={handleGoogleSignIn} disabled={isSubmitting}>
-                    <GoogleIcon className="mr-2 h-5 w-5" />
-                    Sign in with Google
+                    {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <GoogleIcon className="mr-2 h-5 w-5" />}
+                    {isSubmitting ? 'Signing In...' : 'Sign in with Google'}
                 </Button>
                  <Button variant="secondary" className="w-full" onClick={handleAnonymousSignIn} disabled={isSubmitting}>
-                    Sign in as Guest
+                    {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Sign in as Guest'}
                 </Button>
             </div>
             <div className="my-4 flex items-center">
@@ -326,5 +337,3 @@ export default function LoginPage() {
     </div>
   );
 }
-
-    
