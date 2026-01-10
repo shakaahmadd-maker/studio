@@ -141,27 +141,31 @@ function AuthWrapper({ children }: { children: React.ReactNode }) {
     const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
 
     useEffect(() => {
+        // Wait until Firebase has finished its initial auth check.
         if (isUserLoading) {
-            return; // Wait for user loading to complete
+            return;
         }
 
+        // If no user is logged in, redirect to the login page.
         if (!user) {
             router.replace('/login');
             return;
         }
 
-        // Check for admin custom claim
-        user.getIdTokenResult()
+        // If there is a user, check for the admin custom claim.
+        // Force a token refresh to ensure we have the latest claims.
+        user.getIdTokenResult(true)
             .then((idTokenResult) => {
-                const claims = idTokenResult.claims;
-                if (claims.isAdmin) {
+                // Check if the 'isAdmin' claim is true.
+                if (!!idTokenResult.claims.isAdmin) {
                     setIsAdmin(true);
                 } else {
-                    setIsAdmin(false);
+                    setIsAdmin(false); // User is authenticated but not an admin.
                 }
             })
-            .catch(() => {
-                setIsAdmin(false);
+            .catch((error) => {
+                console.error("Error fetching user claims:", error);
+                setIsAdmin(false); // On error, deny access.
             });
 
     }, [user, isUserLoading, router]);
@@ -175,7 +179,7 @@ function AuthWrapper({ children }: { children: React.ReactNode }) {
         );
     }
     
-    // If the user is not an admin, show a permission denied message.
+    // If the user is authenticated but not an admin, show permission denied.
     if (isAdmin === false) {
         return (
             <div className="flex h-screen w-full items-center justify-center bg-muted/30 p-4">
@@ -201,12 +205,7 @@ function AuthWrapper({ children }: { children: React.ReactNode }) {
     }
 
     // If the user is authenticated and is an admin, render the admin content.
-    if (user && isAdmin) {
-        return <>{children}</>;
-    }
-
-    // Fallback, should not be reached
-    return null;
+    return <>{children}</>;
 }
 
 
