@@ -35,17 +35,11 @@ service cloud.firestore {
     // Helper functions to improve readability and maintainability of the rules.
 
     /**
-     * Placeholder for content administrator role check.
-     * Currently returns false to lock down all write operations on public content.
-     * TODO: Implement a real admin check, e.g., by looking up a user's custom claims.
-     * function isContentAdmin() {
-     *   return request.auth.token.isAdmin == true;
-     * }
+     * Checks if the authenticated user has an 'isAdmin' custom claim.
+     * This is the central function for controlling administrative access.
      */
     function isContentAdmin() {
-      // For development, we are temporarily allowing any authenticated user to write.
-      // In a production app, this should be replaced with a proper admin check.
-      return request.auth != null;
+      return request.auth != null && request.auth.token.isAdmin == true;
     }
 
     /**

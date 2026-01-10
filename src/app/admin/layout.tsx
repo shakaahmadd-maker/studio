@@ -12,13 +12,15 @@ import {
   SidebarMenuButton,
   SidebarFooter,
 } from "@/components/ui/sidebar";
-import { Home, BookOpen, Star, FileText, Briefcase, Handshake, HelpCircle, PanelLeft, MessageSquareQuote, Users, Building2, Mail, MapPin, LogOut, Loader2 } from "lucide-react";
+import { Home, BookOpen, Star, FileText, Briefcase, Handshake, HelpCircle, PanelLeft, MessageSquareQuote, Users, Building2, Mail, MapPin, LogOut, Loader2, ShieldAlert } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { useAuth, useUser } from "@/firebase";
 import { signOut } from "firebase/auth";
 import { useToast } from "@/hooks/use-toast";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import Link from "next/link";
 
 const AdminSidebar = () => {
     const auth = useAuth();
@@ -136,31 +138,74 @@ const AdminSidebar = () => {
 function AuthWrapper({ children }: { children: React.ReactNode }) {
     const { user, isUserLoading } = useUser();
     const router = useRouter();
+    const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
 
     useEffect(() => {
-        // If the auth state is done loading and there is still no user,
-        // it means they are unauthenticated. Redirect them to the login page.
-        if (!isUserLoading && !user) {
-            router.replace('/login');
+        if (isUserLoading) {
+            return; // Wait for user loading to complete
         }
+
+        if (!user) {
+            router.replace('/login');
+            return;
+        }
+
+        // Check for admin custom claim
+        user.getIdTokenResult()
+            .then((idTokenResult) => {
+                const claims = idTokenResult.claims;
+                if (claims.isAdmin) {
+                    setIsAdmin(true);
+                } else {
+                    setIsAdmin(false);
+                }
+            })
+            .catch(() => {
+                setIsAdmin(false);
+            });
+
     }, [user, isUserLoading, router]);
 
-    // While the authentication state is loading, show a full-screen loader.
-    if (isUserLoading) {
+    // While checking auth state or claims, show a full-screen loader.
+    if (isUserLoading || isAdmin === null) {
         return (
             <div className="flex h-screen w-full items-center justify-center">
                 <Loader2 className="h-8 w-8 animate-spin text-primary" />
             </div>
         );
     }
+    
+    // If the user is not an admin, show a permission denied message.
+    if (isAdmin === false) {
+        return (
+            <div className="flex h-screen w-full items-center justify-center bg-muted/30 p-4">
+                 <Card className="w-full max-w-md text-center">
+                    <CardHeader>
+                        <div className="mx-auto bg-destructive/10 p-4 rounded-full w-fit">
+                            <ShieldAlert className="h-10 w-10 text-destructive" />
+                        </div>
+                        <CardTitle className="font-headline text-2xl">Permission Denied</CardTitle>
+                        <CardDescription>You do not have the necessary permissions to access the admin dashboard.</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <p className="text-sm text-muted-foreground mb-4">
+                            Please contact the site administrator if you believe this is a mistake. You may need to have an admin role assigned to your account.
+                        </p>
+                         <Button asChild>
+                            <Link href="/">Go to Homepage</Link>
+                        </Button>
+                    </CardContent>
+                </Card>
+            </div>
+        );
+    }
 
-    // If the user is authenticated (user object exists), render the admin content.
-    if (user) {
+    // If the user is authenticated and is an admin, render the admin content.
+    if (user && isAdmin) {
         return <>{children}</>;
     }
 
-    // If not authenticated and not loading, render nothing.
-    // The useEffect above will have already initiated the redirect.
+    // Fallback, should not be reached
     return null;
 }
 
