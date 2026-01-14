@@ -9,38 +9,36 @@
 //    npm install firebase-admin
 // 4. Run this script from the root of your project:
 //    node scripts/set-admin.js
+    // scripts/set-admin.js
+    const admin = require('firebase-admin');
 
-const admin = require('firebase-admin');
+    // Initialize Firebase Admin SDK
+    // This expects the GOOGLE_APPLICATION_CREDENTIALS environment variable to be set
+    // pointing to your service account key file.
+    admin.initializeApp({
+      // No explicit credential needed here if GOOGLE_APPLICATION_CREDENTIALS is set
+    });
 
-// Initialize the Firebase Admin SDK
-// The SDK will automatically find the credentials from the environment variable.
-try {
-  admin.initializeApp({
-    // If you don't set the credential here, the SDK will look for the
-    // GOOGLE_APPLICATION_CREDENTIALS environment variable.
-    // Make sure your service account JSON file has the following project_id:
-    projectId: 'studio-5243418223-ccb0b'
-  });
-} catch (error) {
-  if (error.code === 'app/duplicate-app') {
-    console.log('Firebase Admin SDK already initialized.');
-  } else {
-    console.error('Error initializing Firebase Admin SDK:', error);
-    process.exit(1);
-  }
-}
+    // Your User ID
+    const targetUid = 'Ng7jWBORCNTSN2w1GA7NSh2xIXz2';
 
-// The UID of the user to make an admin.
-const uid = 'Ng7jWBORCNTSN2w1GA7NSh2xIXz2';
+    async function grantAdminPrivileges(uid) {
+      try {
+        // Set the custom claim for the user
+        await admin.auth().setCustomUserClaims(uid, { isAdmin: true });
+        console.log(`Successfully set custom claim 'isAdmin: true' for user: ${uid}`);
 
-// Set the custom claim { isAdmin: true }
-admin.auth().setCustomUserClaims(uid, { isAdmin: true })
-  .then(() => {
-    console.log(`Successfully set custom claim 'isAdmin: true' for user: ${uid}`);
-    console.log('The user will have admin privileges on their next sign-in or token refresh.');
-    process.exit(0);
-  })
-  .catch((error) => {
-    console.error('Error setting custom user claims:', error);
-    process.exit(1);
-  });
+        // Optionally, verify the claims have been set
+        const user = await admin.auth().getUser(uid);
+        console.log('Updated user custom claims:', user.customClaims);
+        console.log('Remember to sign out and sign back in to refresh your token.');
+      } catch (error) {
+        console.error('Error setting custom user claims:', error);
+      } finally {
+        // Exit the process after execution
+        process.exit();
+      }
+    }
+
+    grantAdminPrivileges(targetUid);
+    ```
